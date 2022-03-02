@@ -1,6 +1,21 @@
-import app from "./app";
-import { PORT } from "./utils/config";
+import { ApolloServer } from 'apollo-server';
+import schema from './graphql/schema';
+// import AuthService from './services/authentication/authService';
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+const server = new ApolloServer({ 
+  schema,
+  // context: ({ req }) => {
+
+  //   const authorization = req.get('authorization');
+  //   const accessToken = authorization ? authorization.split(' ')[1] : undefined;
+
+  //   return {
+  //     authService: new AuthService({ accessToken }),
+  //   };
+  // },
+});
+
+/* eslint-disable  @typescript-eslint/no-floating-promises */
+server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+  console.log(`🚀  Server ready at ${url}graphql`);
 });

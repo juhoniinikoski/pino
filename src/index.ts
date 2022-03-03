@@ -1,6 +1,9 @@
 import { ApolloServer } from 'apollo-server';
 import schema from './graphql/schema';
+import * as dotenv from 'dotenv';
 // import AuthService from './services/authentication/authService';
+
+dotenv.config();
 
 const server = new ApolloServer({ 
   schema,

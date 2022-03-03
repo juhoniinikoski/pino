@@ -7,7 +7,6 @@ export const typeDefs = gql`
     email: String!
     createdAt: DateTime!
     updatedAt: DateTime!
-    savedBlocks(first: Int, after: String): [Block]
   }
 `;
 

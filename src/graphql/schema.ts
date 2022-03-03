@@ -9,14 +9,18 @@ import DateTime from './scalars/DateTime';
 import UserQuery from './queries/user';
 import UsersQuery from './queries/users';
 import BlockQuery from './queries/block';
+import BlocksQuery from './queries/blocks';
 
 import CreateUser from './mutations/create/createUser';
+import CreateBlock from './mutations/create/createBlock';
 
 import UpdateUser from './mutations/update/updateUser';
+import UpdateBlock from './mutations/update/updateBlock';
 
 import DeleteUser from './mutations/delete/deleteUser';
 
 import Authorize from './mutations/authorize';
+import MoveBlock from './mutations/move/moveBlock';
 
 /* eslint-disable  @typescript-eslint/no-unsafe-assignment */
 
@@ -41,6 +45,10 @@ const typeDefs = [
   UpdateUser.typeDefs,
   Authorize.typeDefs,
   DeleteUser.typeDefs,
+  BlocksQuery.typeDefs,
+  CreateBlock.typeDefs,
+  UpdateBlock.typeDefs,
+  MoveBlock.typeDefs
 ];
 
 const resolvers = merge(
@@ -54,6 +62,10 @@ const resolvers = merge(
   UpdateUser.resolvers,
   Authorize.resolvers,
   DeleteUser.resolvers,
+  BlocksQuery.resolvers,
+  CreateBlock.resolvers,
+  UpdateBlock.resolvers,
+  MoveBlock.resolvers
 );
 
 const schema = makeExecutableSchema({

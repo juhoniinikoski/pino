@@ -1,5 +1,8 @@
 import testServer from '../../utils/testServer';
 
+/* eslint-disable @typescript-eslint/no-unsafe-call*/
+/* eslint-disable @typescript-eslint/no-explicit-any*/
+
 const usersQuery = {
   query: `
     query {

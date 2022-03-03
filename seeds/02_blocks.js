@@ -17,6 +17,14 @@ exports.seed = async knex => {
 
   await knex('blocks').insert([
     {
+      ...createColumns('workspace', 'Juhon työtila', 'bbe42984-051b-4a01-b45d-b8d29c32200c', 'workspace1'),
+      ...createDateColumns(new Date(Date.now() - oneHour)),
+    },
+    {
+      ...createColumns('workspace', 'Jonkun muun työtila', '9b9d927e-2ee9-4f93-b96b-c8f677c63a5f', 'workspace2'),
+      ...createDateColumns(new Date(Date.now() - oneHour)),
+    },
+    {
       ...createColumns('collection', 'yofysiikka', 'bbe42984-051b-4a01-b45d-b8d29c32200c', 'index1'),
       ...createDateColumns(new Date(Date.now() - oneHour)),
     },

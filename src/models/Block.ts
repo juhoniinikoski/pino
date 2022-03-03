@@ -29,6 +29,7 @@ class BlockClass extends BaseModel {
   type: string;
   createdAt: Date;
   updatedAt: Date;
+  content: BlockClass[];
 }
 
 export default BlockClass;

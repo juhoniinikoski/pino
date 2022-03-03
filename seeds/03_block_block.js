@@ -3,6 +3,14 @@ exports.seed = await = (knex) => {
     .then(function () {
       return knex('block_block').insert([
         {
+          parent_id: 'workspace1',
+          block_id: 'index1'
+        },
+        {
+          parent_id: 'workspace2',
+          block_id: 'index8'
+        },
+        {
           parent_id: 'index1',
           block_id: 'index3'
         },

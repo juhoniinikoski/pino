@@ -12,7 +12,7 @@ export const typeDefs = gql`
 `;
 
 interface Args {
-  id: string | number
+  id: string | number;
 }
 
 export const resolvers = {
@@ -20,8 +20,8 @@ export const resolvers = {
     deleteUser: async (_obj: null, args: Args, { authService }: Context) => {
       const authorizedUser = await authService.getAuthorizedUserOrFail();
       return await deleteUser(args.id, authorizedUser);
-    }
-  }
+    },
+  },
 };
 
 export default {

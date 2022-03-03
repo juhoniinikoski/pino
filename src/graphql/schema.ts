@@ -40,7 +40,7 @@ const typeDefs = [
   CreateUser.typeDefs,
   UpdateUser.typeDefs,
   Authorize.typeDefs,
-  DeleteUser.typeDefs
+  DeleteUser.typeDefs,
 ];
 
 const resolvers = merge(
@@ -53,7 +53,7 @@ const resolvers = merge(
   CreateUser.resolvers,
   UpdateUser.resolvers,
   Authorize.resolvers,
-  DeleteUser.resolvers
+  DeleteUser.resolvers,
 );
 
 const schema = makeExecutableSchema({

@@ -243,20 +243,20 @@ describe('testing user updates', () => {
   test('should update a user succesfully if username is changed', async () => {
     await testServer.executeOperation({ query: updateUsernameMutation.mutation });
     const result = await testServer.executeOperation({ query: userQueryID.query });
-    return expect(result.data.user.username).toBe("juhoniinikoski1234");
+    return expect(result.data.user.username).toBe('juhoniinikoski1234');
   });
 
   test('should update a user succesfully if email is changed', async () => {
     await testServer.executeOperation({ query: updateEmailMutation.mutation });
     const result = await testServer.executeOperation({ query: userQueryID.query });
-    return expect(result.data.user.email).toBe("testi123456@gmail.com");
+    return expect(result.data.user.email).toBe('testi123456@gmail.com');
   });
 
   test('should update a user succesfully if username and email is changed', async () => {
     await testServer.executeOperation({ query: updateMutation.mutation });
     const result = await testServer.executeOperation({ query: userQueryID.query });
-    expect(result.data.user.username).toBe("juhoniinikoski")
-    return expect(result.data.user.email).toBe("testi1@gmail.com");
+    expect(result.data.user.username).toBe('juhoniinikoski');
+    return expect(result.data.user.email).toBe('testi1@gmail.com');
   });
 
   test('should throw an error if wanted username is already taken', async () => {
@@ -303,7 +303,7 @@ describe('testing user deletion', () => {
     expect(mutation.errors[0].message).toBe('You can only delete your user when authenticated.');
     return expect(result.data.users.length).toBe(initial.data.users.length);
   });
-  
+
   test('should delete a user succesfully', async () => {
     const initial = await testServer.executeOperation({ query: usersQuery.query });
     await testServer.executeOperation({ query: deleteUserMutation.mutation });

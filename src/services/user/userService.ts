@@ -96,7 +96,6 @@ export const updateUser = async (
 };
 
 export const deleteUser = async (id: string | number, authorizedUser: UserClass): Promise<boolean> => {
-
   if (authorizedUser.id === id) {
     const res = await User.query().findById(id).delete();
     if (res === 0) {
@@ -106,5 +105,4 @@ export const deleteUser = async (id: string | number, authorizedUser: UserClass)
   }
 
   throw new AuthenticationError('You can only delete your user when authenticated.');
-
 };

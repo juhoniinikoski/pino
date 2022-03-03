@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server';
-import { User } from '../../models/User';
+import { getUsers } from '../../services/user/userService';
 
 export const typeDefs = gql`
   extend type Query {
@@ -12,8 +12,8 @@ export const typeDefs = gql`
 
 export const resolvers = {
   Query: {
-    users: async () => await User.query()
-  }
+    users: async () => getUsers(),
+  },
 };
 
 export default {

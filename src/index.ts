@@ -1,21 +1,20 @@
 import { ApolloServer } from 'apollo-server';
 import schema from './graphql/schema';
 import * as dotenv from 'dotenv';
-// import AuthService from './services/authentication/authService';
+import AuthService from './services/authentication/authService';
 
 dotenv.config();
 
-const server = new ApolloServer({ 
+const server = new ApolloServer({
   schema,
-  // context: ({ req }) => {
+  context: ({ req }) => {
+    const authorization = req.get('authorization');
+    const accessToken = authorization ? authorization.split(' ')[1] : undefined;
 
-  //   const authorization = req.get('authorization');
-  //   const accessToken = authorization ? authorization.split(' ')[1] : undefined;
-
-  //   return {
-  //     authService: new AuthService({ accessToken }),
-  //   };
-  // },
+    return {
+      authService: new AuthService({ accessToken }),
+    };
+  },
 });
 
 /* eslint-disable  @typescript-eslint/no-floating-promises */

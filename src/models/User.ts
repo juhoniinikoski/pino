@@ -3,24 +3,21 @@ import knex from '../utils/knex';
 import { Model } from 'objection';
 
 class UserClass extends BaseModel {
-  
   static idColumn = 'id';
 
   static tableName = 'users';
 
   static relationMappings = {
-
-    savedBy: {
+    savedBlocks: {
       relation: Model.HasManyRelation,
       modelClass: __dirname + '/UserBlock',
       join: {
         from: 'users.id',
-        to: 'user_block.userId'
-      }
+        to: 'user_block.userId',
+      },
     },
-
   };
-  
+
   id: string | number;
   username: string;
   email: string;

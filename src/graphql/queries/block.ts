@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server';
-import { Block } from '../../models/Block';
+import { getBlock } from '../../services/block/blockService';
 
 export const typeDefs = gql`
   extend type Query {
@@ -11,12 +11,12 @@ export const typeDefs = gql`
 `;
 
 interface Args {
-  id: number | string
+  id: number | string;
 }
 
 export const resolvers = {
   Query: {
-    block: async (_obj: null, args: Args) => await Block.query().findById(args.id).withGraphFetched('content')
+    block: async (_obj: null, args: Args) => await getBlock(args.id),
   },
 };
 

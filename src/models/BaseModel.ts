@@ -1,6 +1,6 @@
 import { Model, Page, QueryBuilder, Transaction } from 'objection';
 
- /* eslint-disable */
+/* eslint-disable */
 
 export class BaseQueryBuilder<M extends Model, R = M[]> extends QueryBuilder<M, R> {
   // These are necessary. You can just copy-paste them and change the

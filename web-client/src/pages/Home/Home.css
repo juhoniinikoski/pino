@@ -1,0 +1,17 @@
+.box-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.box-container-horizontal {
+  display: flex;
+  justify-content: space-between;
+}
+
+.channel-container {
+  margin-top: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}

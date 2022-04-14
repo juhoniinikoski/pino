@@ -1,22 +1,22 @@
 import { gql } from 'apollo-server';
-import { getBlock } from '../../services/block/blockService';
+import { getStack } from '../../services/stack/stackService';
 
 export const typeDefs = gql`
   extend type Query {
     """
-    Returns a block by an id.
+    Returns a stack and related questions.
     """
-    block(id: ID!): Block
+    stack(id: ID!): Stack!
   }
 `;
 
 interface Args {
-  id: number | string;
+  id: string | number;
 }
 
 export const resolvers = {
   Query: {
-    block: async (_obj: null, args: Args) => await getBlock(args.id),
+    stack: async (_obj: null, { id }: Args) => getStack(id),
   },
 };
 

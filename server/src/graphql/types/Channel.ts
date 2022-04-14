@@ -1,14 +1,11 @@
 import { gql } from 'apollo-server';
 
 export const typeDefs = gql`
-  type Block {
+  type Channel {
     id: ID!
-    createdById: String!
-    type: String!
-    title: String!
+    name: String!
     createdAt: DateTime!
     updatedAt: DateTime!
-    content: [Block]
   }
 `;
 

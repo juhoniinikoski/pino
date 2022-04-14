@@ -6,7 +6,7 @@ import { getUser } from '../../services/user/userService';
 
 export const typeDefs = gql`
   input AuthorizeInput {
-    username: String!
+    email: String!
     password: String!
   }
   type AuthorizationPayload {
@@ -16,7 +16,7 @@ export const typeDefs = gql`
   }
   extend type Mutation {
     """
-    Generates a new access token, if provided credentials (username and password) match any registered user.
+    Generates a new access token, if provided credentials (email and password) match any registered user.
     """
     authorize(credentials: AuthorizeInput): AuthorizationPayload
   }
@@ -24,14 +24,14 @@ export const typeDefs = gql`
 
 const argsSchema = yup.object().shape({
   credentials: yup.object().shape({
-    username: yup.string().required().lowercase().trim(),
+    email: yup.string().required().lowercase().trim(),
     password: yup.string().required().trim(),
   }),
 });
 
 interface Args {
   credentials: {
-    username: string;
+    email: string;
     password: string;
   };
 }
@@ -40,21 +40,21 @@ export const resolvers = {
   Mutation: {
     authorize: async (_obj: null, args: Args, { authService }: Context) => {
       const {
-        credentials: { username, password },
+        credentials: { email, password },
       } = await argsSchema.validate(args, {
         stripUnknown: true,
       });
 
-      const user = await getUser(username);
+      const user = await getUser(email);
 
       if (!user) {
-        throw new UserInputError('Invalid username or password');
+        throw new UserInputError('Invalid email or password');
       }
 
       const match = await bcrypt.compare(password, user.password);
 
       if (!match) {
-        throw new UserInputError('Invalid username or password');
+        throw new UserInputError('Invalid email or password');
       }
 
       return {

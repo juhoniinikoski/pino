@@ -3,13 +3,12 @@ import { createUser } from '../../../services/user/userService';
 
 export const typeDefs = gql`
   input CreateUserInput {
-    username: String!
     password: String!
     email: String!
   }
   extend type Mutation {
     """
-    Creates a new user, if the provided username or email does not already exist.
+    Creates a new user, if the provided email does not already exist.
     """
     createUser(user: CreateUserInput): String
   }
@@ -17,7 +16,6 @@ export const typeDefs = gql`
 
 interface Args {
   user: {
-    username: string;
     password: string;
     email: string;
   };

@@ -6,12 +6,6 @@ export class InvalidIdError extends ApolloError {
   }
 }
 
-export class UsernameTakenError extends ApolloError {
-  constructor(field: string) {
-    super('Given username is already taken.', 'USERNAME_TAKEN', { field: field });
-  }
-}
-
 export class EmailTakenError extends ApolloError {
   constructor(field: string) {
     super('Given email is already taken.', 'EMAIL_TAKEN', { field: field });

@@ -1,11 +1,16 @@
 import { gql } from 'apollo-server';
 
 export const typeDefs = gql`
-  type User {
+  type Question {
     id: ID!
-    email: String!
+    question: String!
+    type: String!
+    createdById: ID!
+    answers: [Answer]!
     createdAt: DateTime!
     updatedAt: DateTime!
+    channels: [Channel]
+    stacks: [Stack]
   }
 `;
 

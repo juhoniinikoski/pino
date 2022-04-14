@@ -8,7 +8,6 @@ const usersQuery = {
     query {
       users {
         id
-        username
         email
       }
     }
@@ -20,19 +19,17 @@ const userQueryID = {
     query {
       user(id: "bbe42984-051b-4a01-b45d-b8d29c32200c") {
         id
-        username
         email
       }
     }
   `,
 };
 
-const userQueryUsername = {
+const userQueryEmail = {
   query: `
     query {
-      user(id: "johndoe") {
+      user(id: "testi2@gmail.com") {
         id
-        username
         email
       }
     }
@@ -44,19 +41,17 @@ const userQueryInvalidID = {
     query {
       user(id: "bbe42984-051b-4a01-b45d-b8d29c322") {
         id
-        username
         email
       }
     }
   `,
 };
 
-const userQueryInvalidUsername = {
+const userQueryInvalidEmail = {
   query: `
     query {
-      user(id: "joku jota ei ole olemassa") {
+      user(id: "joku jota ei ole olemassa@gmail.com") {
         id
-        username
         email
       }
     }
@@ -72,7 +67,7 @@ describe('testing user read', () => {
 
   test('should return one user with correct id', async () => {
     const result = await testServer.executeOperation({ query: userQueryID.query });
-    return expect(result.data.user.username).toBe('juhoniinikoski');
+    return expect(result.data.user.email).toBe('testi1@gmail.com');
   });
 
   test('should throw an error if use with given id is not found', async () => {
@@ -80,13 +75,13 @@ describe('testing user read', () => {
     return expect(result.errors[0].message).toBeDefined();
   });
 
-  test('should return one user with correct username', async () => {
-    const result = await testServer.executeOperation({ query: userQueryUsername.query });
-    return expect(result.data.user.username).toBe('johndoe');
+  test('should return one user with correct email', async () => {
+    const result = await testServer.executeOperation({ query: userQueryEmail.query });
+    return expect(result.data.user.email).toBe('testi2@gmail.com');
   });
 
-  test('should throw an error if user with given username is not found', async () => {
-    const result = await testServer.executeOperation({ query: userQueryInvalidUsername.query });
+  test('should throw an error if user with given email is not found', async () => {
+    const result = await testServer.executeOperation({ query: userQueryInvalidEmail.query });
     return expect(result.errors[0].message).toBeDefined();
   });
 });
@@ -95,7 +90,6 @@ const createUserMutation = {
   mutation: `
     mutation {
       createUser(user: {
-        username: "juhoN",
         email: "juho@gmail.com",
         password: "supersekret"
       })
@@ -107,20 +101,7 @@ const defectiveCreationMutation = {
   mutation: `
     mutation {
       createUser(user: {
-        username: "",
-        email: "juho123@gmail.com",
-        password: "supersekret"
-      })
-    }
-  `,
-};
-
-const takenUsernameMutation = {
-  mutation: `
-    mutation {
-      createUser(user: {
-        username: "juhoniinikoski",
-        email: "juho@gmail.com",
+        email: "",
         password: "supersekret"
       })
     }
@@ -131,7 +112,6 @@ const takenEmailMutation = {
   mutation: `
     mutation {
       createUser(user: {
-        username: "juhoniinikoski1234",
         email: "testi1@gmail.com",
         password: "supersekret"
       })
@@ -147,11 +127,6 @@ describe('testing user creation', () => {
     return expect(result.data.users.length).toBe(initial.data.users.length + 1);
   });
 
-  test('should throw an error if username is already taken', async () => {
-    const result = await testServer.executeOperation({ query: takenUsernameMutation.mutation });
-    return expect(result.errors[0].message).toBe('Given username is already taken.');
-  });
-
   test('should throw an error if email is already taken', async () => {
     const result = await testServer.executeOperation({ query: takenEmailMutation.mutation });
     return expect(result.errors[0].message).toBe('Given email is already taken.');
@@ -159,22 +134,9 @@ describe('testing user creation', () => {
 
   test("shouldn't create a user if data is defective", async () => {
     const result = await testServer.executeOperation({ query: defectiveCreationMutation.mutation });
-    return expect(result.errors[0].message).toBe('username is a required field');
+    return expect(result.errors[0].message).toBe('email is a required field');
   });
 });
-
-const updateUsernameMutation = {
-  mutation: `
-    mutation {
-      updateUser(
-        id: "bbe42984-051b-4a01-b45d-b8d29c32200c",
-        data: {
-          username: "juhoniinikoski1234"
-        }
-      )
-    }
-  `,
-};
 
 const updateEmailMutation = {
   mutation: `
@@ -189,40 +151,13 @@ const updateEmailMutation = {
   `,
 };
 
-const updateMutation = {
-  mutation: `
-    mutation {
-      updateUser(
-        id: "bbe42984-051b-4a01-b45d-b8d29c32200c",
-        data: {
-          username: "juhoniinikoski",
-          email: "testi1@gmail.com"
-        }
-      )
-    }
-  `,
-};
-
-const updateMutation2 = {
+const updateEmailMutation2 = {
   mutation: `
     mutation {
       updateUser(
         id: "cff8872a-8ff5-4092-ac2f-d79e65f18aa2",
         data: {
-          username: "meijänmasa"
-        }
-      )
-    }
-  `,
-};
-
-const takenUsernameUpdateMutation = {
-  mutation: `
-    mutation {
-      updateUser(
-        id: "bbe42984-051b-4a01-b45d-b8d29c32200c",
-        data: {
-          username: "johndoe"
+          email: "testi123456@gmail.com"
         }
       )
     }
@@ -243,28 +178,10 @@ const takenEmailUpdateMutation = {
 };
 
 describe('testing user updates', () => {
-  test('should update a user succesfully if username is changed', async () => {
-    await testServer.executeOperation({ query: updateUsernameMutation.mutation });
-    const result = await testServer.executeOperation({ query: userQueryID.query });
-    return expect(result.data.user.username).toBe('juhoniinikoski1234');
-  });
-
   test('should update a user succesfully if email is changed', async () => {
     await testServer.executeOperation({ query: updateEmailMutation.mutation });
     const result = await testServer.executeOperation({ query: userQueryID.query });
     return expect(result.data.user.email).toBe('testi123456@gmail.com');
-  });
-
-  test('should update a user succesfully if username and email is changed', async () => {
-    await testServer.executeOperation({ query: updateMutation.mutation });
-    const result = await testServer.executeOperation({ query: userQueryID.query });
-    expect(result.data.user.username).toBe('juhoniinikoski');
-    return expect(result.data.user.email).toBe('testi1@gmail.com');
-  });
-
-  test('should throw an error if wanted username is already taken', async () => {
-    const result = await testServer.executeOperation({ query: takenUsernameUpdateMutation.mutation });
-    return expect(result.errors[0].message).toBe('Given username is already taken.');
   });
 
   test('should throw an error if wanted email is already taken', async () => {
@@ -273,7 +190,7 @@ describe('testing user updates', () => {
   });
 
   test('should throw an error if user is not authorized to update a user', async () => {
-    const result = await testServer.executeOperation({ query: updateMutation2.mutation });
+    const result = await testServer.executeOperation({ query: updateEmailMutation2.mutation });
     return expect(result.errors[0].message).toBe('You can only update your data as an authenticated user.');
   });
 });

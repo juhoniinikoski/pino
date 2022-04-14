@@ -1,7 +1,7 @@
 import { AuthenticationError } from 'apollo-server';
 import bcrypt from 'bcryptjs';
 import UserClass, { User } from '../../models/User';
-import { EmailTakenError, InvalidIdError, UsernameTakenError } from '../errors';
+import { EmailTakenError, InvalidIdError } from '../errors';
 import { v4 as uuid } from 'uuid';
 import { object, string } from 'yup';
 
@@ -11,7 +11,7 @@ export const getUser = async (id: string | number): Promise<UserClass> => {
   let data = await User.query().findById(id);
 
   if (!data) {
-    data = await User.query().findOne({ username: id });
+    data = await User.query().findOne({ email: id });
   }
 
   if (!data) {
@@ -24,19 +24,12 @@ export const getUser = async (id: string | number): Promise<UserClass> => {
 export const getUsers = async (): Promise<UserClass[]> => await User.query();
 
 const userSchema = object({
-  username: string().required(),
   email: string().required(),
   password: string().required(),
 });
 
 export const createUser = async (user: Partial<UserClass>): Promise<string> => {
   const data = await userSchema.validate(user);
-
-  const existingUsername = await User.query().where('username', data.username);
-
-  if (existingUsername.length !== 0) {
-    throw new UsernameTakenError('createUser');
-  }
 
   const existingEmail = await User.query().where('email', data.email);
 
@@ -57,7 +50,6 @@ export const createUser = async (user: Partial<UserClass>): Promise<string> => {
 };
 
 const updateSchema = object({
-  username: string(),
   email: string(),
 });
 
@@ -72,15 +64,7 @@ export const updateUser = async (
     throw new AuthenticationError('You can only update your data as an authenticated user.');
   }
 
-  const { username, email } = data;
-
-  if (username) {
-    const existingUsername = await User.query().where('username', data.username);
-
-    if (existingUsername.length !== 0) {
-      throw new UsernameTakenError('updateUser');
-    }
-  }
+  const { email } = data;
 
   if (email) {
     const existingEmail = await User.query().where('email', data.email);

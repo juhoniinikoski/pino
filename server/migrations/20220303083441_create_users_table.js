@@ -1,13 +1,12 @@
 exports.up = function(knex) {
   return knex.schema.createTable('users', table => {
     table.text('id').primary();
-    table.text('username').unique();
+    table.text('email').unique();
     table.text('password');
-    table.text('email');
     table.timestamp('created_at');
     table.timestamp('updated_at');
 
-    table.index('username');
+    table.index('email');
   });
 };
 

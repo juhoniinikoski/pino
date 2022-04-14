@@ -1,9 +1,9 @@
 import { gql } from 'apollo-server';
 
 export const typeDefs = gql`
-  type User {
+  type Stack {
     id: ID!
-    email: String!
+    name: String!
     createdAt: DateTime!
     updatedAt: DateTime!
   }

@@ -5,12 +5,11 @@ import { Context } from '../../../utils/entities';
 export const typeDefs = gql`
   input UpdateUserInput {
     id: ID
-    username: String
     email: String
   }
   extend type Mutation {
     """
-   Updates a user, if the provided username or email does not already exist.
+    Updates a user, if the provided email does not already exist.
     """
     updateUser(id: ID!, data: UpdateUserInput): String
   }
@@ -19,7 +18,6 @@ export const typeDefs = gql`
 interface Args {
   id: string | number;
   data: {
-    username: string;
     email: string;
     id: string | number;
   };

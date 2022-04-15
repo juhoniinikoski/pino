@@ -1,5 +1,6 @@
 import { Model, Page, QueryBuilder, Transaction } from 'objection';
 import cursorPaginate from '../services/pagination/cursorPaginate';
+import cursorPaginateQuestion from '../services/pagination/cursorPaginateQuestion';
 
 /* eslint-disable */
 
@@ -14,6 +15,10 @@ export class BaseQueryBuilder<M extends Model, R = M[]> extends QueryBuilder<M, 
 
   cursorPaginate(options: any) {
     return cursorPaginate(this, options);
+  }
+  
+  cursorPaginateQuestion(options: any) {
+    return cursorPaginateQuestion(this, options);
   }
   
 }

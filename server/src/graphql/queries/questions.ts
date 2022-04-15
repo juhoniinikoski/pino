@@ -6,7 +6,14 @@ export const typeDefs = gql`
     """
     Returns questions related to given params.
     """
-    questions(first: Int, after: String, orderBy: String, createdBy: ID, stackId: ID, channelId: ID): [Question]
+    questions(
+      first: Int
+      after: String
+      orderBy: String
+      createdBy: ID
+      stackId: ID
+      channelId: ID
+    ): QuestionConnection!
   }
 `;
 

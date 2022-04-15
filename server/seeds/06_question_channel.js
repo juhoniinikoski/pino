@@ -15,12 +15,12 @@ exports.seed = await = (knex) => {
           channel_id: 'kauppikseen1234'
         },
         {
-          question_id: '3',
+          question_id: '4',
           channel_id: 'kauppikseen1234'
         },
         {
           question_id: '5',
-          channel_id: 'kauppikseen1234'
+          channel_id: 'DIA20221234'
         }
       ])
     })

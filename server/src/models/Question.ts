@@ -3,7 +3,7 @@ import knex from '../utils/knex';
 import { Model } from 'objection';
 import ChannelClass from './Channel';
 import StackClass from './Stack';
-import AnswerClass, { Answer } from './Answer';
+import AnswerClass from './Answer';
 
 class QuestionClass extends BaseModel {
   static idColumn = 'id';
@@ -13,7 +13,7 @@ class QuestionClass extends BaseModel {
   id: string | number;
   question: string;
   type: string;
-  publish: boolean
+  publish: boolean;
   createdById: string | number;
   createdAt: Date;
   updatedAt: Date;

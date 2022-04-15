@@ -12,11 +12,11 @@ exports.seed = await = (knex) => {
         },
         {
           question_id: '3',
-          stack_id: 'kauppis-yh1234'
+          stack_id: 'yofysiikka1234'
         },
         {
-          question_id: '3',
-          stack_id: 'kauppis-yh1234'
+          question_id: '4',
+          stack_id: 'yofysiikka1234'
         },
         {
           question_id: '5',

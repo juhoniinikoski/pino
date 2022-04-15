@@ -6,7 +6,7 @@ import { Context } from '../../../utils/entities';
 export const typeDefs = gql`
   input AnswerType {
     answer: String!
-      correct: Boolean!
+    correct: Boolean!
   }
   input CreateQuestionInput {
     question: String!
@@ -26,8 +26,8 @@ interface Args {
   question: {
     question: string;
     type: string;
-    publish: boolean
-    answers: Partial<AnswerClass>[]
+    publish: boolean;
+    answers: Partial<AnswerClass>[];
   };
 }
 

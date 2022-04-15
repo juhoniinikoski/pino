@@ -9,6 +9,8 @@ import Channel from './types/Channel';
 import Stack from './types/Stack';
 import DateTime from './scalars/DateTime';
 
+import QuestionConnection from './types/QuestionConnection';
+
 import UserQuery from './queries/user';
 import UsersQuery from './queries/users';
 import StacksQuery from './queries/stacks';
@@ -24,6 +26,7 @@ import DeleteUser from './mutations/delete/deleteUser';
 import DeleteQuestion from './mutations/delete/deleteQuestion';
 
 import Authorize from './mutations/authorize';
+import PageInfo from './types/PageInfo';
 
 /* eslint-disable  @typescript-eslint/no-unsafe-assignment */
 
@@ -54,7 +57,9 @@ const typeDefs = [
   QuestionsQuery.typeDefs,
   CreateQuestion.typeDefs,
   UpdateQuestion.typeDefs,
-  DeleteQuestion.typeDefs
+  DeleteQuestion.typeDefs,
+  PageInfo.typeDefs,
+  QuestionConnection.typeDefs,
 ];
 
 const resolvers = merge(
@@ -74,7 +79,9 @@ const resolvers = merge(
   QuestionsQuery.resolvers,
   CreateQuestion.resolvers,
   UpdateQuestion.resolvers,
-  DeleteQuestion.resolvers
+  DeleteQuestion.resolvers,
+  PageInfo.resolvers,
+  QuestionConnection.resolvers,
 );
 
 const schema = makeExecutableSchema({

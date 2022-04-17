@@ -51,21 +51,21 @@ const cursorPaginateQuestion = async (
     ? parseCursor(before)
     : null;
 
-  const cursorQuery = cursor
+  const cursorQuery: QueryBuilderType<any> = cursor
     ? builder.clone().andWhere((b: QueryBuilderType<any>) => cursorWhere(b, orderBy, cursor))
     : builder;
 
-  const paginationQuery = cursorQuery
+  const paginationQuery: QueryBuilderType<any> = cursorQuery
     .clone()
     .limit(limit)
     .orderBy(orderBy);
 
-  const cursorCountQuery = cursorQuery
+  const cursorCountQuery: QueryBuilderType<any> = cursorQuery
     .clone()
     .count({ count: '*' })
     .first();
 
-  const totalCountQuery = builder
+  const totalCountQuery: QueryBuilderType<any> = builder
     .clone()
     .count({ count: '*' })
     .first();

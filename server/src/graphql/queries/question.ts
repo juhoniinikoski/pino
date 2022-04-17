@@ -1,12 +1,12 @@
 import { gql } from 'apollo-server';
-import { getChannel } from '../../services/channel/channelService';
+import { getQuestion } from '../../services/question/questionService';
 
 export const typeDefs = gql`
   extend type Query {
     """
-    Returns a channel.
+    Returns a question.
     """
-    channel(id: ID!): Channel!
+    question(id: ID!): Question!
   }
 `;
 
@@ -16,7 +16,7 @@ interface Args {
 
 export const resolvers = {
   Query: {
-    stack: async (_obj: null, { id }: Args) => getChannel(id),
+    question: async (_obj: null, { id }: Args) => getQuestion(id),
   },
 };
 

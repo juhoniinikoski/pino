@@ -5,6 +5,7 @@ import { array, boolean, number, object, string } from 'yup';
 import { AuthenticationError } from 'apollo-server';
 import { InvalidIdError } from '../errors';
 import AnswerClass from '../../models/Answer';
+import { PageInfoType } from '../../utils/entities';
 
 interface Args {
   first?: number;
@@ -20,13 +21,6 @@ interface Args {
 interface EdgeType {
   cursor: string;
   node: QuestionClass;
-}
-
-interface PageInfoType {
-  hasPreviousPage: boolean;
-  hasNextPage: boolean;
-  startCursor: string;
-  endCursor: string;
 }
 
 interface QuestionConnection {

@@ -5,11 +5,10 @@ const createDateColumns = date => ({
   updated_at: date,
 })
 
-const createColumns = (name, no, createdBy) => ({
+const createColumns = (name, createdBy, public) => ({
   id: `${name}1234`,
   name: name,
-  public: false,
-  no_of_questions: no,
+  public: public,
   created_by_id: createdBy
 })
 
@@ -18,23 +17,23 @@ exports.seed = async knex => {
 
   await knex('stacks').insert([
     {
-      ...createColumns('kauppis-yh', 5, 'bbe42984-051b-4a01-b45d-b8d29c32200c'),
+      ...createColumns('kauppis-yh', 'bbe42984-051b-4a01-b45d-b8d29c32200c', false),
       ...createDateColumns(new Date(Date.now() - oneHour)),
     },
     {
-      ...createColumns('DIA2022', 0, 'bbe42984-051b-4a01-b45d-b8d29c32200c'),
+      ...createColumns('DIA2022', 'bbe42984-051b-4a01-b45d-b8d29c32200c', false),
       ...createDateColumns(new Date(Date.now() - 2 * oneHour)),
     },
     {
-      ...createColumns('yomatematiikka', 0, 'bbe42984-051b-4a01-b45d-b8d29c32200c'),
+      ...createColumns('yomatematiikka', 'bbe42984-051b-4a01-b45d-b8d29c32200c', true),
       ...createDateColumns(new Date(Date.now() - 3 * oneHour)),
     },
     {
-      ...createColumns('yofysiikka', 0, 'cff8872a-8ff5-4092-ac2f-d79e65f18aa2'),
+      ...createColumns('yofysiikka', 'cff8872a-8ff5-4092-ac2f-d79e65f18aa2', true),
       ...createDateColumns(new Date(Date.now() - 3 * oneHour)),
     },
     {
-      ...createColumns('tuta1', 0, 'cff8872a-8ff5-4092-ac2f-d79e65f18aa2'),
+      ...createColumns('tuta1', 'cff8872a-8ff5-4092-ac2f-d79e65f18aa2', false),
       ...createDateColumns(new Date(Date.now() - 4 * oneHour)),
     },
   ]);

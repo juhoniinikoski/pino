@@ -4,9 +4,9 @@ import { getStack } from '../../services/stack/stackService';
 export const typeDefs = gql`
   extend type Query {
     """
-    Returns a stack and related questions.
+    Returns a stack.
     """
-    stack(id: ID!): Stack!
+    stack(id: ID!): Stack
   }
 `;
 

@@ -10,10 +10,13 @@ import Stack from './types/Stack';
 import DateTime from './scalars/DateTime';
 
 import QuestionConnection from './types/QuestionConnection';
+import StackConection from './types/StackConection';
 
 import UserQuery from './queries/user';
 import UsersQuery from './queries/users';
+import StackQuery from './queries/stack';
 import StacksQuery from './queries/stacks';
+import QuestionQuery from './queries/question';
 import QuestionsQuery from './queries/questions';
 
 import CreateUser from './mutations/create/createUser';
@@ -60,6 +63,9 @@ const typeDefs = [
   DeleteQuestion.typeDefs,
   PageInfo.typeDefs,
   QuestionConnection.typeDefs,
+  QuestionQuery.typeDefs,
+  StackConection.typeDefs,
+  StackQuery.typeDefs
 ];
 
 const resolvers = merge(
@@ -82,6 +88,9 @@ const resolvers = merge(
   DeleteQuestion.resolvers,
   PageInfo.resolvers,
   QuestionConnection.resolvers,
+  QuestionQuery.resolvers,
+  StackConection.resolvers,
+  StackQuery.resolvers
 );
 
 const schema = makeExecutableSchema({

@@ -6,7 +6,7 @@ export const typeDefs = gql`
     """
     Returns a stack and related questions.
     """
-    stacks(first: Int, after: String, orderBy: String, public: Boolean, createdBy: ID): [Stack]!
+    stacks(first: Int, after: String, orderBy: String, public: Boolean, createdBy: ID): StackConnection!
   }
 `;
 

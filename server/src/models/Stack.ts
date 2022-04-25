@@ -27,7 +27,20 @@ class StackClass extends BaseModel {
         },
         to: 'questions.id',
       },
-    }
+    },
+    tags: {
+      relation: Model.ManyToManyRelation,
+      modelClass: __dirname + '/Channel',
+      join: {
+        from: 'stacks.id',
+        through: {
+          // stack_channel is the join table.
+          from: 'stack_channel.stackId',
+          to: 'stack_channel.channelId',
+        },
+        to: 'channels.id',
+      },
+    },
   };
 }
 

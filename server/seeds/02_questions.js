@@ -8,7 +8,6 @@ const createDateColumns = date => ({
 const createColumns = (id, question, createdBy) => ({
   id: id,
   created_by_id: createdBy,
-  publish: true,
   type: 'multi',
   question: question,
 })

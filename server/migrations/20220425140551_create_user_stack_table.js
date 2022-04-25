@@ -1,14 +1,14 @@
 exports.up = function(knex) {
-  return knex.schema.createTable('question_stack', table => {
+  return knex.schema.createTable('user_stack', table => {
     table.increments('id').primary();
-    table.text('question_id').notNullable();
+    table.text('user_id').notNullable();
     table.text('stack_id').notNullable();
     table.timestamp('created_at');
     table.timestamp('updated_at');
 
-    table.foreign('question_id')
+    table.foreign('user_id')
       .references('id')
-      .inTable('questions')
+      .inTable('users')
       .onDelete('cascade')
     
     table.foreign('stack_id')
@@ -19,5 +19,5 @@ exports.up = function(knex) {
 }
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists('question_stack')
+  return knex.schema.dropTableIfExists('user_stack')
 }

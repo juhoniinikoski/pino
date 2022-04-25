@@ -13,7 +13,6 @@ class QuestionClass extends BaseModel {
   id: string | number;
   question: string;
   type: string;
-  publish: boolean;
   createdById: string | number;
   createdAt: Date;
   updatedAt: Date;

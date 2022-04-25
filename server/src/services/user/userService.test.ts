@@ -20,6 +20,12 @@ const userQueryID = {
       user(id: "bbe42984-051b-4a01-b45d-b8d29c32200c") {
         id
         email
+        followedChannels {
+          name
+        }
+        followedStacks {
+          name
+        }
       }
     }
   `,
@@ -31,6 +37,12 @@ const userQueryEmail = {
       user(id: "testi2@gmail.com") {
         id
         email
+        followedChannels {
+          name
+        }
+        followedStacks {
+          name
+        }
       }
     }
   `,
@@ -192,6 +204,52 @@ describe('testing user updates', () => {
   test('should throw an error if user is not authorized to update a user', async () => {
     const result = await testServer.executeOperation({ query: updateEmailMutation2.mutation });
     return expect(result.errors[0].message).toBe('You can only update your data as an authenticated user.');
+  });
+});
+
+const followChannel = {
+  mutation: `
+    mutation {
+      followChannel (
+        channelId: "kauppikseen1234"
+      )
+    }
+  `,
+};
+
+const followStack = {
+  mutation: `
+    mutation {
+      followStack (
+        stackId: "kauppis-yh1234"
+      )
+    }
+  `,
+};
+
+describe('follow tests', () => {
+  test('should be able to unfollow a channel', async () => {
+    await testServer.executeOperation({ query: followChannel.mutation });
+    const result = await testServer.executeOperation({ query: userQueryID.query });
+    return expect(result.data.user.followedChannels.length).toBe(1);
+  });
+
+  test('should be able to follow a channel', async () => {
+    await testServer.executeOperation({ query: followChannel.mutation });
+    const result = await testServer.executeOperation({ query: userQueryID.query });
+    return expect(result.data.user.followedChannels.length).toBe(2);
+  });
+
+  test('should be able to follow a stack', async () => {
+    await testServer.executeOperation({ query: followStack.mutation });
+    const result = await testServer.executeOperation({ query: userQueryID.query });
+    return expect(result.data.user.followedStacks.length).toBe(1);
+  });
+
+  test('should be able to unfollow a stack', async () => {
+    await testServer.executeOperation({ query: followStack.mutation });
+    const result = await testServer.executeOperation({ query: userQueryID.query });
+    return expect(result.data.user.followedStacks.length).toBe(0);
   });
 });
 

@@ -21,9 +21,16 @@ import QuestionsQuery from './queries/questions';
 
 import CreateUser from './mutations/create/createUser';
 import CreateQuestion from './mutations/create/createQuestion';
+import CreateStack from './mutations/create/createStack';
 
 import UpdateUser from './mutations/update/updateUser';
 import UpdateQuestion from './mutations/update/updateQuestion';
+import UpdateStack from './mutations/update/updateStack';
+
+import FollowChannel from './mutations/follow/followChannel';
+import FollowStack from './mutations/follow/followStack';
+
+import TagToStack from './mutations/add/tagToStack';
 
 import DeleteUser from './mutations/delete/deleteUser';
 import DeleteQuestion from './mutations/delete/deleteQuestion';
@@ -65,7 +72,12 @@ const typeDefs = [
   QuestionConnection.typeDefs,
   QuestionQuery.typeDefs,
   StackConection.typeDefs,
-  StackQuery.typeDefs
+  StackQuery.typeDefs,
+  CreateStack.typeDefs,
+  UpdateStack.typeDefs,
+  TagToStack.typeDefs,
+  FollowStack.typeDefs,
+  FollowChannel.typeDefs
 ];
 
 const resolvers = merge(
@@ -90,7 +102,12 @@ const resolvers = merge(
   QuestionConnection.resolvers,
   QuestionQuery.resolvers,
   StackConection.resolvers,
-  StackQuery.resolvers
+  StackQuery.resolvers,
+  CreateStack.resolvers,
+  UpdateStack.resolvers,
+  TagToStack.resolvers,
+  FollowChannel.resolvers,
+  FollowStack.resolvers
 );
 
 const schema = makeExecutableSchema({

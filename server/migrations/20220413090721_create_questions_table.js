@@ -3,7 +3,6 @@ exports.up = function(knex) {
     table.text('id').primary();
     table.text('question')
     table.text('type')
-    table.boolean('publish')
     table.text('created_by_id')
     table.timestamp('created_at');
     table.timestamp('updated_at');

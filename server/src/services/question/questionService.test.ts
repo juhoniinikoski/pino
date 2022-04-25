@@ -1,7 +1,4 @@
 import { Answer } from '../../models/Answer';
-import ChannelClass from '../../models/Channel';
-import QuestionClass from '../../models/Question';
-import StackClass from '../../models/Stack';
 import testServer from '../../utils/testServer';
 
 /* eslint-disable @typescript-eslint/no-unsafe-call*/
@@ -79,13 +76,13 @@ describe('testing question queries', () => {
   test('should return a list of questions of a certain channel', async () => {
     const result = await testServer.executeOperation({ query: channelQuery.query });
     expect(result).toBeDefined();
-    return expect(result.data.questions.edges.length).toBe(4)
+    return expect(result.data.questions.edges.length).toBe(4);
   });
 
   test('should return a list of questions of a certain stack', async () => {
     const result = await testServer.executeOperation({ query: stackQuery.query });
     expect(result).toBeDefined();
-    return expect(result.data.questions.edges.length).toBe(3)
+    return expect(result.data.questions.edges.length).toBe(3);
   });
 
   test('should get all questions made by authorized user', async () => {
@@ -102,7 +99,6 @@ const createQuestionMutation = {
     mutation {
       createQuestion(question: {
         question: "testikysymys",
-        publish: true,
         type: "multi",
         answers: [
           {
@@ -124,7 +120,6 @@ const defectiveCreationMutation = {
     mutation {
       createQuestion(question: {
         question: "",
-        publish: true,
         type: "multi",
         answers: [
           {

@@ -4,14 +4,16 @@ import UserClass, { User } from '../../models/User';
 import { EmailTakenError, InvalidIdError } from '../errors';
 import { v4 as uuid } from 'uuid';
 import { object, string } from 'yup';
+import { UserChannel } from '../../models/UserChannel';
+import { UserStack } from '../../models/UserStack';
 
 const createPasswordHash = (password: string) => bcrypt.hash(password, 10);
 
 export const getUser = async (id: string | number): Promise<UserClass> => {
-  let data = await User.query().findById(id);
+  let data = await User.query().findById(id).withGraphFetched('[followedChannels, followedStacks]');
 
   if (!data) {
-    data = await User.query().findOne({ email: id });
+    data = await User.query().findOne({ email: id }).withGraphFetched('[followedChannels, followedStacks]');
   }
 
   if (!data) {
@@ -89,4 +91,30 @@ export const deleteUser = async (id: string | number, authorizedUser: UserClass)
   }
 
   throw new AuthenticationError('You can only delete your user when authenticated.');
+};
+
+export const followChannel = async (channelId: string | number, authorizedUser: UserClass): Promise<string | number> => {
+
+  const alreadyFollowing = await UserChannel.query().where({userId: authorizedUser.id, channelId: channelId})
+
+  if (alreadyFollowing.length !== 0) {
+    await UserChannel.query().where({ userId: authorizedUser.id, channelId: channelId }).delete()
+  } else {
+    await UserChannel.query().insert({ userId: authorizedUser.id, channelId: channelId })
+  }
+
+  return channelId
+};
+
+export const followStack = async (stackId: string | number, authorizedUser: UserClass): Promise<string | number> => {
+
+  const alreadyFollowing = await UserStack.query().where({userId: authorizedUser.id, stackId: stackId})
+
+  if (alreadyFollowing.length !== 0) {
+    await UserStack.query().where({ userId: authorizedUser.id, stackId: stackId }).delete()
+  } else {
+    await UserStack.query().insert({ userId: authorizedUser.id, stackId: stackId })
+  }
+
+  return stackId
 };

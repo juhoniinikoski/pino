@@ -79,7 +79,6 @@ export const getQuestions = async (args: Args): Promise<QuestionConnection> => {
 const questionSchema = object({
   question: string().required(),
   type: string().required(),
-  publish: boolean().required(),
   answers: array(
     object({
       answer: string().required(),
@@ -108,7 +107,6 @@ export const createQuestion = async (question: Partial<QuestionClass>, authorize
     question: data.question,
     type: data.type,
     createdById: authorizedUser.id,
-    publish: data.publish,
     answers: answersWithId,
   });
 

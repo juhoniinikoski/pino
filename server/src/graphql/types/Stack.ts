@@ -7,6 +7,7 @@ export const typeDefs = gql`
     name: String!
     questions: Int!
     public: Boolean!
+    tags: [Channel]
     createdById: ID!
     createdAt: DateTime!
     updatedAt: DateTime!
@@ -16,9 +17,9 @@ export const typeDefs = gql`
 export const resolvers = {
   Stack: {
     public: (obj: StackClass) => {
-      return obj.public === 'true' ? true : false
-    }
-  }
+      return obj.public === 'true' ? true : false;
+    },
+  },
 };
 
 export default {

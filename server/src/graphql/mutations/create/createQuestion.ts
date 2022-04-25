@@ -11,7 +11,6 @@ export const typeDefs = gql`
   input CreateQuestionInput {
     question: String!
     type: String!
-    publish: Boolean!
     answers: [AnswerType]!
   }
   extend type Mutation {
@@ -26,7 +25,6 @@ interface Args {
   question: {
     question: string;
     type: string;
-    publish: boolean;
     answers: Partial<AnswerClass>[];
   };
 }

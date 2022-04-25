@@ -29,8 +29,9 @@ const createCursor = (row: any, orderBy: OrderBy[]) => {
   return serializeCursor(payload);
 };
 
-const cursorPaginate = async (
+const cursorPaginateStack = async (
   builder: QueryBuilderType<any>,
+  countBuilder: QueryBuilderType<any>, // countBuilder = builder without joins
   { orderBy: orderByOption, after, before, first, last }: OrderByObject,
 ) => {
   let orderBy = normalizeOrderBy(orderByOption);
@@ -54,24 +55,28 @@ const cursorPaginate = async (
   const cursorQuery = cursor
     ? builder.clone().andWhere((b: QueryBuilderType<any>) => cursorWhere(b, orderBy, cursor))
     : builder;
+  
+  const countQuery = cursor
+    ? countBuilder.clone().andWhere((b: QueryBuilderType<any>) => cursorWhere(b, orderBy, cursor))
+    : countBuilder;
 
   const paginationQuery = cursorQuery
     .clone()
     .limit(limit)
     .orderBy(orderBy);
 
-  const cursorCountQuery = cursorQuery
+  const cursorCountQuery = countQuery
     .clone()
     .count({ count: '*' })
     .first();
 
-  const totalCountQuery = builder
+  const totalCountQuery = countBuilder
     .clone()
     .count({ count: '*' })
     .first();
 
   const [rows, cursorCountObject, totalCountObject] = await Promise.all([
-    paginationQuery,
+    paginationQuery.withGraphFetched('tags'),
     cursorCountQuery,
     totalCountQuery,
   ]);
@@ -112,4 +117,4 @@ const cursorPaginate = async (
   };
 };
 
-export default cursorPaginate;
+export default cursorPaginateStack;

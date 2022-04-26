@@ -253,39 +253,39 @@ describe('follow tests', () => {
   });
 });
 
-const deleteUserMutation = {
-  mutation: `
-    mutation {
-      deleteUser(
-        id: "bbe42984-051b-4a01-b45d-b8d29c32200c"
-      )
-    }
-  `,
-};
+// const deleteUserMutation = {
+//   mutation: `
+//     mutation {
+//       deleteUser(
+//         id: "bbe42984-051b-4a01-b45d-b8d29c32200c"
+//       )
+//     }
+//   `,
+// };
 
-const unableDeleteMutation = {
-  mutation: `
-    mutation {
-      deleteUser(
-        id: "1b10e4d8-57ee-4d00-8886-e4a049d7ff8f"
-      )
-    }
-  `,
-};
+// const unableDeleteMutation = {
+//   mutation: `
+//     mutation {
+//       deleteUser(
+//         id: "1b10e4d8-57ee-4d00-8886-e4a049d7ff8f"
+//       )
+//     }
+//   `,
+// };
 
-describe('testing user deletion', () => {
-  test('should throw an error if the user wanted to delete is not the authorized user', async () => {
-    const initial = await testServer.executeOperation({ query: usersQuery.query });
-    const mutation = await testServer.executeOperation({ query: unableDeleteMutation.mutation });
-    const result = await testServer.executeOperation({ query: usersQuery.query });
-    expect(mutation.errors[0].message).toBe('You can only delete your user when authenticated.');
-    return expect(result.data.users.length).toBe(initial.data.users.length);
-  });
+// describe('testing user deletion', () => {
+//   test('should throw an error if the user wanted to delete is not the authorized user', async () => {
+//     const initial = await testServer.executeOperation({ query: usersQuery.query });
+//     const mutation = await testServer.executeOperation({ query: unableDeleteMutation.mutation });
+//     const result = await testServer.executeOperation({ query: usersQuery.query });
+//     expect(mutation.errors[0].message).toBe('You can only delete your user when authenticated.');
+//     return expect(result.data.users.length).toBe(initial.data.users.length);
+//   });
 
-  test('should delete a user succesfully', async () => {
-    const initial = await testServer.executeOperation({ query: usersQuery.query });
-    await testServer.executeOperation({ query: deleteUserMutation.mutation });
-    const result = await testServer.executeOperation({ query: usersQuery.query });
-    return expect(result.data.users.length).toBe(initial.data.users.length - 1);
-  });
-});
+//   test('should delete a user succesfully', async () => {
+//     const initial = await testServer.executeOperation({ query: usersQuery.query });
+//     await testServer.executeOperation({ query: deleteUserMutation.mutation });
+//     const result = await testServer.executeOperation({ query: usersQuery.query });
+//     return expect(result.data.users.length).toBe(initial.data.users.length - 1);
+//   });
+// });

@@ -12,8 +12,8 @@ class UserClass extends BaseModel {
   id: string | number;
   email: string;
   password: string;
-  followedChannels: ChannelClass[]
-  followedStacks: StackClass[]
+  followedChannels: ChannelClass[];
+  followedStacks: StackClass[];
   createdAt: Date;
   updatedAt: Date;
 
@@ -43,7 +43,7 @@ class UserClass extends BaseModel {
         },
         to: 'stacks.id',
       },
-    }
+    },
   };
 }
 

@@ -1,6 +1,7 @@
 import { Model, Page, QueryBuilder, Transaction } from 'objection';
 import cursorPaginateStack from '../services/pagination/cursorPaginateStack';
 import cursorPaginateQuestion from '../services/pagination/cursorPaginateQuestion';
+import cursorPaginate from '../services/pagination/cursorPaginate';
 
 /* eslint-disable */
 
@@ -13,6 +14,9 @@ export class BaseQueryBuilder<M extends Model, R = M[]> extends QueryBuilder<M, 
   NumberQueryBuilderType!: BaseQueryBuilder<M, number>;
   PageQueryBuilderType!: BaseQueryBuilder<M, Page<M>>;
 
+  cursorPaginate(that: QueryBuilder<M, R>, options: any) {
+    return cursorPaginate(this, that, options);
+  }
   cursorPaginateStack(that: QueryBuilder<M, R>, options: any) {
     return cursorPaginateStack(this, that, options);
   }

@@ -18,7 +18,6 @@ export const typeDefs = gql`
 `;
 
 interface Args {
-  id?: string | number;
   first?: number;
   after?: string;
   orderBy?: string;

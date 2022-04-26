@@ -9,8 +9,8 @@ class UserStackClass extends BaseModel {
   id: string | number;
   stackId: string | number;
   userId: string | number;
-  createdAt: Date
-  updatedAt: Date
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export default UserStackClass;

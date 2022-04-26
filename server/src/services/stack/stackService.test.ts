@@ -181,6 +181,26 @@ const tagToStack = {
   `,
 };
 
+const deleteStack = {
+  mutation: `
+    mutation {
+      deleteStack(
+        id: "yomatematiikka1234"
+      )
+    }
+  `,
+};
+
+const deleteStackUnable = {
+  mutation: `
+    mutation {
+      deleteStack(
+        id: "yofysiikka1234"
+      )
+    }
+  `,
+};
+
 describe('testing stack mutations', () => {
   test('should create a new, empty stack', async () => {
     const initialStacks = await testServer.executeOperation({ query: publicQuery.query });
@@ -210,5 +230,20 @@ describe('testing stack mutations', () => {
     await testServer.executeOperation({ query: tagToStack.mutation });
     const result = await testServer.executeOperation({ query: stackQuery.query });
     return expect(result.data.stack.tags.length).toBe(0);
+  });
+
+  test('should delete the stack', async () => {
+    const initial = await testServer.executeOperation({ query: publicQuery.query });
+    await testServer.executeOperation({ query: deleteStack.mutation });
+    const result = await testServer.executeOperation({ query: publicQuery.query });
+    return expect(result.data.stacks.edges.length).toBe(initial.data.stacks.edges.length - 1);
+  });
+
+  test("shouldn't delete the stack if it's not made by authorized user", async () => {
+    const initial = await testServer.executeOperation({ query: publicQuery.query });
+    const mutation = await testServer.executeOperation({ query: deleteStackUnable.mutation });
+    const result = await testServer.executeOperation({ query: publicQuery.query });
+    expect(mutation.errors[0].message).toBe('You can only delete the stack if you have made it.');
+    return expect(result.data.stacks.edges.length).toBe(initial.data.stacks.edges.length);
   });
 });

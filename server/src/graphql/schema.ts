@@ -11,6 +11,7 @@ import DateTime from './scalars/DateTime';
 
 import QuestionConnection from './types/QuestionConnection';
 import StackConection from './types/StackConection';
+import ChannelConnection from './types/ChannelConnection';
 
 import UserQuery from './queries/user';
 import UsersQuery from './queries/users';
@@ -18,10 +19,13 @@ import StackQuery from './queries/stack';
 import StacksQuery from './queries/stacks';
 import QuestionQuery from './queries/question';
 import QuestionsQuery from './queries/questions';
+import ChannelQuery from './queries/channel';
+import ChannelsQuery from './queries/channels';
 
 import CreateUser from './mutations/create/createUser';
 import CreateQuestion from './mutations/create/createQuestion';
 import CreateStack from './mutations/create/createStack';
+import CreateChannel from './mutations/create/createChannel';
 
 import UpdateUser from './mutations/update/updateUser';
 import UpdateQuestion from './mutations/update/updateQuestion';
@@ -34,6 +38,8 @@ import TagToStack from './mutations/add/tagToStack';
 
 import DeleteUser from './mutations/delete/deleteUser';
 import DeleteQuestion from './mutations/delete/deleteQuestion';
+import DeleteStack from './mutations/delete/deleteStack';
+import DeleteChannel from './mutations/delete/deleteChannel';
 
 import Authorize from './mutations/authorize';
 import PageInfo from './types/PageInfo';
@@ -77,7 +83,13 @@ const typeDefs = [
   UpdateStack.typeDefs,
   TagToStack.typeDefs,
   FollowStack.typeDefs,
-  FollowChannel.typeDefs
+  FollowChannel.typeDefs,
+  DeleteStack.typeDefs,
+  ChannelConnection.typeDefs,
+  ChannelsQuery.typeDefs,
+  ChannelQuery.typeDefs,
+  CreateChannel.typeDefs,
+  DeleteChannel.typeDefs,
 ];
 
 const resolvers = merge(
@@ -107,7 +119,13 @@ const resolvers = merge(
   UpdateStack.resolvers,
   TagToStack.resolvers,
   FollowChannel.resolvers,
-  FollowStack.resolvers
+  FollowStack.resolvers,
+  DeleteStack.resolvers,
+  ChannelConnection.resolvers,
+  ChannelsQuery.resolvers,
+  ChannelQuery.resolvers,
+  CreateChannel.resolvers,
+  DeleteChannel.resolvers,
 );
 
 const schema = makeExecutableSchema({

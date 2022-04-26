@@ -6,6 +6,7 @@ export const typeDefs = gql`
     name: String!
     createdAt: DateTime!
     updatedAt: DateTime!
+    questions: Int
   }
 `;
 

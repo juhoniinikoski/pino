@@ -3,12 +3,11 @@ import StackClass, { Stack } from '../../models/Stack';
 import UserClass from '../../models/User';
 import { PageInfoType } from '../../utils/entities';
 import { v4 as uuid } from 'uuid';
-import { NotFoundError } from 'objection';
 import { AuthenticationError } from 'apollo-server';
 import { StackChannel } from '../../models/StackChannel';
+import { InvalidIdError } from '../errors';
 
 interface Args {
-  id?: string | number;
   first?: number;
   after?: string;
   orderBy?: string;
@@ -120,6 +119,20 @@ export const updateStack = async (
   await Stack.query().patchAndFetchById(id, { name: data.name });
 
   return id;
+};
+
+export const deleteStack = async (id: string | number, authorizedUser: UserClass): Promise<boolean> => {
+  const stack = await Stack.query().findById(id);
+
+  if (authorizedUser.id === stack.createdById) {
+    const res = await Stack.query().findById(id).delete();
+    if (res === 0) {
+      throw new InvalidIdError('deleteStack');
+    }
+    return true;
+  }
+
+  throw new AuthenticationError('You can only delete the stack if you have made it.');
 };
 
 export const tagToStack = async (

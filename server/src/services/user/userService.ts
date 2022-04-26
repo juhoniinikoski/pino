@@ -93,28 +93,29 @@ export const deleteUser = async (id: string | number, authorizedUser: UserClass)
   throw new AuthenticationError('You can only delete your user when authenticated.');
 };
 
-export const followChannel = async (channelId: string | number, authorizedUser: UserClass): Promise<string | number> => {
-
-  const alreadyFollowing = await UserChannel.query().where({userId: authorizedUser.id, channelId: channelId})
+export const followChannel = async (
+  channelId: string | number,
+  authorizedUser: UserClass,
+): Promise<string | number> => {
+  const alreadyFollowing = await UserChannel.query().where({ userId: authorizedUser.id, channelId: channelId });
 
   if (alreadyFollowing.length !== 0) {
-    await UserChannel.query().where({ userId: authorizedUser.id, channelId: channelId }).delete()
+    await UserChannel.query().where({ userId: authorizedUser.id, channelId: channelId }).delete();
   } else {
-    await UserChannel.query().insert({ userId: authorizedUser.id, channelId: channelId })
+    await UserChannel.query().insert({ userId: authorizedUser.id, channelId: channelId });
   }
 
-  return channelId
+  return channelId;
 };
 
 export const followStack = async (stackId: string | number, authorizedUser: UserClass): Promise<string | number> => {
-
-  const alreadyFollowing = await UserStack.query().where({userId: authorizedUser.id, stackId: stackId})
+  const alreadyFollowing = await UserStack.query().where({ userId: authorizedUser.id, stackId: stackId });
 
   if (alreadyFollowing.length !== 0) {
-    await UserStack.query().where({ userId: authorizedUser.id, stackId: stackId }).delete()
+    await UserStack.query().where({ userId: authorizedUser.id, stackId: stackId }).delete();
   } else {
-    await UserStack.query().insert({ userId: authorizedUser.id, stackId: stackId })
+    await UserStack.query().insert({ userId: authorizedUser.id, stackId: stackId });
   }
 
-  return stackId
+  return stackId;
 };

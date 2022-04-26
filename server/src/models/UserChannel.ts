@@ -9,8 +9,8 @@ class UserChannelClass extends BaseModel {
   id: string | number;
   userId: string | number;
   channelId: string | number;
-  createdAt: Date
-  updatedAt: Date
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export default UserChannelClass;

@@ -9,8 +9,8 @@ class StackChannelClass extends BaseModel {
   id: string | number;
   stackId: string | number;
   channelId: string | number;
-  createdAt: Date
-  updatedAt: Date
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export default StackChannelClass;

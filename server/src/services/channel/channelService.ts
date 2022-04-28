@@ -34,7 +34,13 @@ const argsSchema = object({
 });
 
 export const getChannel = async (id: string | number): Promise<ChannelClass> =>
-  await Channel.query().findById(id).select('*', Channel.relatedQuery('questions').count().as('questions'));
+  await Channel.query()
+    .findById(id)
+    .select(
+      '*',
+      Channel.relatedQuery('questions').count().as('questions'),
+      Channel.relatedQuery('followedBy').count().as('followedBy'),
+    );
 
 const getLikeFilter = (value: string) => `%${value}%`;
 
@@ -55,7 +61,11 @@ export const getChannels = async (args: Args): Promise<ChannelConnection> => {
 
   const count = query.clone();
 
-  query = query.select('*', Channel.relatedQuery('questions').count().as('questions'));
+  query = query.select(
+    '*',
+    Channel.relatedQuery('questions').count().as('questions'),
+    Channel.relatedQuery('followedBy').count().as('followedBy'),
+  );
 
   return await query.cursorPaginate(count, {
     first,

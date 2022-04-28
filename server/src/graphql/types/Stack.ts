@@ -6,6 +6,7 @@ export const typeDefs = gql`
     id: ID!
     name: String!
     questions: Int!
+    followedBy: Int!
     public: Boolean!
     tags: [Channel]
     createdById: ID!

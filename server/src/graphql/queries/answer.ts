@@ -6,7 +6,7 @@ export const typeDefs = gql`
     """
     Returns an answer.
     """
-    answer (id: ID!): Answer!
+    answer(id: ID!): Answer!
   }
 `;
 

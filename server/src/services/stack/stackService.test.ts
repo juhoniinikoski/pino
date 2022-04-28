@@ -22,6 +22,7 @@ const userStackQuery = {
             questions
             public
             createdById
+            followedBy
             tags {
               name
             }
@@ -41,6 +42,7 @@ const stackQuery = {
         questions
         public
         createdById
+        followedBy
         tags {
           name
         }
@@ -57,6 +59,7 @@ const stackQuery2 = {
         name
         questions
         public
+        followedBy
         createdById
         tags {
           name
@@ -76,6 +79,7 @@ const publicQuery = {
             id
             name
             questions
+            followedBy
             public
             createdById
             tags {
@@ -98,6 +102,7 @@ const keywordQuery = {
             id
             name
             questions
+            followedBy
             public
             createdById
             tags {

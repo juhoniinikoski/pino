@@ -10,9 +10,11 @@ class StackClass extends BaseModel {
   id: string | number;
   name: string;
   public: string | boolean;
+  followedBy: number;
   createdById: string | Id;
   createdAt: Date;
   updatedAt: Date;
+  questions: number;
 
   static relationMappings = {
     questions: {
@@ -39,6 +41,14 @@ class StackClass extends BaseModel {
           to: 'stack_channel.channelId',
         },
         to: 'channels.id',
+      },
+    },
+    followedBy: {
+      relation: Model.HasManyRelation,
+      modelClass: __dirname + '/UserStack',
+      join: {
+        from: 'stacks.id',
+        to: 'user_stack.stackId',
       },
     },
   };

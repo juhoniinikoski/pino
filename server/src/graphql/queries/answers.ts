@@ -10,10 +10,6 @@ export const typeDefs = gql`
   }
 `;
 
-interface Args {
-  id: string | number;
-}
-
 export const resolvers = {
   Query: {
     answers: async () => getAnswers(),

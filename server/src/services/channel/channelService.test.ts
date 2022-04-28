@@ -12,6 +12,7 @@ const channelQuery = {
         id
         name
         questions
+        followedBy
       }
     }
   `,
@@ -27,6 +28,7 @@ const channelsQuery = {
             id
             name
             questions
+            followedBy
           }
         }
       }
@@ -44,6 +46,7 @@ const channelsQueryKeyword = {
             id
             name
             questions
+            followedBy
           }
         }
       }

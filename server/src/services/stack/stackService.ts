@@ -65,7 +65,11 @@ export const getStacks = async (args: Args): Promise<StackConnection> => {
 
   const count = query.clone();
 
-  query = query.select('*', Stack.relatedQuery('questions').count().as('questions'));
+  query = query.select(
+    '*',
+    Stack.relatedQuery('questions').count().as('questions'),
+    Stack.relatedQuery('followedBy').count().as('followedBy'),
+  );
 
   return await query.cursorPaginateStack(count, {
     first,
@@ -77,7 +81,11 @@ export const getStacks = async (args: Args): Promise<StackConnection> => {
 export const getStack = async (id: string | number): Promise<StackClass> =>
   await Stack.query()
     .findById(id)
-    .select('*', Stack.relatedQuery('questions').count().as('questions'))
+    .select(
+      '*',
+      Stack.relatedQuery('questions').count().as('questions'),
+      Stack.relatedQuery('followedBy').count().as('followedBy'),
+    )
     .withGraphFetched('tags');
 
 const stackSchema = object({

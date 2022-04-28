@@ -11,6 +11,8 @@ class ChannelClass extends BaseModel {
   name: string;
   createdAt: Date;
   updatedAt: Date;
+  followedBy: number;
+  questions: number;
 
   static relationMappings = {
     questions: {
@@ -24,6 +26,14 @@ class ChannelClass extends BaseModel {
           to: 'question_channel.questionId',
         },
         to: 'questions.id',
+      },
+    },
+    followedBy: {
+      relation: Model.HasManyRelation,
+      modelClass: __dirname + '/UserChannel',
+      join: {
+        from: 'channels.id',
+        to: 'user_channel.channelId',
       },
     },
   };

@@ -9,7 +9,7 @@ class AnswerClass extends BaseModel {
   id: string | number;
   questionId: string | number;
   answer: string;
-  correct: string;
+  correct: string | boolean;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -87,7 +87,7 @@ const questionSchema = object({
   ),
 });
 
-export const getQuestion = async (id: string | number): Promise<QuestionClass> => await Question.query().findById(id);
+export const getQuestion = async (id: string | number): Promise<QuestionClass> => await Question.query().findById(id).withGraphFetched('answers');
 
 export const createQuestion = async (question: Partial<QuestionClass>, authorizedUser: UserClass): Promise<string> => {
   const data = await questionSchema.validate(question);

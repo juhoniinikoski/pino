@@ -21,15 +21,19 @@ import QuestionQuery from './queries/question';
 import QuestionsQuery from './queries/questions';
 import ChannelQuery from './queries/channel';
 import ChannelsQuery from './queries/channels';
+import AnswerQuery from './queries/answer';
+import AnswersQuery from './queries/answers';
 
 import CreateUser from './mutations/create/createUser';
 import CreateQuestion from './mutations/create/createQuestion';
 import CreateStack from './mutations/create/createStack';
 import CreateChannel from './mutations/create/createChannel';
+import CreateAnswer from './mutations/create/createAnswer';
 
 import UpdateUser from './mutations/update/updateUser';
 import UpdateQuestion from './mutations/update/updateQuestion';
 import UpdateStack from './mutations/update/updateStack';
+import UpdateAnswer from './mutations/update/updateAnswer';
 
 import FollowChannel from './mutations/follow/followChannel';
 import FollowStack from './mutations/follow/followStack';
@@ -40,6 +44,7 @@ import DeleteUser from './mutations/delete/deleteUser';
 import DeleteQuestion from './mutations/delete/deleteQuestion';
 import DeleteStack from './mutations/delete/deleteStack';
 import DeleteChannel from './mutations/delete/deleteChannel';
+import DeleteAnswer from './mutations/delete/deleteAnswer';
 
 import Authorize from './mutations/authorize';
 import PageInfo from './types/PageInfo';
@@ -90,6 +95,11 @@ const typeDefs = [
   ChannelQuery.typeDefs,
   CreateChannel.typeDefs,
   DeleteChannel.typeDefs,
+  DeleteAnswer.typeDefs,
+  UpdateAnswer.typeDefs,
+  AnswerQuery.typeDefs,
+  AnswersQuery.typeDefs,
+  CreateAnswer.typeDefs
 ];
 
 const resolvers = merge(
@@ -126,6 +136,11 @@ const resolvers = merge(
   ChannelQuery.resolvers,
   CreateChannel.resolvers,
   DeleteChannel.resolvers,
+  DeleteAnswer.resolvers,
+  UpdateAnswer.resolvers,
+  AnswerQuery.resolvers,
+  AnswersQuery.resolvers,
+  CreateAnswer.resolvers
 );
 
 const schema = makeExecutableSchema({

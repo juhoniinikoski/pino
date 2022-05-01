@@ -2,9 +2,7 @@ import * as React from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { useAuth } from '../../contexts/auth';
 
-interface Props {}
-
-const SignIn = ({}: Props) => {
+const SignIn = () => {
   const auth = useAuth();
 
   const handlePress = async () => {

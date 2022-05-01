@@ -9,7 +9,7 @@ import apolloClient from './utils/apolloClient';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FDFDFD',
+    backgroundColor: '#FFFFFF',
   },
 });
 

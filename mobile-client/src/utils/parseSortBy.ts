@@ -1,22 +1,22 @@
 const parseSortBy = (sortBy: string) => {
   let variablesObject;
   switch (sortBy) {
-    case "ASC":
+    case 'ASC':
       variablesObject = {
-        orderDirection: "ASC",
+        orderDirection: 'ASC',
       };
       break;
-    case "DESC":
+    case 'DESC':
       variablesObject = {
-        orderDirection: "DESC",
+        orderDirection: 'DESC',
       };
       break;
-    case "CREATED_AT":
+    case 'CREATED_AT':
       variablesObject = {
-        orderBy: "CREATED_AT",
+        orderBy: 'CREATED_AT',
       };
       break;
-    case "":
+    default:
       variablesObject = {};
   }
 

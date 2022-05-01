@@ -19,14 +19,14 @@ const PlaceHolderIcon = () => {
 };
 
 const AppTab = () => {
+  const IconComponent = React.useCallback(() => <PlaceHolderIcon />, []);
   return (
     <Tab.Navigator
       screenOptions={{
-        headerShown: false,
-        tabBarIcon: () => <PlaceHolderIcon />,
+        tabBarIcon: IconComponent,
       }}
     >
-      <Tab.Screen name="Channels" component={Channels} />
+      <Tab.Screen name="Kanavat" component={Channels} />
     </Tab.Navigator>
   );
 };

@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flex: 1,
+    marginHorizontal: 16,
   },
 });
 
@@ -14,7 +15,7 @@ interface Props {
   style?: ViewStyle | ViewStyle[];
 }
 
-const Layout = ({ children, style }: Props) => {
+const Layout = ({ children, style }: Props): JSX.Element => {
   return (
     <SafeAreaView edges={['left', 'right']} style={[styles.container, style]}>
       {children}

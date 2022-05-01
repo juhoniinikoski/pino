@@ -9,6 +9,7 @@ const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
+    background: '#FFFFFF',
   },
 };
 

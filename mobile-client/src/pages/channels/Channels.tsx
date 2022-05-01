@@ -4,7 +4,7 @@ import Layout from '../../components/layout/Layout';
 import useChannels from '../../hooks/useChannels';
 import HeaderText from '../../components/common/HeaderText';
 import parseNodes from '../../utils/parseNodes';
-import { Channel } from '../../utils/types';
+import { Channel, Section } from '../../utils/types';
 import ChannelBox from '../../components/box/ChannelBox';
 
 const styles = StyleSheet.create({
@@ -18,12 +18,7 @@ const styles = StyleSheet.create({
   },
 });
 
-interface Section {
-  title: string;
-  data: Channel[] | undefined;
-}
-
-const Channels = () => {
+const ChannelsPage = () => {
   const { channels: saved, loading } = useChannels();
   const { channels: recommended, loading: newLoading } = useChannels(
     'WyIyMDIyLTA0LTI4VDA3OjEyOjQ2LjI0MVoiLCJESUEyMDIyMTIzNCJd',
@@ -55,7 +50,7 @@ const Channels = () => {
 
   return (
     <Layout>
-      <SectionList<Channel, Section>
+      <SectionList<Channel, Section<Channel>>
         sections={data}
         keyExtractor={(item: Channel) => item.id}
         renderItem={({ item }) => <ChannelBox channel={item} />}
@@ -73,4 +68,4 @@ const Channels = () => {
   );
 };
 
-export default Channels;
+export default ChannelsPage;

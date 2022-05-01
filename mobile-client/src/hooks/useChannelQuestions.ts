@@ -1,9 +1,10 @@
 import { useQuery } from '@apollo/client';
-import { GET_CHANNELS } from '../graphql/queries';
+import { GET_QUESTIONS } from '../graphql/queries';
 import parseSortBy from '../utils/parseSortBy';
-import { Channel, Connection } from '../utils/types';
+import { Connection, Question } from '../utils/types';
 
 interface QueryVariables {
+  channelId: string
   sortVariables:
     | {
         orderDirection: string;
@@ -17,55 +18,53 @@ interface QueryVariables {
         orderDirection?: undefined;
         orderBy?: undefined;
       };
-  searchKeyword?: string;
   first?: number;
   after?: string;
 }
 
 interface QueryData {
-  channels: Connection<Channel>;
+  questions: Connection<Question>;
 }
 
-const useChannels = (after?: string, sortBy?: string, filterText?: string) => {
+const usequestions = (channelId: string, sortBy?: string) => {
   const sortVariables = parseSortBy(sortBy || 'ASC');
 
   const queryVariables: QueryVariables = {
+    channelId: channelId,
     sortVariables,
-    searchKeyword: filterText || '',
-    first: 10,
-    after: after || '',
+    first: 20
   };
 
   const { data, loading, fetchMore, ...result } = useQuery<
     QueryData,
     QueryVariables
-  >(GET_CHANNELS, {
+  >(GET_QUESTIONS, {
     variables: queryVariables,
     fetchPolicy: 'cache-and-network',
   });
 
   const handleFetchMore = () => {
-    const canFetchMore = !loading && data && data.channels.pageInfo.hasNextPage;
+    const canFetchMore = !loading && data && data.questions.pageInfo.hasNextPage;
 
     if (!canFetchMore) {
       return;
     }
 
     fetchMore({
-      query: GET_CHANNELS,
+      query: GET_QUESTIONS,
       variables: {
-        after: data.channels.pageInfo.endCursor,
+        after: data.questions.pageInfo.endCursor,
         ...queryVariables,
       },
     });
   };
 
   return {
-    channels: data ? data.channels.edges : undefined,
+    questions: data ? data.questions.edges : undefined,
     fetchMore: handleFetchMore,
     loading,
     ...result,
   };
 };
 
-export default useChannels;
+export default usequestions;

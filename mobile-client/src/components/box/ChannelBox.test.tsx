@@ -19,3 +19,8 @@ describe('box rendering', () => {
 
   it.todo('should render number of followers of channel');
 });
+
+describe('block press gestures', () => {
+  test.todo('should navigte to channel main page when clicked the box');
+  test.todo('should follow the channel when clicked the small box');
+});

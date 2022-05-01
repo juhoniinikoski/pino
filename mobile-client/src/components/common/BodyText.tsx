@@ -4,12 +4,15 @@ import { Text, StyleSheet, TextStyle } from 'react-native';
 
 const styles = StyleSheet.create({
   bold: {
-    fontSize: 15,
-    fontWeight: 'bold',
+    fontSize: 18,
+    fontWeight: '600',
+    letterSpacing: -0.41,
+    lineHeight: 22,
+    textAlign: 'center',
   },
   medium: {
     fontSize: 17,
-    fontWeight: '400',
+    fontWeight: '500',
     letterSpacing: -0.41,
     lineHeight: 22,
     textAlign: 'center',

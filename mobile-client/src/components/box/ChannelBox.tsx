@@ -1,7 +1,13 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
+import {
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 import BodyText from '../common/BodyText';
+import { Channel } from '../../utils/types';
+import { ChannelStackParamList } from '../../navigation/AppTab';
 
 const styles = StyleSheet.create({
   container: {
@@ -33,23 +39,22 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  channel: {
-    id: number | string;
-    name: string;
-    questions: number;
-    followedBy: number;
-  };
+  channel: Channel;
 };
 
-const handlePress = () => {
-  console.log('painettu kanavaa');
-};
-
-const handleFollow = () => {
-  console.log('painettu seuraamisnappia');
-};
+type NavigationProps = NativeStackNavigationProp<ChannelStackParamList>;
 
 const ChannelBox = ({ channel }: Props) => {
+  const navigation = useNavigation<NavigationProps>();
+
+  const handlePress = () => {
+    navigation.navigate('Channel', { channel });
+  };
+
+  const handleFollow = () => {
+    console.log(`painettu seuraamisnappia: ${channel.name}`);
+  };
+
   return (
     <Pressable style={styles.container} onPress={handlePress}>
       <View style={styles.nameContainer}>

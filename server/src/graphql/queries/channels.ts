@@ -4,9 +4,9 @@ import { getChannels } from '../../services/channel/channelService';
 export const typeDefs = gql`
   extend type Query {
     """
-    Returns a stack and related questions.
+    Returns list of channels.
     """
-    channels(first: Int, after: String, searchKeyword: String): StackConnection!
+    channels(first: Int, after: String, searchKeyword: String): ChannelConnection!
   }
 `;
 

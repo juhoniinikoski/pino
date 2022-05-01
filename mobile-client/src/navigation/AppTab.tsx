@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View } from 'react-native';
-import Home from '../pages/home/Home';
+import Channels from '../pages/channels/Channels';
 
 const Tab = createBottomTabNavigator();
 
@@ -26,7 +26,7 @@ const AppTab = () => {
         tabBarIcon: () => <PlaceHolderIcon />,
       }}
     >
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Channels" component={Channels} />
     </Tab.Navigator>
   );
 };

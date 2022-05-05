@@ -7,36 +7,36 @@ export interface Channel {
 }
 
 export interface Answer {
-  answer: string
-  correct: boolean
-  createdAt?: Date
-  updatedAt?: Date
-  id: string
-  questionId: string
+  answer: string;
+  correct: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+  id: string;
+  questionId: string;
 }
 
 export interface Stack {
-  createdAt: Date
-  updatedAt: Date
-  createdById: string
-  followedBy: number
-  id: string
-  name: string
-  public: boolean
-  questions: number
-  tags: Channel[]
+  createdAt: Date;
+  updatedAt: Date;
+  createdById: string;
+  followedBy: number;
+  id: string;
+  name: string;
+  public: boolean;
+  questions: number;
+  tags: Channel[];
 }
 
 export interface Question {
   __typename?: string;
   id: string;
-  answers: Answer[]
-  createdAt: Date
-  updatedAt: Date
-  createdById: string
-  question: string
-  stacks: Stack[]
-  type: string
+  answers: Answer[] | Partial<Answer>[];
+  createdAt: Date;
+  updatedAt: Date;
+  createdById: string;
+  question: string;
+  stacks?: Stack[];
+  type: string;
 }
 
 export interface Section<T> {

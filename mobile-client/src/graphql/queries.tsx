@@ -23,12 +23,26 @@ export const GET_CHANNELS = gql`
 `;
 
 export const GET_QUESTIONS = gql`
-  query Questions($channelId: ID, $stackId: ID, $createdBy: ID, $first: Int, $after: String) {
-    questions (channelId: $channelId, stackId: $stackId, createdBy: $createdBy, first: $first, after: $after) {
+  query Questions(
+    $channelId: ID
+    $stackId: ID
+    $createdBy: ID
+    $first: Int
+    $after: String
+  ) {
+    questions(
+      channelId: $channelId
+      stackId: $stackId
+      createdBy: $createdBy
+      first: $first
+      after: $after
+    ) {
       edges {
         node {
           id
           question
+          createdById
+          type
           answers {
             answer
             correct

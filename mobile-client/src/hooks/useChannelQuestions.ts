@@ -4,7 +4,7 @@ import parseSortBy from '../utils/parseSortBy';
 import { Connection, Question } from '../utils/types';
 
 interface QueryVariables {
-  channelId: string
+  channelId: string;
   sortVariables:
     | {
         orderDirection: string;
@@ -26,13 +26,13 @@ interface QueryData {
   questions: Connection<Question>;
 }
 
-const usequestions = (channelId: string, sortBy?: string) => {
+const useQuestions = (channelId: string, sortBy?: string) => {
   const sortVariables = parseSortBy(sortBy || 'ASC');
 
   const queryVariables: QueryVariables = {
-    channelId: channelId,
+    channelId,
     sortVariables,
-    first: 20
+    first: 20,
   };
 
   const { data, loading, fetchMore, ...result } = useQuery<
@@ -44,7 +44,8 @@ const usequestions = (channelId: string, sortBy?: string) => {
   });
 
   const handleFetchMore = () => {
-    const canFetchMore = !loading && data && data.questions.pageInfo.hasNextPage;
+    const canFetchMore =
+      !loading && data && data.questions.pageInfo.hasNextPage;
 
     if (!canFetchMore) {
       return;
@@ -67,4 +68,4 @@ const usequestions = (channelId: string, sortBy?: string) => {
   };
 };
 
-export default usequestions;
+export default useQuestions;

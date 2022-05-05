@@ -6,6 +6,7 @@ import ChannelsPage from '../pages/channels/Channels';
 import ChannelPage from '../pages/channel/Channel';
 import { Channel } from '../utils/types';
 import CustomTitle from '../components/common/CustomTitle';
+import FollowBox from '../components/followBox/FollowBox';
 
 const Tab = createBottomTabNavigator();
 const ChanStack = createNativeStackNavigator<ChannelStackParamList>();
@@ -29,6 +30,22 @@ export type ChannelStackParamList = {
 };
 
 const ChannelStack = () => {
+  const HeaderTitle = React.useCallback(
+    title => <CustomTitle title={title} />,
+    [],
+  );
+
+  const HeaderRight = React.useCallback(
+    (channelId, followedBy) => (
+      <FollowBox
+        channelId={channelId}
+        followedBy={followedBy}
+        followedByUser={false}
+      />
+    ),
+    [],
+  );
+
   return (
     <ChanStack.Navigator
       initialRouteName="Channels"
@@ -39,7 +56,12 @@ const ChannelStack = () => {
         name="Channel"
         component={ChannelPage}
         options={({ route }) => ({
-          headerTitle: () => <CustomTitle title={route.params.channel.name} />,
+          headerTitle: () => HeaderTitle(route.params.channel.name),
+          headerRight: () =>
+            HeaderRight(
+              route.params.channel.id,
+              route.params.channel.followedBy,
+            ),
         })}
       />
     </ChanStack.Navigator>

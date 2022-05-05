@@ -1,13 +1,12 @@
 import { Pressable, StyleSheet, View } from 'react-native';
-import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import * as React from 'react';
-import {
-  NativeStackNavigationProp,
-} from '@react-navigation/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import BodyText from '../common/BodyText';
 import { Channel } from '../../utils/types';
 import { ChannelStackParamList } from '../../navigation/AppTab';
+import FollowBox from '../followBox/FollowBox';
 
 const styles = StyleSheet.create({
   container: {
@@ -51,22 +50,21 @@ const ChannelBox = ({ channel }: Props) => {
     navigation.navigate('Channel', { channel });
   };
 
-  const handleFollow = () => {
-    console.log(`painettu seuraamisnappia: ${channel.name}`);
-  };
-
   return (
-    <Pressable style={styles.container} onPress={handlePress}>
+    <Pressable
+      testID="channel-box"
+      style={styles.container}
+      onPress={handlePress}
+    >
       <View style={styles.nameContainer}>
         <MaterialIcons name="tag" size={24} color="black" />
         <BodyText style={{ marginLeft: 2 }}>{channel.name}</BodyText>
       </View>
-      <Pressable style={styles.followContainer} onPress={handleFollow}>
-        <BodyText style={{ marginRight: 4 }} textType="medium-light">
-          {channel.followedBy}
-        </BodyText>
-        <Ionicons name="heart-outline" size={20} color="black" />
-      </Pressable>
+      <FollowBox
+        channelId={channel.id}
+        followedBy={channel.followedBy}
+        followedByUser={false}
+      />
     </Pressable>
   );
 };

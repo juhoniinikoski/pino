@@ -15,7 +15,7 @@ export const typeDefs = gql`
 export const resolvers = {
   Answer: {
     correct: (obj: AnswerClass) => {
-      if (obj.correct === 'true') {
+      if (obj.correct === 'true' || obj.correct === true) {
         return true;
       } else return false;
     },

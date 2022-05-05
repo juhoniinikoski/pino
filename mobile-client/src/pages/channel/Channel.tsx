@@ -2,12 +2,11 @@ import { Text, StyleSheet, FlatList, View } from 'react-native';
 import * as React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Layout from '../../components/layout/Layout';
-import HeaderText from '../../components/common/HeaderText';
 import { ChannelStackParamList } from '../../navigation/AppTab';
 import useChannelQuestions from '../../hooks/useChannelQuestions';
 import { Question } from '../../utils/types';
 import parseNodes from '../../utils/parseNodes';
-import QuestionBox from '../../components/box/QuestionBox';
+import QuestionBox from '../../components/questionBox/QuestionBox';
 
 const styles = StyleSheet.create({
   loadingText: {
@@ -18,24 +17,28 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 8,
   },
-  separator: {
-    flex: 1, 
-    borderWidth: 1,
-    marginVertical: -1,
-    marginLeft: 48,
-    borderColor: 'black'
-},
 });
 
 type Props = NativeStackScreenProps<ChannelStackParamList, 'Channel'>;
 
-const SeparatorItem = () => (
-  <View style={styles.separator}/>
-)
-
 const ChannelPage = ({ route }: Props) => {
-  const { questions: raw, loading } = useChannelQuestions(route.params.channel.id);
+  const { questions: raw, loading } = useChannelQuestions(
+    route.params.channel.id,
+  );
   const questions = raw ? parseNodes<Question>(raw) : [];
+
+  const SeparatorItem = React.useCallback(
+    () => (
+      <View
+        style={{
+          marginTop: 24,
+          borderBottomColor: 'grey',
+          borderBottomWidth: StyleSheet.hairlineWidth,
+        }}
+      />
+    ),
+    [],
+  );
 
   if (loading) {
     return (
@@ -49,8 +52,11 @@ const ChannelPage = ({ route }: Props) => {
     <Layout>
       <FlatList
         data={questions}
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
+        ItemSeparatorComponent={SeparatorItem}
         renderItem={({ item }) => <QuestionBox question={item} />}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
       />
     </Layout>
   );

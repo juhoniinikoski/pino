@@ -17,6 +17,13 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     textAlign: 'center',
   },
+  regular: {
+    fontSize: 17,
+    fontWeight: '400',
+    letterSpacing: -0.41,
+    lineHeight: 22,
+    textAlign: 'center',
+  },
   mediumLight: {
     fontSize: 17,
     fontWeight: '300',
@@ -27,7 +34,7 @@ const styles = StyleSheet.create({
 });
 
 type BodyTextProps = {
-  textType?: 'bold' | 'medium-light';
+  textType?: 'bold' | 'medium-light' | 'regular';
   style?: TextStyle | TextStyle[];
 };
 
@@ -43,6 +50,9 @@ const BodyText: FunctionComponent<BodyTextProps> = ({
       break;
     case 'medium-light':
       textStyle = styles.mediumLight;
+      break;
+    case 'regular':
+      textStyle = styles.regular;
       break;
     default:
       textStyle = styles.medium;

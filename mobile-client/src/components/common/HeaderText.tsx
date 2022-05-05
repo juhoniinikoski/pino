@@ -24,12 +24,14 @@ const styles = StyleSheet.create({
 type HeaderTextProps = {
   textType?: 'large' | 'regular' | 'small' | 'smallest';
   style?: TextStyle | TextStyle[];
+  testID?: string;
 };
 
 const HeaderText: FunctionComponent<HeaderTextProps> = ({
   children,
   textType,
   style,
+  testID,
 }) => {
   let textStyle: TextStyle;
   switch (textType) {
@@ -54,7 +56,11 @@ const HeaderText: FunctionComponent<HeaderTextProps> = ({
     ? Object.assign({}, ...style)
     : style;
 
-  return <Text style={[textStyle, { ...passedStyles }]}>{children}</Text>;
+  return (
+    <Text testID={testID} style={[textStyle, { ...passedStyles }]}>
+      {children}
+    </Text>
+  );
 };
 
 HeaderText.defaultProps = {

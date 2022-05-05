@@ -5,7 +5,7 @@ import useChannels from '../../hooks/useChannels';
 import HeaderText from '../../components/common/HeaderText';
 import parseNodes from '../../utils/parseNodes';
 import { Channel, Section } from '../../utils/types';
-import ChannelBox from '../../components/box/ChannelBox';
+import ChannelBox from '../../components/channelBox/ChannelBox';
 
 const styles = StyleSheet.create({
   loadingText: {
@@ -57,7 +57,11 @@ const ChannelsPage = () => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         renderSectionHeader={({ section: { title } }) => (
-          <HeaderText style={styles.header} textType="smallest">
+          <HeaderText
+            testID="subheader"
+            style={styles.header}
+            textType="smallest"
+          >
             {title}
           </HeaderText>
         )}

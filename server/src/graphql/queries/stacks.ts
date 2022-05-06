@@ -28,7 +28,7 @@ interface Args {
 
 export const resolvers = {
   Query: {
-    stacks: async (_obj: null, args: Args) => getStacks(args),
+    stacks: (_obj: null, args: Args) => getStacks(args),
   },
 };
 

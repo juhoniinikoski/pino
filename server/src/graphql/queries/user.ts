@@ -16,7 +16,7 @@ interface Args {
 
 export const resolvers = {
   Query: {
-    user: async (_obj: null, args: Args) => await getUser(args.id),
+    user: (_obj: null, args: Args) => getUser(args.id),
   },
 };
 

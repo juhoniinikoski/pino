@@ -19,7 +19,7 @@ interface Args {
 
 export const resolvers = {
   Query: {
-    channels: async (_obj: null, args: Args) => getChannels(args),
+    channels: (_obj: null, args: Args) => getChannels(args),
   },
 };
 

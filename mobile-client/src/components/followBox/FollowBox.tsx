@@ -26,6 +26,8 @@ const FollowBox = ({ followedBy, channelId, followedByUser }: Props) => {
     console.log(`painettu seuraamisnappia: ${channelId}`);
   };
 
+  
+
   return (
     <Pressable
       style={{

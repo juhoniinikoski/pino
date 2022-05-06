@@ -6,6 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { object, string } from 'yup';
 import { UserChannel } from '../../models/UserChannel';
 import { UserStack } from '../../models/UserStack';
+import AuthService from '../authentication/authService';
 
 const createPasswordHash = (password: string) => bcrypt.hash(password, 10);
 
@@ -22,6 +23,8 @@ export const getUser = async (id: string | number): Promise<UserClass> => {
 
   return data;
 };
+
+export const getAuthorizedUser = async (authService: AuthService) => await authService.getAuthorizedUser()
 
 export const getUsers = async (): Promise<UserClass[]> => await User.query();
 

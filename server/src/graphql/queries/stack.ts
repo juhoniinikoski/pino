@@ -16,7 +16,7 @@ interface Args {
 
 export const resolvers = {
   Query: {
-    stack: async (_obj: null, { id }: Args) => getStack(id),
+    stack: (_obj: null, { id }: Args) => getStack(id),
   },
 };
 

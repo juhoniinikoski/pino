@@ -12,7 +12,7 @@ export const typeDefs = gql`
 
 export const resolvers = {
   Query: {
-    answers: async () => getAnswers(),
+    answers: () => getAnswers(),
   },
 };
 

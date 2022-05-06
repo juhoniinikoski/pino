@@ -14,6 +14,21 @@ const usersQuery = {
   `,
 };
 
+const authorizedUuserQuery = {
+  query: `
+    query {
+      authorizedUser {
+        id
+        email
+        followedChannels {
+          id
+          name
+        }
+      }
+    }
+  `,
+};
+
 const userQueryID = {
   query: `
     query {
@@ -80,6 +95,11 @@ describe('testing user read', () => {
   test('should return one user with correct id', async () => {
     const result = await testServer.executeOperation({ query: userQueryID.query });
     return expect(result.data.user.email).toBe('testi1@gmail.com');
+  });
+  
+  test('should return authorized user', async () => {
+    const result = await testServer.executeOperation({ query: authorizedUuserQuery.query });
+    return expect(result.data.authorizedUser.id).toBe('bbe42984-051b-4a01-b45d-b8d29c32200c');
   });
 
   test('should throw an error if use with given id is not found', async () => {

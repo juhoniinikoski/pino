@@ -16,7 +16,7 @@ interface Args {
 
 export const resolvers = {
   Query: {
-    channel: async (_obj: null, { id }: Args) => getChannel(id),
+    channel: (_obj: null, { id }: Args) => getChannel(id),
   },
 };
 

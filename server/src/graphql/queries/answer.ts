@@ -16,7 +16,7 @@ interface Args {
 
 export const resolvers = {
   Query: {
-    answer: async (_obj: null, { id }: Args) => getAnswer(id),
+    answer: (_obj: null, { id }: Args) => getAnswer(id),
   },
 };
 

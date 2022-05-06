@@ -23,6 +23,7 @@ import ChannelQuery from './queries/channel';
 import ChannelsQuery from './queries/channels';
 import AnswerQuery from './queries/answer';
 import AnswersQuery from './queries/answers';
+import AuthorizedUserQuery from './queries/authorizedUser';
 
 import CreateUser from './mutations/create/createUser';
 import CreateQuestion from './mutations/create/createQuestion';
@@ -100,6 +101,7 @@ const typeDefs = [
   AnswerQuery.typeDefs,
   AnswersQuery.typeDefs,
   CreateAnswer.typeDefs,
+  AuthorizedUserQuery.typeDefs
 ];
 
 const resolvers = merge(
@@ -141,6 +143,7 @@ const resolvers = merge(
   AnswerQuery.resolvers,
   AnswersQuery.resolvers,
   CreateAnswer.resolvers,
+  AuthorizedUserQuery.resolvers
 );
 
 const schema = makeExecutableSchema({

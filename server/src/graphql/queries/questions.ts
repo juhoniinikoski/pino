@@ -29,7 +29,7 @@ interface Args {
 
 export const resolvers = {
   Query: {
-    questions: async (_obj: null, args: Args) => await getQuestions(args),
+    questions: (_obj: null, args: Args) => getQuestions(args),
   },
 };
 

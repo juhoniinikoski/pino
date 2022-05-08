@@ -84,4 +84,7 @@ describe('rendering tests', () => {
   test('renders subheaders', async () => {
     expect((await component.findAllByTestId('subheader')).length).toBe(2);
   });
+
+  test.todo('should render lists of channels succesfully');
+  test.todo('should show loading indicator when data is initially loaded');
 });

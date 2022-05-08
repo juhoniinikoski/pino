@@ -16,6 +16,11 @@ const parseSortBy = (sortBy: string) => {
         orderBy: 'CREATED_AT',
       };
       break;
+    case 'UPDATED_AT':
+      variablesObject = {
+        orderBy: 'UPDATED_AT',
+      };
+      break;
     default:
       variablesObject = {};
   }

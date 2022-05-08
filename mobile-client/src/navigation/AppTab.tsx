@@ -7,7 +7,6 @@ import ChannelPage from '../pages/channel/Channel';
 import { Channel } from '../utils/types';
 import CustomTitle from '../components/common/CustomTitle';
 import FollowBox from '../components/followBox/FollowBox';
-import { ChannelProvider } from '../contexts/channelContext';
 
 const Tab = createBottomTabNavigator();
 const ChanStack = createNativeStackNavigator<ChannelStackParamList>();
@@ -44,23 +43,21 @@ const ChannelStack = () => {
   );
 
   return (
-    <ChannelProvider>
-      <ChanStack.Navigator
-        initialRouteName="Channels"
-        screenOptions={{ headerTintColor: 'black', headerBackTitle: '' }}
-      >
-        <ChanStack.Screen name="Channels" component={ChannelsPage} />
-        <ChanStack.Screen
-          name="Channel"
-          component={ChannelPage}
-          options={({ route }) => ({
-            headerTitle: () => HeaderTitle(route.params.channel.name),
-            headerRight: () =>
-              HeaderRight(route.params.channel, route.params.followedByUser),
-          })}
-        />
-      </ChanStack.Navigator>
-    </ChannelProvider>
+    <ChanStack.Navigator
+      initialRouteName="Channels"
+      screenOptions={{ headerTintColor: 'black', headerBackTitle: '' }}
+    >
+      <ChanStack.Screen name="Channels" component={ChannelsPage} />
+      <ChanStack.Screen
+        name="Channel"
+        component={ChannelPage}
+        options={({ route }) => ({
+          headerTitle: () => HeaderTitle(route.params.channel.name),
+          headerRight: () =>
+            HeaderRight(route.params.channel, route.params.followedByUser),
+        })}
+      />
+    </ChanStack.Navigator>
   );
 };
 

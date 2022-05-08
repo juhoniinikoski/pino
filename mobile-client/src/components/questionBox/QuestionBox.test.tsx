@@ -39,7 +39,7 @@ describe('testing render', () => {
     expect(getByText(testProps.question)).toBeTruthy;
     expect(getByText(testProps.answers[0].answer)).toBeTruthy;
     expect(getByText(testProps.answers[1].answer)).toBeTruthy;
-    return expect(getByText(testProps.answers[2].answer)).toBeTruthy;
+    expect(getByText(testProps.answers[2].answer)).toBeTruthy;
   });
 });
 

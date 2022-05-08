@@ -7,7 +7,6 @@ import parseNodes from '../../utils/parseNodes';
 import { Channel, Section } from '../../utils/types';
 import ChannelBox from '../../components/channelBox/ChannelBox';
 import useUserChannels from '../../hooks/useUserChannels';
-import { ChannelContext } from '../../contexts/channelContext';
 
 const styles = StyleSheet.create({
   loadingText: {
@@ -27,12 +26,10 @@ interface Data {
 }
 
 const ChannelsPage = () => {
-  const {
-    followedChannels,
-    setFollowedChannels,
-    recommendedChannels,
-    setRecommendedChannels,
-  } = React.useContext(ChannelContext);
+  const [followedChannels, setFollowedChannels] = React.useState<Channel[]>([]);
+  const [recommendedChannels, setRecommendedChannels] = React.useState<
+    Channel[]
+  >([]);
 
   const [data, setData] = React.useState<Data[]>([]);
 
@@ -62,21 +59,26 @@ const ChannelsPage = () => {
   );
 
   React.useEffect(() => {
-    setData([
-      {
-        title: 'Omat kanavat',
-        data: followedChannels,
-        renderItem: renderItemFollowed,
-      },
-      {
-        title: 'Suositellut kanavat',
-        data: recommendedChannels,
-        renderItem: renderItemOther,
-      },
-    ]);
-  }, [followedChannels, recommendedChannels]);
+    if (!(loading || newLoading)) {
+      setData([
+        {
+          title: 'Omat kanavat',
+          data: followedChannels,
+          renderItem: renderItemFollowed,
+        },
+        {
+          title: 'Suositellut kanavat',
+          data: recommendedChannels,
+          renderItem: renderItemOther,
+        },
+      ]);
+    }
+  }, [followedChannels, recommendedChannels, loading, newLoading]);
 
-  if (loading || newLoading) {
+  if (
+    (loading || newLoading) &&
+    (!followedChannels.length || !recommendedChannels.length)
+  ) {
     return (
       <Layout>
         <Text style={styles.loadingText}>Loading</Text>
@@ -89,8 +91,9 @@ const ChannelsPage = () => {
       <SectionList<Channel, Section<Channel>>
         sections={data}
         keyExtractor={(item: Channel, index) => item.id + index.toString}
-        // renderItem={({ item }) => <ChannelBox channel={item} />}
-        renderItem={({ section: { renderItem } }) => <View>{renderItem}</View>}
+        renderItem={({ section: { renderItem } }) => (
+          <View testID="render-item">{renderItem}</View>
+        )}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         renderSectionHeader={({ section: { title } }) => (

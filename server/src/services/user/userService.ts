@@ -24,7 +24,7 @@ export const getUser = async (id: string | number): Promise<UserClass> => {
   return data;
 };
 
-export const getAuthorizedUser = async (authService: AuthService) => await authService.getAuthorizedUser()
+export const getAuthorizedUser = async (authService: AuthService) => await authService.getAuthorizedUser();
 
 export const getUsers = async (): Promise<UserClass[]> => await User.query();
 

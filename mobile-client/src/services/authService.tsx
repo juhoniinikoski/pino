@@ -1,35 +1,27 @@
-// import { apolloClient } from '../utils/apolloClient';
-// import { AUTHORIZE } from "../../utils/graphql/mutations"
+import { AUTHORIZE } from '../graphql/mutations';
+import apolloClient from '../utils/apolloClient';
 
 export type AuthData = {
   token: string;
-  name: string;
+  email: string;
 };
 
-const signIn = async (
-  username: string,
-  password: string,
-): Promise<AuthData> => {
-  // const { data } = await apolloClient.mutate({
-  //   mutation: AUTHORIZE,
-  //   variables: {
-  //     username,
-  //     password
-  //   }
-  // })
+const signIn = async (): Promise<AuthData> => {
+  // const signIn = async (username: string, password: string): Promise<AuthData> => {
 
-  const data = {
-    authorize: {
-      accessToken:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYmU0Mjk4NC0wNTFiLTRhMDEtYjQ1ZC1iOGQyOWMzMjIwMGMiLCJpYXQiOjE2NDUyNjkxMTQsImV4cCI6MjI1MDA2OTExNCwic3ViIjoiYWNjZXNzVG9rZW4ifQ.SDhiE64ZsiQEww9WzM1emgDxEP0vu5SxHMeDaTS9QLU',
+  const { data } = await apolloClient.mutate({
+    mutation: AUTHORIZE,
+    variables: {
+      email: 'testi1@gmail.com',
+      password: 'password',
     },
-  };
+  });
 
   return new Promise(resolve => {
     setTimeout(() => {
       resolve({
         token: data.authorize.accessToken,
-        name: username,
+        email: 'testi1@gmail.com',
       });
     }, 1000);
   });

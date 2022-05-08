@@ -15,6 +15,11 @@ export interface Answer {
   questionId: string;
 }
 
+export interface User {
+  id: string;
+  email: string;
+}
+
 export interface Stack {
   createdAt: Date;
   updatedAt: Date;

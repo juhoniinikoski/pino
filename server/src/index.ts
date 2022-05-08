@@ -7,6 +7,10 @@ dotenv.config();
 
 const server = new ApolloServer({
   schema,
+  cors: {
+    origin: 'http://192.168.100.23:19000',
+    credentials: true
+  },
   context: ({ req }) => {
     const authorization = req.get('authorization');
     const accessToken = authorization ? authorization.split(' ')[1] : undefined;

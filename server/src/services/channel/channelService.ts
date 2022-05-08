@@ -1,10 +1,12 @@
-import { number, object, string } from 'yup';
+import { boolean, number, object, string } from 'yup';
 import ChannelClass, { Channel } from '../../models/Channel';
 import { PageInfoType } from '../../utils/entities';
 import { v4 as uuid } from 'uuid';
 import { ApolloError } from 'apollo-server';
 import { InvalidIdError } from '../errors';
 import { QuestionChannel } from '../../models/QuestionChannel';
+import AuthService from '../authentication/authService';
+import { UserChannel } from '../../models/UserChannel';
 
 interface Args {
   first?: number;
@@ -12,6 +14,7 @@ interface Args {
   orderBy?: string;
   orderDirection?: string;
   searchKeyword?: string;
+  followedByAuthorized?: boolean;
 }
 
 interface EdgeType {
@@ -31,6 +34,7 @@ const argsSchema = object({
   orderDirection: string().default('DESC'),
   orderBy: string().default('CREATED_AT'),
   searchKeyword: string().trim(),
+  followedByAuthorized: boolean(),
 });
 
 export const getChannel = async (id: string | number): Promise<ChannelClass> =>
@@ -44,12 +48,17 @@ export const getChannel = async (id: string | number): Promise<ChannelClass> =>
 
 const getLikeFilter = (value: string) => `%${value}%`;
 
-export const getChannels = async (args: Args): Promise<ChannelConnection> => {
+export const getChannels = async (args: Args, authService: AuthService): Promise<ChannelConnection> => {
   const normalizedArgs = await argsSchema.validate(args);
 
-  const { first, orderDirection, after, searchKeyword } = normalizedArgs;
+  const { first, orderDirection, after, searchKeyword, followedByAuthorized } = normalizedArgs;
 
   let query = Channel.query();
+
+  if (followedByAuthorized) {
+    const user = await authService.getAuthorizedUserOrFail();
+    query = query.where('id', 'in', UserChannel.query().where('userId', user.id).select('channelId'));
+  }
 
   if (searchKeyword) {
     const likeFilter = getLikeFilter(searchKeyword);

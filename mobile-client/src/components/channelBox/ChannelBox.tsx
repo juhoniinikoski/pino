@@ -39,15 +39,16 @@ const styles = StyleSheet.create({
 
 type Props = {
   channel: Channel;
+  followedByUser: boolean;
 };
 
 type NavigationProps = NativeStackNavigationProp<ChannelStackParamList>;
 
-const ChannelBox = ({ channel }: Props) => {
+const ChannelBox = ({ channel, followedByUser }: Props) => {
   const navigation = useNavigation<NavigationProps>();
 
   const handlePress = () => {
-    navigation.navigate('Channel', { channel });
+    navigation.navigate('Channel', { channel, followedByUser });
   };
 
   return (
@@ -60,11 +61,7 @@ const ChannelBox = ({ channel }: Props) => {
         <MaterialIcons name="tag" size={24} color="black" />
         <BodyText style={{ marginLeft: 2 }}>{channel.name}</BodyText>
       </View>
-      <FollowBox
-        channelId={channel.id}
-        followedBy={channel.followedBy}
-        followedByUser={false}
-      />
+      <FollowBox channel={channel} followedByUser={followedByUser} />
     </Pressable>
   );
 };

@@ -39,8 +39,8 @@ const AuthProvider: React.FC = ({ children }) => {
     loadStorageData();
   }, []);
 
-  const signIn = async (username: string, password: string) => {
-    const authData = await authService.signIn(username, password);
+  const signIn = async (email: string, password: string) => {
+    const authData = await authService.signIn();
 
     setAuthData(authData);
     apolloClient.resetStore();

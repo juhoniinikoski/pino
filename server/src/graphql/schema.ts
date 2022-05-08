@@ -101,7 +101,7 @@ const typeDefs = [
   AnswerQuery.typeDefs,
   AnswersQuery.typeDefs,
   CreateAnswer.typeDefs,
-  AuthorizedUserQuery.typeDefs
+  AuthorizedUserQuery.typeDefs,
 ];
 
 const resolvers = merge(
@@ -143,7 +143,7 @@ const resolvers = merge(
   AnswerQuery.resolvers,
   AnswersQuery.resolvers,
   CreateAnswer.resolvers,
-  AuthorizedUserQuery.resolvers
+  AuthorizedUserQuery.resolvers,
 );
 
 const schema = makeExecutableSchema({

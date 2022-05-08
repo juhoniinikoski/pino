@@ -1,12 +1,13 @@
 import { gql } from 'apollo-server';
 import { getChannels } from '../../services/channel/channelService';
+import { Context } from '../../utils/entities';
 
 export const typeDefs = gql`
   extend type Query {
     """
     Returns list of channels.
     """
-    channels(first: Int, after: String, searchKeyword: String): ChannelConnection!
+    channels(first: Int, after: String, searchKeyword: String, followedByAuthorized: Boolean): ChannelConnection!
   }
 `;
 
@@ -15,11 +16,12 @@ interface Args {
   after?: string;
   orderBy?: string;
   searchKeyword?: string;
+  followedByAuthorized?: boolean;
 }
 
 export const resolvers = {
   Query: {
-    channels: (_obj: null, args: Args) => getChannels(args),
+    channels: (_obj: null, args: Args, { authService }: Context) => getChannels(args, authService),
   },
 };
 

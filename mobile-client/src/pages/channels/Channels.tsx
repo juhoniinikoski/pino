@@ -1,4 +1,4 @@
-import { SectionList, StyleSheet, Text } from 'react-native';
+import { SectionList, StyleSheet, Text, View } from 'react-native';
 import * as React from 'react';
 import Layout from '../../components/layout/Layout';
 import useChannels from '../../hooks/useChannels';
@@ -6,6 +6,8 @@ import HeaderText from '../../components/common/HeaderText';
 import parseNodes from '../../utils/parseNodes';
 import { Channel, Section } from '../../utils/types';
 import ChannelBox from '../../components/channelBox/ChannelBox';
+import useUserChannels from '../../hooks/useUserChannels';
+import { ChannelContext } from '../../contexts/channelContext';
 
 const styles = StyleSheet.create({
   loadingText: {
@@ -18,27 +20,61 @@ const styles = StyleSheet.create({
   },
 });
 
+interface Data {
+  title: string;
+  data: Channel[];
+  renderItem: ({ item }: { item: Channel }) => JSX.Element;
+}
+
 const ChannelsPage = () => {
-  const { channels: saved, loading } = useChannels();
-  const { channels: recommended, loading: newLoading } = useChannels(
-    'WyIyMDIyLTA0LTI4VDA3OjEyOjQ2LjI0MVoiLCJESUEyMDIyMTIzNCJd',
+  const {
+    followedChannels,
+    setFollowedChannels,
+    recommendedChannels,
+    setRecommendedChannels,
+  } = React.useContext(ChannelContext);
+
+  const [data, setData] = React.useState<Data[]>([]);
+
+  const { channels: followedRaw, loading } = useUserChannels();
+  const { channels: recommendedRaw, loading: newLoading } = useChannels();
+
+  React.useEffect(() => {
+    const followed = followedRaw ? parseNodes<Channel>(followedRaw) : [];
+    const recommended = recommendedRaw
+      ? parseNodes<Channel>(recommendedRaw)
+      : [];
+    const savedIds = followed.map(c => c.id);
+    setFollowedChannels(followed);
+    setRecommendedChannels(recommended.filter(c => !savedIds.includes(c.id)));
+  }, [
+    followedRaw,
+    recommendedRaw,
+    setFollowedChannels,
+    setRecommendedChannels,
+  ]);
+
+  const renderItemFollowed = ({ item }: { item: Channel }) => (
+    <ChannelBox channel={item} followedByUser />
+  );
+  const renderItemOther = ({ item }: { item: Channel }) => (
+    <ChannelBox channel={item} followedByUser={false} />
   );
 
-  const channels = saved ? parseNodes<Channel>(saved) : [];
-  const recommendedChannels = recommended
-    ? parseNodes<Channel>(recommended)
-    : [];
-
-  const data = [
-    {
-      title: 'Omat kanavat',
-      data: channels,
-    },
-    {
-      title: 'Suositellut kanavat',
-      data: recommendedChannels,
-    },
-  ];
+  React.useEffect(() => {
+    setData([
+      {
+        title: 'Omat kanavat',
+        data: followedChannels,
+        renderItem: renderItemFollowed,
+      },
+      {
+        title: 'Suositellut kanavat',
+        data: recommendedChannels,
+        renderItem: renderItemOther,
+      },
+    ]);
+  }, [followedChannels, recommendedChannels]);
 
   if (loading || newLoading) {
     return (
@@ -52,8 +88,9 @@ const ChannelsPage = () => {
     <Layout>
       <SectionList<Channel, Section<Channel>>
         sections={data}
-        keyExtractor={(item: Channel) => item.id}
-        renderItem={({ item }) => <ChannelBox channel={item} />}
+        keyExtractor={(item: Channel, index) => item.id + index.toString}
+        // renderItem={({ item }) => <ChannelBox channel={item} />}
+        renderItem={({ section: { renderItem } }) => <View>{renderItem}</View>}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         renderSectionHeader={({ section: { title } }) => (

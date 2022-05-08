@@ -22,6 +22,33 @@ export const GET_CHANNELS = gql`
   }
 `;
 
+export const GET_USERS_CHANNELS = gql`
+  query Channels($first: Int, $after: String, $searchKeyword: String) {
+    channels(
+      first: $first
+      after: $after
+      searchKeyword: $searchKeyword
+      followedByAuthorized: true
+    ) {
+      edges {
+        node {
+          id
+          name
+          followedBy
+          questions
+        }
+        cursor
+      }
+      totalCount
+      pageInfo {
+        endCursor
+        startCursor
+        hasNextPage
+      }
+    }
+  }
+`;
+
 export const GET_QUESTIONS = gql`
   query Questions(
     $channelId: ID
@@ -60,6 +87,15 @@ export const GET_QUESTIONS = gql`
         hasNextPage
         hasPreviousPage
       }
+    }
+  }
+`;
+
+export const GET_AUTHORIZED_USER = gql`
+  query authorizedUser {
+    authorizedUser {
+      id
+      email
     }
   }
 `;

@@ -1,7 +1,6 @@
-import { gql } from 'apollo-server'
-import AuthService from '../../services/authentication/authService'
-import { getAuthorizedUser } from '../../services/user/userService'
-import { Context } from '../../utils/entities'
+import { gql } from 'apollo-server';
+import { getAuthorizedUser } from '../../services/user/userService';
+import { Context } from '../../utils/entities';
 
 export const typeDefs = gql`
   extend type Query {
@@ -10,15 +9,15 @@ export const typeDefs = gql`
     """
     authorizedUser: User
   }
-`
+`;
 
 export const resolvers = {
   Query: {
-    authorizedUser: (_obj: null, _args: null, { authService }: Context) => getAuthorizedUser(authService)
+    authorizedUser: (_obj: null, _args: null, { authService }: Context) => getAuthorizedUser(authService),
   },
-}
+};
 
 export default {
   typeDefs,
   resolvers,
-}
+};

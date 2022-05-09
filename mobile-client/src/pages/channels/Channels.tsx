@@ -25,6 +25,13 @@ interface Data {
   renderItem: ({ item }: { item: Channel }) => JSX.Element;
 }
 
+export const renderItemFollowed = ({ item }: { item: Channel }) => (
+  <ChannelBox channel={item} followedByUser />
+);
+export const renderItemOther = ({ item }: { item: Channel }) => (
+  <ChannelBox channel={item} followedByUser={false} />
+);
+
 const ChannelsPage = () => {
   const [followedChannels, setFollowedChannels] = React.useState<Channel[]>([]);
   const [recommendedChannels, setRecommendedChannels] = React.useState<
@@ -50,13 +57,6 @@ const ChannelsPage = () => {
     setFollowedChannels,
     setRecommendedChannels,
   ]);
-
-  const renderItemFollowed = ({ item }: { item: Channel }) => (
-    <ChannelBox channel={item} followedByUser />
-  );
-  const renderItemOther = ({ item }: { item: Channel }) => (
-    <ChannelBox channel={item} followedByUser={false} />
-  );
 
   React.useEffect(() => {
     if (!(loading || newLoading)) {
@@ -89,6 +89,7 @@ const ChannelsPage = () => {
   return (
     <Layout>
       <SectionList<Channel, Section<Channel>>
+        testID="channels-list"
         sections={data}
         keyExtractor={(item: Channel, index) => item.id + index.toString}
         renderItem={({ section: { renderItem } }) => (

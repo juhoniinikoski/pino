@@ -1,8 +1,11 @@
 import { MockedProvider } from '@apollo/client/testing';
-import { render, RenderAPI } from '@testing-library/react-native';
+import { render, RenderAPI, waitFor } from '@testing-library/react-native';
 import React from 'react';
 import { GET_QUESTIONS } from '../../graphql/queries';
 import ChannelPage from './Channel';
+
+/* eslint-disable no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 const mocks = [
   {
@@ -166,6 +169,22 @@ describe('render tests', () => {
     );
   });
 
-  test.todo('should show loading indicator when questions are loaded');
-  test.todo('should render questions succesfully');
+  test('should display a name of the channel', async () => {
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  test('should show loading indicator when questions are loaded', async () => {
+    await waitFor(() => {
+      expect(component.getByText('Loading')).toBeTruthy;
+      expect(component).toMatchSnapshot();
+    });
+  });
+
+  test('should render a list containing questions succesfully', async () => {
+    await waitFor(async () => {
+      expect(component.getAllByTestId('question-list').length).toBe(1);
+      expect(component).toMatchSnapshot();
+    });
+  });
 });

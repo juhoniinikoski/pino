@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render tests should display a name of the channel 1`] = `
+<RNCSafeAreaView
+  edges={
+    Array [
+      "left",
+      "right",
+    ]
+  }
+  style={
+    Array [
+      Object {
+        "display": "flex",
+        "flex": 1,
+        "marginHorizontal": 16,
+      },
+      undefined,
+    ]
+  }
+>
+  <Text
+    style={
+      Object {
+        "textAlign": "center",
+        "textAlignVertical": "center",
+      }
+    }
+  >
+    Loading
+  </Text>
+</RNCSafeAreaView>
+`;
+
+exports[`render tests should render a list containing questions succesfully 1`] = `
+<RNCSafeAreaView
+  edges={
+    Array [
+      "left",
+      "right",
+    ]
+  }
+  style={
+    Array [
+      Object {
+        "display": "flex",
+        "flex": 1,
+        "marginHorizontal": 16,
+      },
+      undefined,
+    ]
+  }
+>
+  <RCTScrollView
+    ItemSeparatorComponent={[Function]}
+    data={Array []}
+    disableVirtualization={false}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={false}
+    initialNumToRender={10}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={10}
+    onContentSizeChange={[Function]}
+    onEndReachedThreshold={2}
+    onLayout={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    showsHorizontalScrollIndicator={false}
+    showsVerticalScrollIndicator={false}
+    stickyHeaderIndices={Array []}
+    testID="question-list"
+    updateCellsBatchingPeriod={50}
+    viewabilityConfigCallbackPairs={Array []}
+    windowSize={21}
+  >
+    <View />
+  </RCTScrollView>
+</RNCSafeAreaView>
+`;
+
+exports[`render tests should show loading indicator when questions are loaded 1`] = `
+<RNCSafeAreaView
+  edges={
+    Array [
+      "left",
+      "right",
+    ]
+  }
+  style={
+    Array [
+      Object {
+        "display": "flex",
+        "flex": 1,
+        "marginHorizontal": 16,
+      },
+      undefined,
+    ]
+  }
+>
+  <Text
+    style={
+      Object {
+        "textAlign": "center",
+        "textAlignVertical": "center",
+      }
+    }
+  >
+    Loading
+  </Text>
+</RNCSafeAreaView>
+`;

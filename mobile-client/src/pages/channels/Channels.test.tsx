@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, RenderAPI } from '@testing-library/react-native';
+import { render, RenderAPI, waitFor } from '@testing-library/react-native';
 import { GET_CHANNELS } from '../../graphql/queries';
 import ChannelsPage from './Channels';
 
@@ -85,6 +85,17 @@ describe('rendering tests', () => {
     expect((await component.findAllByTestId('subheader')).length).toBe(2);
   });
 
-  test.todo('should render lists of channels succesfully');
-  test.todo('should show loading indicator when data is initially loaded');
+  test('should render lists of channels succesfully', async () => {
+    await waitFor(async () => {
+      expect(component.getAllByTestId('channels-list').length).toBe(1);
+      expect(component).toMatchSnapshot();
+    });
+  });
+
+  test('should show loading indicator when data is initially loaded', async () => {
+    await waitFor(() => {
+      expect(component.getByText('Loading')).toBeTruthy;
+      expect(component).toMatchSnapshot();
+    });
+  });
 });

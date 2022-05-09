@@ -9,7 +9,8 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "lint": "eslint --fix --ext .ts --ext .tsx .",
-    "test": "jest"
+    "test": "jest",
+    "coverage": "CI=true npm test -- --coverage"
   },
   "dependencies": {
     "@apollo/client": "3.5.10",

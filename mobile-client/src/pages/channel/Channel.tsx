@@ -51,6 +51,7 @@ const ChannelPage = ({ route }: Props) => {
   return (
     <Layout>
       <FlatList
+        testID='question-list'
         data={questions}
         keyExtractor={item => item.id}
         ItemSeparatorComponent={SeparatorItem}

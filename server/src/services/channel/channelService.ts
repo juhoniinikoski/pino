@@ -31,8 +31,8 @@ interface ChannelConnection {
 const argsSchema = object({
   after: string(),
   first: number().min(1).max(30).default(30),
-  orderDirection: string().default('DESC'),
-  orderBy: string().default('CREATED_AT'),
+  orderDirection: string().default('desc'),
+  orderBy: string().default('createdAt'),
   searchKeyword: string().trim(),
   followedByAuthorized: boolean(),
 });
@@ -51,7 +51,7 @@ const getLikeFilter = (value: string) => `%${value}%`;
 export const getChannels = async (args: Args, authService: AuthService): Promise<ChannelConnection> => {
   const normalizedArgs = await argsSchema.validate(args);
 
-  const { first, orderDirection, after, searchKeyword, followedByAuthorized } = normalizedArgs;
+  const { first, orderDirection, orderBy, after, searchKeyword, followedByAuthorized } = normalizedArgs;
 
   let query = Channel.query();
 
@@ -84,7 +84,7 @@ export const getChannels = async (args: Args, authService: AuthService): Promise
   return await query.cursorPaginate(count, {
     first,
     after,
-    orderBy: [{ column: 'createdAt', order: orderDirection.toLowerCase() }, 'id'],
+    orderBy: [{ column: orderBy, order: orderDirection.toLowerCase() }, 'id'],
   });
 };
 

@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
-import { GET_STACKS } from '../graphql/queries';
+import { GET_FOLLOWED_CHANNELS } from '../graphql/queries';
 import parseSortBy from '../utils/parseSortBy';
-import { Connection, Stack } from '../utils/types';
+import { Connection, FollowedChannel } from '../utils/types';
 
 interface QueryVariables {
   sortVariables:
@@ -20,15 +20,13 @@ interface QueryVariables {
   searchKeyword?: string;
   first?: number;
   after?: string;
-  createdById?: string;
 }
 
 interface QueryData {
-  stacks: Connection<Stack>;
+  channels: Connection<FollowedChannel>;
 }
 
-const useStacks = (
-  createdById?: string,
+const useFollowedChannels = (
   after?: string,
   sortBy?: string,
   filterText?: string,
@@ -45,33 +43,33 @@ const useStacks = (
   const { data, loading, fetchMore, ...result } = useQuery<
     QueryData,
     QueryVariables
-  >(GET_STACKS, {
+  >(GET_FOLLOWED_CHANNELS, {
     variables: queryVariables,
     fetchPolicy: 'cache-and-network',
   });
 
   const handleFetchMore = () => {
-    const canFetchMore = !loading && data && data.stacks.pageInfo.hasNextPage;
+    const canFetchMore = !loading && data && data.channels.pageInfo.hasNextPage;
 
     if (!canFetchMore) {
       return;
     }
 
     fetchMore({
-      query: GET_STACKS,
+      query: GET_FOLLOWED_CHANNELS,
       variables: {
-        after: data.stacks.pageInfo.endCursor,
+        after: data.channels.pageInfo.endCursor,
         ...queryVariables,
       },
     });
   };
 
   return {
-    stacks: data ? data.stacks.edges : undefined,
+    channels: data ? data.channels.edges : undefined,
     fetchMore: handleFetchMore,
     loading,
     ...result,
   };
 };
 
-export default useStacks;
+export default useFollowedChannels;

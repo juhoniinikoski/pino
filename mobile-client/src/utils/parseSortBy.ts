@@ -13,12 +13,17 @@ const parseSortBy = (sortBy: string) => {
       break;
     case 'CREATED_AT':
       variablesObject = {
-        orderBy: 'CREATED_AT',
+        orderBy: 'createdAt',
       };
       break;
     case 'UPDATED_AT':
       variablesObject = {
-        orderBy: 'UPDATED_AT',
+        orderBy: 'updatedAt',
+      };
+      break;
+    case 'CONNECTION_DATE':
+      variablesObject = {
+        orderBy: 'connectionDate',
       };
       break;
     default:

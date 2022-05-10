@@ -15,6 +15,7 @@ class StackClass extends BaseModel {
   createdAt: Date;
   updatedAt: Date;
   questions: number;
+  connectionDate?: Date;
 
   static relationMappings = {
     questions: {

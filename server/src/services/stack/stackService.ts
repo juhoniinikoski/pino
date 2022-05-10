@@ -35,7 +35,7 @@ const argsSchema = object({
   after: string(),
   first: number().min(1).max(30).default(30),
   orderDirection: string().default('DESC'),
-  orderBy: string().default('CREATED_AT'),
+  orderBy: string().default('createdAt'),
   searchKeyword: string().trim(),
   createdBy: string().trim(),
   public: boolean(),
@@ -47,7 +47,7 @@ const getLikeFilter = (value: string) => `%${value}%`;
 export const getStacks = async (args: Args, authService: AuthService): Promise<StackConnection> => {
   const normalizedArgs = await argsSchema.validate(args);
 
-  const { first, orderDirection, after, searchKeyword, createdBy, public: publicStack, followedByAuthorized } = normalizedArgs;
+  const { first, orderDirection, after, orderBy, searchKeyword, createdBy, public: publicStack, followedByAuthorized } = normalizedArgs;
 
   let query = Stack.query();
 
@@ -88,7 +88,7 @@ export const getStacks = async (args: Args, authService: AuthService): Promise<S
   return await query.cursorPaginateStack(count, {
     first,
     after,
-    orderBy: [{ column: 'createdAt', order: orderDirection.toLowerCase() }, 'id'],
+    orderBy: [{ column: orderBy, order: orderDirection.toLowerCase() }, 'id'],
   });
 };
 

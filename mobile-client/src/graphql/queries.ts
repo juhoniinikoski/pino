@@ -22,13 +22,14 @@ export const GET_CHANNELS = gql`
   }
 `;
 
-export const GET_USERS_CHANNELS = gql`
+export const GET_FOLLOWED_CHANNELS = gql`
   query Channels($first: Int, $after: String, $searchKeyword: String) {
     channels(
       first: $first
       after: $after
       searchKeyword: $searchKeyword
       followedByAuthorized: true
+      orderBy: "connectionDate"
     ) {
       edges {
         node {
@@ -36,6 +37,7 @@ export const GET_USERS_CHANNELS = gql`
           name
           followedBy
           questions
+          connectionDate
         }
         cursor
       }
@@ -91,10 +93,8 @@ export const GET_QUESTIONS = gql`
   }
 `;
 
-export const GET_STACKS = gql`
+export const GET_FOLLOWED_STACKS = gql`
   query Stacks(
-    $public: Boolean
-    $createdBy: ID
     $first: Int
     $after: String
     $searchKeyword: String
@@ -102,9 +102,9 @@ export const GET_STACKS = gql`
     stacks(
       first: $first
       after: $after
-      createdBy: $createdBy
       searchKeyword: $searchKeyword
-      public: $public
+      orderBy: "connectionDate"
+      followedByAuthorized: true
     ) {
       totalCount
       edges {
@@ -117,6 +117,7 @@ export const GET_STACKS = gql`
           createdById
           createdAt
           updatedAt
+          connectionDate
           tags {
             id
             name

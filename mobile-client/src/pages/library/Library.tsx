@@ -2,10 +2,10 @@ import { FlatList, StyleSheet, Text } from 'react-native';
 import * as React from 'react';
 import Layout from '../../components/layout/Layout';
 import parseNodes from '../../utils/parseNodes';
-import { Channel, Stack } from '../../utils/types';
+import { FollowedChannel, FollowedStack, Stack } from '../../utils/types';
 import ChannelBox from '../../components/channelBox/ChannelBox';
-import useUserChannels from '../../hooks/useUserChannels';
-import useStacks from '../../hooks/useStacks';
+import useFollowedChannels from '../../hooks/useFollowedChannels';
+import useFollowedStacks from '../../hooks/useFollowedStacks';
 import StackBox from '../../components/stackBox/StackBox';
 
 /* eslint-disable no-underscore-dangle */
@@ -21,24 +21,24 @@ const styles = StyleSheet.create({
   },
 });
 
-type DataType = Stack | Channel;
+type DataType = FollowedStack | FollowedChannel;
 
-function isChannel(item: DataType): item is Channel {
+function isChannel(item: DataType): item is FollowedChannel {
   return item.__typename === 'Channel';
 }
 
 const Library = () => {
-  const [followedChannels, setFollowedChannels] = React.useState<Channel[]>([]);
-  const [userStacks, setUserStacks] = React.useState<Stack[]>([]);
+  const [followedChannels, setFollowedChannels] = React.useState<FollowedChannel[]>([]);
+  const [userStacks, setUserStacks] = React.useState<FollowedStack[]>([]);
 
   const [data, setData] = React.useState<DataType[]>([]);
 
-  const { channels: followedRaw, loading: channelLoad } = useUserChannels();
-  const { stacks: userStacksRaw, loading: stackLoad } = useStacks();
+  const { channels: followedRaw, loading: channelLoad } = useFollowedChannels("", "CONNECTION_DATE");
+  const { stacks: userStacksRaw, loading: stackLoad } = useFollowedStacks();
 
   React.useEffect(() => {
-    const followed = followedRaw ? parseNodes<Channel>(followedRaw) : [];
-    const userStacks = userStacksRaw ? parseNodes<Stack>(userStacksRaw) : [];
+    const followed = followedRaw ? parseNodes<FollowedChannel>(followedRaw) : [];
+    const userStacks = userStacksRaw ? parseNodes<FollowedStack>(userStacksRaw) : [];
     setFollowedChannels(followed);
     setUserStacks(userStacks);
   }, [followedRaw, userStacksRaw, setFollowedChannels, setUserStacks]);

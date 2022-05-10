@@ -12,6 +12,7 @@ export const typeDefs = gql`
     createdById: ID!
     createdAt: DateTime!
     updatedAt: DateTime!
+    connectionDate: DateTime
   }
 `;
 

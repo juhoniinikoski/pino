@@ -91,6 +91,43 @@ export const GET_QUESTIONS = gql`
   }
 `;
 
+export const GET_STACKS = gql`
+  query Stacks(
+    $public: Boolean
+    $createdBy: ID
+    $first: Int
+    $after: String
+    $searchKeyword: String
+  ) {
+    stacks(
+      first: $first
+      after: $after
+      createdBy: $createdBy
+      searchKeyword: $searchKeyword
+      public: $public
+    ) {
+      totalCount
+      edges {
+        node {
+          id
+          name
+          public
+          questions
+          followedBy
+          createdById
+          createdAt
+          updatedAt
+          tags {
+            id
+            name
+          }
+        }
+        cursor
+      }
+    }
+  }
+`;
+
 export const GET_AUTHORIZED_USER = gql`
   query authorizedUser {
     authorizedUser {

@@ -8,6 +8,7 @@ export const typeDefs = gql`
     updatedAt: DateTime!
     questions: Int!
     followedBy: Int!
+    connectionDate: DateTime
   }
 `;
 

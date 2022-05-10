@@ -1,5 +1,7 @@
 export interface Channel {
   __typename?: string;
+  createdAt: Date;
+  updatedAt: Date;
   followedBy: number;
   id: string;
   name: string;
@@ -21,6 +23,7 @@ export interface User {
 }
 
 export interface Stack {
+  __typename?: string;
   createdAt: Date;
   updatedAt: Date;
   createdById: string;

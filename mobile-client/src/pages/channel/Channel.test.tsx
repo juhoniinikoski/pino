@@ -1,11 +1,24 @@
 import { MockedProvider } from '@apollo/client/testing';
+import { NavigationContainer } from '@react-navigation/native';
 import { render, RenderAPI, waitFor } from '@testing-library/react-native';
 import React from 'react';
 import { GET_QUESTIONS } from '../../graphql/queries';
-import ChannelPage from './Channel';
+import Channel from './Channel';
 
 /* eslint-disable no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+const mockedNavigate = jest.fn();
+
+jest.mock('@react-navigation/native', () => {
+  const actualNav = jest.requireActual('@react-navigation/native');
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: mockedNavigate,
+    }),
+  };
+});
 
 const mocks = [
   {
@@ -164,14 +177,18 @@ describe('render tests', () => {
     props = createTestProps({});
     component = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <ChannelPage route={props.route} navigation={props.navigation} />
+        <NavigationContainer>
+          <Channel route={props.route} navigation={props.navigation} />
+        </NavigationContainer>
       </MockedProvider>,
     );
   });
 
   test('should display a name of the channel', async () => {
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    await waitFor(() => {
+      const tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
+    })
   });
 
   test('should show loading indicator when questions are loaded', async () => {

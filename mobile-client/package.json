@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "lint": "eslint --fix --ext .ts --ext .tsx .",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "coverage": "CI=true npm test -- --coverage"
   },
   "dependencies": {

@@ -6,6 +6,8 @@ import { v4 as uuid } from 'uuid';
 import { AuthenticationError } from 'apollo-server';
 import { StackChannel } from '../../models/StackChannel';
 import { InvalidIdError } from '../errors';
+import AuthService from '../authentication/authService';
+import { UserStack } from '../../models/UserStack';
 
 interface Args {
   first?: number;
@@ -15,6 +17,7 @@ interface Args {
   searchKeyword?: string;
   createdBy?: number | string;
   public?: boolean;
+  followedByAutohrized?: boolean
 }
 
 interface EdgeType {
@@ -36,16 +39,27 @@ const argsSchema = object({
   searchKeyword: string().trim(),
   createdBy: string().trim(),
   public: boolean(),
+  followedByAuthorized: boolean()
 });
 
 const getLikeFilter = (value: string) => `%${value}%`;
 
-export const getStacks = async (args: Args): Promise<StackConnection> => {
+export const getStacks = async (args: Args, authService: AuthService): Promise<StackConnection> => {
   const normalizedArgs = await argsSchema.validate(args);
 
-  const { first, orderDirection, after, searchKeyword, createdBy, public: publicStack } = normalizedArgs;
+  const { first, orderDirection, after, searchKeyword, createdBy, public: publicStack, followedByAuthorized } = normalizedArgs;
 
   let query = Stack.query();
+
+  if (followedByAuthorized) {
+    const user = await authService.getAuthorizedUserOrFail();
+    query = query
+      .where('id', 'in', UserStack.query().where('userId', user.id).select('stackId'))
+      .select(
+        '*',
+        Stack.relatedQuery('followedBy').where('userId', user.id).select('createdAt').as('connectionDate'),
+      );
+  }
 
   if (publicStack) {
     query = query.where('public', true);

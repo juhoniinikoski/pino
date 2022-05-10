@@ -13,6 +13,7 @@ class ChannelClass extends BaseModel {
   updatedAt: Date;
   followedBy: number;
   questions: number;
+  connectionDate?: Date;
 
   static relationMappings = {
     questions: {

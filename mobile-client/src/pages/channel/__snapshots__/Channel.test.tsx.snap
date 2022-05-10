@@ -81,6 +81,65 @@ exports[`render tests should render a list containing questions succesfully 1`] 
   >
     <View />
   </RCTScrollView>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EFEFEF",
+        "borderRadius": 100,
+        "bottom": 16,
+        "display": "flex",
+        "height": 64,
+        "justifyContent": "center",
+        "position": "absolute",
+        "right": 0,
+        "shadowColor": "black",
+        "shadowOffset": Object {
+          "height": 4,
+          "width": 0,
+        },
+        "shadowOpacity": 0.08,
+        "shadowRadius": 8,
+        "width": 64,
+      }
+    }
+    testID="button"
+  >
+    <Text
+      allowFontScaling={false}
+      style={
+        Array [
+          Object {
+            "color": "black",
+            "fontSize": 28,
+          },
+          Object {
+            "marginLeft": 6,
+          },
+          Object {
+            "fontFamily": "FontAwesome",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+          Object {},
+        ]
+      }
+    >
+      
+    </Text>
+  </View>
 </RNCSafeAreaView>
 `;
 

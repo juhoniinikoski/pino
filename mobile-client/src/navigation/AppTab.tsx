@@ -2,14 +2,14 @@ import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View } from 'react-native';
-import ChannelsPage from '../pages/channels/Channels';
-import ChannelPage from '../pages/channel/Channel';
+import ChannelsPage from '../pages/library/Library';
+import LibraryPage from '../pages/channel/Channel';
 import { Channel } from '../utils/types';
 import CustomTitle from '../components/common/CustomTitle';
 import FollowBox from '../components/followBox/FollowBox';
 
 const Tab = createBottomTabNavigator();
-const ChanStack = createNativeStackNavigator<ChannelStackParamList>();
+const Stack = createNativeStackNavigator<LibraryStackParamList>();
 
 const PlaceHolderIcon = () => {
   return (
@@ -24,12 +24,12 @@ const PlaceHolderIcon = () => {
   );
 };
 
-export type ChannelStackParamList = {
-  Channels: undefined;
+export type LibraryStackParamList = {
+  Library: undefined;
   Channel: { channel: Channel; followedByUser: boolean };
 };
 
-const ChannelStack = () => {
+const LibraryStack = () => {
   const HeaderTitle = React.useCallback(
     title => <CustomTitle title={title} />,
     [],
@@ -43,21 +43,21 @@ const ChannelStack = () => {
   );
 
   return (
-    <ChanStack.Navigator
-      initialRouteName="Channels"
+    <Stack.Navigator
+      initialRouteName="Library"
       screenOptions={{ headerTintColor: 'black', headerBackTitle: '' }}
     >
-      <ChanStack.Screen name="Channels" component={ChannelsPage} />
-      <ChanStack.Screen
+      <Stack.Screen name="Library" component={ChannelsPage} />
+      <Stack.Screen
         name="Channel"
-        component={ChannelPage}
+        component={LibraryPage}
         options={({ route }) => ({
           headerTitle: () => HeaderTitle(route.params.channel.name),
           headerRight: () =>
             HeaderRight(route.params.channel, route.params.followedByUser),
         })}
       />
-    </ChanStack.Navigator>
+    </Stack.Navigator>
   );
 };
 
@@ -70,7 +70,7 @@ const AppTab = () => {
         tabBarIcon: IconComponent,
       }}
     >
-      <Tab.Screen name="Kanavat" component={ChannelStack} />
+      <Tab.Screen name="Kanavat" component={LibraryStack} />
     </Tab.Navigator>
   );
 };

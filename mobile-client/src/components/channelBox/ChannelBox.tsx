@@ -5,7 +5,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import BodyText from '../common/BodyText';
 import { Channel } from '../../utils/types';
-import { ChannelStackParamList } from '../../navigation/AppTab';
+import { LibraryStackParamList } from '../../navigation/AppTab';
 import FollowBox from '../followBox/FollowBox';
 
 const styles = StyleSheet.create({
@@ -20,10 +20,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  textContainer: {
+    display: 'flex',
+    alignItems: 'flex-start',
+  },
   nameContainer: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    marginLeft: -4,
   },
   followContainer: {
     height: 36,
@@ -42,7 +47,7 @@ type Props = {
   followedByUser: boolean;
 };
 
-type NavigationProps = NativeStackNavigationProp<ChannelStackParamList>;
+type NavigationProps = NativeStackNavigationProp<LibraryStackParamList>;
 
 const ChannelBox = ({ channel, followedByUser }: Props) => {
   const navigation = useNavigation<NavigationProps>();
@@ -57,9 +62,12 @@ const ChannelBox = ({ channel, followedByUser }: Props) => {
       style={styles.container}
       onPress={handlePress}
     >
-      <View style={styles.nameContainer}>
-        <MaterialIcons name="tag" size={24} color="black" />
-        <BodyText style={{ marginLeft: 2 }}>{channel.name}</BodyText>
+      <View style={styles.textContainer}>
+        <View style={styles.nameContainer}>
+          <MaterialIcons name="tag" size={24} color="black" />
+          <BodyText style={{ marginLeft: 2 }}>{channel.name}</BodyText>
+        </View>
+        <BodyText textType="secondary">{channel.questions} tehtävää</BodyText>
       </View>
       <FollowBox channel={channel} followedByUser={followedByUser} />
     </Pressable>

@@ -57,7 +57,12 @@ export const getChannels = async (args: Args, authService: AuthService): Promise
 
   if (followedByAuthorized) {
     const user = await authService.getAuthorizedUserOrFail();
-    query = query.where('id', 'in', UserChannel.query().where('userId', user.id).select('channelId'));
+    query = query
+      .where('id', 'in', UserChannel.query().where('userId', user.id).select('channelId'))
+      .select(
+        '*',
+        Channel.relatedQuery('followedBy').where('userId', user.id).select('createdAt').as('connectionDate'),
+      );
   }
 
   if (searchKeyword) {

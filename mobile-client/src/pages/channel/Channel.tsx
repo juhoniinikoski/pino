@@ -2,11 +2,12 @@ import { Text, StyleSheet, FlatList, View } from 'react-native';
 import * as React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Layout from '../../components/layout/Layout';
-import { ChannelStackParamList } from '../../navigation/AppTab';
+import { LibraryStackParamList } from '../../navigation/AppTab';
 import useChannelQuestions from '../../hooks/useChannelQuestions';
 import { Question } from '../../utils/types';
 import parseNodes from '../../utils/parseNodes';
 import QuestionBox from '../../components/questionBox/QuestionBox';
+import NewQuestionButton from '../../components/newQuestionButton/NewQuestionButton';
 
 const styles = StyleSheet.create({
   loadingText: {
@@ -19,9 +20,9 @@ const styles = StyleSheet.create({
   },
 });
 
-type Props = NativeStackScreenProps<ChannelStackParamList, 'Channel'>;
+type Props = NativeStackScreenProps<LibraryStackParamList, 'Channel'>;
 
-const ChannelPage = ({ route }: Props) => {
+const Channel = ({ route }: Props) => {
   const { questions: raw, loading } = useChannelQuestions(
     route.params.channel.id,
   );
@@ -51,7 +52,7 @@ const ChannelPage = ({ route }: Props) => {
   return (
     <Layout>
       <FlatList
-        testID='question-list'
+        testID="question-list"
         data={questions}
         keyExtractor={item => item.id}
         ItemSeparatorComponent={SeparatorItem}
@@ -59,8 +60,9 @@ const ChannelPage = ({ route }: Props) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       />
+      <NewQuestionButton channelId={route.params.channel.id} />
     </Layout>
   );
 };
 
-export default ChannelPage;
+export default Channel;

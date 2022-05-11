@@ -19,8 +19,8 @@ export const resolvers = {
   Collection: {
     __resolveType: (collection: CollectionClass) => {
       if (collection.type === 'channel') {
-        return 'Channel'
-      } else return 'Stack'
+        return 'Channel';
+      } else return 'Stack';
     },
   },
 };

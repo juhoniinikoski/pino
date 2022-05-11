@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { render, RenderAPI, waitFor } from '@testing-library/react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import StackBox from './StackBox';
 
 const mockStack = {
@@ -18,7 +19,11 @@ describe('rendering tests', () => {
   let component: RenderAPI;
 
   beforeEach(() => {
-    component = render(<StackBox stack={mockStack} />);
+    component = render(
+      <NavigationContainer>
+        <StackBox stack={mockStack} followedByUser />
+      </NavigationContainer>,
+    );
   });
 
   test('should display the name of the stack', async () => {

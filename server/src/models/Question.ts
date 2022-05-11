@@ -1,7 +1,6 @@
 import BaseModel from './BaseModel';
 import knex from '../utils/knex';
 import { Model } from 'objection';
-import collectionClass from './collection';
 import CollectionClass from './Collection';
 import AnswerClass from './Answer';
 

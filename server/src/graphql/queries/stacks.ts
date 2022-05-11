@@ -26,7 +26,7 @@ interface Args {
   public?: boolean;
   createdBy?: number | string;
   searchKeyword?: string;
-  followedByAuthorized?: boolean
+  followedByAuthorized?: boolean;
 }
 
 export const resolvers = {

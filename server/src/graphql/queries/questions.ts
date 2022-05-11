@@ -6,13 +6,7 @@ export const typeDefs = gql`
     """
     Returns questions related to given params.
     """
-    questions(
-      first: Int
-      after: String
-      orderBy: String
-      createdBy: ID
-      collectionId: ID
-    ): QuestionConnection!
+    questions(first: Int, after: String, orderBy: String, createdBy: ID, collectionId: ID): QuestionConnection!
   }
 `;
 
@@ -22,7 +16,7 @@ interface Args {
   after?: string;
   orderBy?: string;
   createdBy?: number | string;
-  collectionId?: string | number
+  collectionId?: string | number;
 }
 
 export const resolvers = {

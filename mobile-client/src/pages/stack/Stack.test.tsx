@@ -2,8 +2,8 @@ import { MockedProvider } from '@apollo/client/testing';
 import { NavigationContainer } from '@react-navigation/native';
 import { render, RenderAPI, waitFor } from '@testing-library/react-native';
 import React from 'react';
-import { GET_QUESTIONS } from '../../graphql/queries';
-import Channel from './Channel';
+import { GET_AUTHORIZED_USER, GET_QUESTIONS } from '../../graphql/queries';
+import Stack from './Stack';
 
 /* eslint-disable no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -25,7 +25,7 @@ const mocks = [
     request: {
       query: GET_QUESTIONS,
       variables: {
-        channelId: 'kauppikseen1234',
+        stackId: 'kauppis-yh1234stack',
       },
     },
     result: {
@@ -150,6 +150,19 @@ const mocks = [
       ],
     },
   },
+  {
+    request: {
+      query: GET_AUTHORIZED_USER,
+    },
+    result: {
+      data: {
+        authorizedUser: {
+          id: 'bbe42984-051b-4a01-b45d-b8d29c32200c',
+          email: 'testi1@gmail.com',
+        },
+      },
+    },
+  },
 ];
 
 const createTestProps = (props: Record<string, unknown>) => ({
@@ -158,10 +171,29 @@ const createTestProps = (props: Record<string, unknown>) => ({
   },
   route: {
     params: {
-      channel: {
+      stack: {
         followedBy: 2,
-        id: 'kauppikseen1234',
-        name: 'kauppikseen',
+        id: 'kauppis-yh1234stack',
+        name: 'kauppis-yh',
+        createdById: 'bbe42984-051b-4a01-b45d-b8d29c32200c',
+        questions: 4,
+      },
+    },
+  },
+  ...props,
+});
+
+const createTestProps2 = (props: Record<string, unknown>) => ({
+  navigation: {
+    navigate: jest.fn(),
+  },
+  route: {
+    params: {
+      stack: {
+        followedBy: 2,
+        id: 'yomatematiikka1234stack',
+        name: 'yomatematiikka',
+        createdById: 'jokumuu',
         questions: 4,
       },
     },
@@ -178,30 +210,61 @@ describe('render tests', () => {
     component = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <NavigationContainer>
-          <Channel route={props.route} navigation={props.navigation} />
+          <Stack route={props.route} navigation={props.navigation} />
         </NavigationContainer>
       </MockedProvider>,
     );
   });
 
-  test('should display a name of the channel (channelpage)', async () => {
+  test('should display a name of the stack', async () => {
     await waitFor(() => {
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     });
   });
 
-  test('should show loading indicator when questions are loaded (channelpage)', async () => {
+  test('should show loading indicator when questions are loaded', async () => {
     await waitFor(() => {
       expect(component.getByText('Loading')).toBeTruthy;
       expect(component).toMatchSnapshot();
     });
   });
 
-  test('should render a list containing questions succesfully (channelpage)', async () => {
+  test('should render a list containing questions succesfully', async () => {
     await waitFor(async () => {
       expect(component.getAllByTestId('question-list').length).toBe(1);
       expect(component).toMatchSnapshot();
     });
   });
+  
+  test('should render add question button succesfully', async () => {
+    await waitFor(async () => {
+      expect(component.getByTestId('add-question')).toBeDefined;
+      expect(component).toMatchSnapshot();
+    });
+  });
 });
+
+describe('add question button responsibility', () => {
+  let component: RenderAPI;
+  let props: any;
+
+  beforeEach(() => {
+    props = createTestProps2({});
+    component = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <NavigationContainer>
+          <Stack route={props.route} navigation={props.navigation} />
+        </NavigationContainer>
+      </MockedProvider>,
+    );
+  });
+
+  test(
+    'if stack is not made by authorized user, it should not display new question button', async () => {
+      await waitFor(async () => {
+        expect(component.queryByTestId('add-question')).toBeNull()
+        expect(component).toMatchSnapshot();
+      });
+    });
+})

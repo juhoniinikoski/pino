@@ -13,8 +13,7 @@ interface Args {
   orderBy?: string;
   orderDirection?: string;
   searchKeyword?: string;
-  stackId?: number | string;
-  channelId?: number | string;
+  collectionId?: string | number;
   createdBy?: number | string;
 }
 
@@ -36,7 +35,7 @@ const argsSchema = object({
   orderBy: string().default('CREATED_AT'),
   searchKeyword: string().trim(),
   createdBy: string().trim(),
-  collectionId: string().trim()
+  collectionId: string().trim(),
 });
 
 const getLikeFilter = (value: string) => `%${value}%`;

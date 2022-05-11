@@ -98,7 +98,10 @@ export const followCollection = async (
   collectionId: string | number,
   authorizedUser: UserClass,
 ): Promise<string | number> => {
-  const alreadyFollowing = await UserCollection.query().where({ userId: authorizedUser.id, collectionId: collectionId });
+  const alreadyFollowing = await UserCollection.query().where({
+    userId: authorizedUser.id,
+    collectionId: collectionId,
+  });
 
   if (alreadyFollowing.length !== 0) {
     await UserCollection.query().where({ userId: authorizedUser.id, collectionId: collectionId }).delete();

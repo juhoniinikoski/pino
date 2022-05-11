@@ -8,6 +8,7 @@ import { Question } from '../../utils/types';
 import parseNodes from '../../utils/parseNodes';
 import QuestionBox from '../../components/questionBox/QuestionBox';
 import NewQuestionButton from '../../components/newQuestionButton/NewQuestionButton';
+import useAuthorizedUser from '../../hooks/useAuthorizedUser';
 
 const styles = StyleSheet.create({
   loadingText: {
@@ -20,11 +21,15 @@ const styles = StyleSheet.create({
   },
 });
 
-type Props = NativeStackScreenProps<LibraryStackParamList, 'Channel'>;
+type Props = NativeStackScreenProps<LibraryStackParamList, 'Stack'>;
 
-const Channel = ({ route }: Props) => {
-  const { questions: raw, loading } = useQuestions(route.params.channel.id);
+const Stack = ({ route }: Props) => {
+  const { stack } = route.params;
+
+  const { questions: raw, loading } = useQuestions(stack.id);
   const questions = raw ? parseNodes<Question>(raw) : [];
+
+  const { user } = useAuthorizedUser();
 
   const SeparatorItem = React.useCallback(
     () => (
@@ -58,9 +63,11 @@ const Channel = ({ route }: Props) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       />
-      <NewQuestionButton channelId={route.params.channel.id} />
+      {user && user.id === stack.createdById && (
+        <View testID="add-question"><NewQuestionButton stackId={stack.id} /></View>
+      )}
     </Layout>
   );
 };
 
-export default Channel;
+export default Stack;

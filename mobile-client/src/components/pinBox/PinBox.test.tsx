@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react-native';
-import FollowBox from './FollowBox';
+import PinBox from './PinBox';
 
 /* eslint-disable no-unused-expressions */
 
@@ -11,6 +11,8 @@ const mockProps = {
     name: 'kauppikseen',
     followedBy: 2,
     questions: 4,
+    updatedAt: new Date('2022-05-07T10:50:58.983Z'),
+    createdAt: new Date('2022-05-07T10:50:58.983Z'),
   },
   followedByUser: true,
 };
@@ -21,6 +23,8 @@ const mockProps2 = {
     name: 'kauppikseen',
     followedBy: 2,
     questions: 4,
+    updatedAt: new Date('2022-05-07T10:50:58.983Z'),
+    createdAt: new Date('2022-05-07T10:50:58.983Z'),
   },
   followedByUser: false,
 };
@@ -29,7 +33,7 @@ describe('rendering tests', () => {
   test('should render a follower count', async () => {
     const { getByText } = render(
       <MockedProvider>
-        <FollowBox
+        <PinBox
           channel={mockProps.channel}
           followedByUser={mockProps.followedByUser}
         />
@@ -40,26 +44,26 @@ describe('rendering tests', () => {
   test('should be colored by if its followed by user', async () => {
     const { getByTestId } = render(
       <MockedProvider>
-        <FollowBox
+        <PinBox
           channel={mockProps.channel}
           followedByUser={mockProps.followedByUser}
         />
       </MockedProvider>,
     );
-    const element = getByTestId('icon');
-    expect(element.props.style[0].color).toEqual('red');
+    const element = getByTestId('pin');
+    expect(element.props.style[0].color).toEqual('white');
   });
 
   test('should not be colored by if it is not followed by user', async () => {
     const { getByTestId } = render(
       <MockedProvider>
-        <FollowBox
+        <PinBox
           channel={mockProps2.channel}
           followedByUser={mockProps2.followedByUser}
         />
       </MockedProvider>,
     );
-    const element = getByTestId('icon');
+    const element = getByTestId('pin');
     expect(element.props.style[0].color).toEqual('black');
   });
 });

@@ -1,12 +1,11 @@
 import { Pressable, StyleSheet, View } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, Entypo } from '@expo/vector-icons';
 import * as React from 'react';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import BodyText from '../common/BodyText';
 import { Channel } from '../../utils/types';
 import { LibraryStackParamList } from '../../navigation/AppTab';
-import FollowBox from '../followBox/FollowBox';
 
 const styles = StyleSheet.create({
   container: {
@@ -69,7 +68,7 @@ const ChannelBox = ({ channel, followedByUser }: Props) => {
         </View>
         <BodyText textType="secondary">{channel.questions} tehtävää</BodyText>
       </View>
-      <FollowBox channel={channel} followedByUser={followedByUser} />
+      <Entypo name="pin" size={20} color="#DADADA" />
     </Pressable>
   );
 };

@@ -1,11 +1,11 @@
 import { Pressable, StyleSheet } from 'react-native';
 import React from 'react';
-import { Ionicons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 import { useMutation } from '@apollo/client';
 import BodyText from '../common/BodyText';
-import { FOLLOW_CHANNEL } from '../../graphql/mutations';
+import { FOLLOW_COLLECTION } from '../../graphql/mutations';
 import { Channel } from '../../utils/types';
-import { GET_USERS_CHANNELS } from '../../graphql/queries';
+import { GET_FOLLOWED } from '../../graphql/queries';
 
 const styles = StyleSheet.create({
   followContainer: {
@@ -24,9 +24,9 @@ type Props = {
   followedByUser: boolean;
 };
 
-const FollowBox = ({ channel, followedByUser }: Props) => {
-  const [followChannel] = useMutation(FOLLOW_CHANNEL, {
-    refetchQueries: [GET_USERS_CHANNELS],
+const PinBox = ({ channel, followedByUser }: Props) => {
+  const [followChannel] = useMutation(FOLLOW_COLLECTION, {
+    refetchQueries: [GET_FOLLOWED],
   });
 
   const [followed, setFollowed] = React.useState<boolean>(followedByUser);
@@ -40,7 +40,7 @@ const FollowBox = ({ channel, followedByUser }: Props) => {
     } else {
       setFollowerCount(followerCount + 1);
     }
-    followChannel({ variables: { channelId: channel.id } });
+    followChannel({ variables: { collectionId: channel.id } });
     setFollowed(!followed);
   };
 
@@ -53,10 +53,13 @@ const FollowBox = ({ channel, followedByUser }: Props) => {
         }}
         onPress={handlePress}
       >
-        <BodyText style={{ marginRight: 4 }} textType="medium-light">
+        <BodyText
+          style={{ marginRight: 6, color: 'white' }}
+          textType="medium-light"
+        >
           {followerCount}
         </BodyText>
-        <Ionicons testID="icon" name="heart" size={20} color="red" />
+        <Entypo testID="pin" name="pin" size={18} color="white" />
       </Pressable>
     );
   }
@@ -65,16 +68,16 @@ const FollowBox = ({ channel, followedByUser }: Props) => {
     <Pressable
       style={{
         ...styles.followContainer,
-        backgroundColor: '#EFEFEF',
+        backgroundColor: 'pink',
       }}
       onPress={handlePress}
     >
-      <BodyText style={{ marginRight: 4 }} textType="medium-light">
+      <BodyText style={{ marginRight: 6 }} textType="medium-light">
         {followerCount}
       </BodyText>
-      <Ionicons testID="icon" name="heart-outline" size={20} color="black" />
+      <Entypo testID="pin" name="pin" size={18} color="black" />
     </Pressable>
   );
 };
 
-export default FollowBox;
+export default PinBox;

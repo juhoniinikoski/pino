@@ -1,91 +1,49 @@
 import * as React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, RenderAPI, waitFor } from '@testing-library/react-native';
-import { GET_CHANNELS, GET_STACKS } from '../../graphql/queries';
+import { GET_FOLLOWED } from '../../graphql/queries';
 import Library from './Library';
 
-jest.useFakeTimers()
+jest.useFakeTimers();
 
 /* eslint-disable no-unused-expressions */
 
 const mocks = [
   {
     request: {
-      query: GET_CHANNELS,
+      query: GET_FOLLOWED,
     },
     result: {
       data: [
         {
-          cursor:
-            'WyIyMDIyLTA0LTI4VDA4OjEyOjQ2LjI0MVoiLCJrYXVwcGlrc2VlbjEyMzQiXQ==',
           node: {
-            followedBy: 2,
-            id: 'kauppikseen1234',
-            name: 'kauppikseen',
-            questions: 4,
-          },
-        },
-        {
-          cursor: 'WyIyMDIyLTA0LTI4VDA3OjEyOjQ2LjI0MVoiLCJESUEyMDIyMTIzNCJd',
-          node: {
+            id: 'DIA20221234channel',
+            name: 'DIA2022',
             followedBy: 1,
-            id: 'DIA20221234',
-            name: 'DIA2022',
             questions: 1,
+            connectionDate: '2022-05-11T10:36:25.877Z',
           },
-        },
-      ],
-    },
-  },
-  {
-    request: {
-      query: GET_STACKS,
-    },
-    result: {
-      data: [
-        {
-          cursor:
-            'WyIyMDIyLTA1LTA3VDEyOjUwOjU5LjE3N1oiLCJrYXVwcGlzLXloMTIzNCJd',
-          node: {
-            id: 'kauppis-yh1234',
-            name: 'kauppis-yh',
-            public: false,
-            questions: 3,
-            followedBy: 0,
-            createdById: 'bbe42984-051b-4a01-b45d-b8d29c32200c',
-            createdAt: '2022-05-07T12:50:59.177Z',
-            updatedAt: '2022-05-07T12:50:59.177Z',
-            tags: [],
-          },
+          cursor: 'WzE2NTIyNjUzODU4NzcsIkRJQTIwMjIxMjM0Y2hhbm5lbCJd',
         },
         {
-          cursor: 'WyIyMDIyLTA1LTA3VDExOjUwOjU5LjE3N1oiLCJESUEyMDIyMTIzNCJd',
           node: {
-            id: 'DIA20221234',
+            id: 'DIA20221234stack',
             name: 'DIA2022',
-            public: false,
+            followedBy: 1,
             questions: 0,
-            followedBy: 0,
-            createdById: 'bbe42984-051b-4a01-b45d-b8d29c32200c',
-            createdAt: '2022-05-07T11:50:59.177Z',
-            updatedAt: '2022-05-07T11:50:59.177Z',
-            tags: [],
+            connectionDate: '2022-05-11T10:36:25.877Z',
           },
+          cursor: 'WzE2NTIyNjUzODU4NzcsIkRJQTIwMjIxMjM0c3RhY2siXQ==',
         },
         {
-          cursor:
-            'WyIyMDIyLTA1LTA3VDEwOjUwOjU5LjE3N1oiLCJ5b21hdGVtYXRpaWtrYTEyMzQiXQ==',
           node: {
-            id: 'yomatematiikka1234',
-            name: 'yomatematiikka',
-            public: false,
-            questions: 0,
-            followedBy: 0,
-            createdById: 'bbe42984-051b-4a01-b45d-b8d29c32200c',
-            createdAt: '2022-05-07T10:50:59.177Z',
-            updatedAt: '2022-05-07T10:50:59.177Z',
-            tags: [],
+            id: 'kauppikseen1234channel',
+            name: 'kauppikseen',
+            followedBy: 2,
+            questions: 4,
+            connectionDate: '2022-05-11T09:36:25.925Z',
           },
+          cursor: 'WzE2NTIyNjE3ODU5MjUsImthdXBwaWtzZWVuMTIzNGNoYW5uZWwiXQ==',
         },
       ],
     },
@@ -97,7 +55,7 @@ describe('rendering tests', () => {
 
   beforeEach(() => {
     component = render(
-      <MockedProvider mocks={mocks} addTypename={true}>
+      <MockedProvider mocks={mocks} addTypename>
         <Library />
       </MockedProvider>,
     );
@@ -106,13 +64,13 @@ describe('rendering tests', () => {
   test('should show loading indicator when data is initially loaded', async () => {
     await waitFor(() => {
       expect(component.getByText('Loading')).toBeTruthy;
-    })
+    });
   });
-  
+
   test('should render the flatlist when not loading', async () => {
     await waitFor(async () => {
       expect(component.getAllByTestId('library-list').length).toBe(1);
       expect(component).toMatchSnapshot();
     });
-  })
+  });
 });

@@ -2,10 +2,9 @@ import { FlatList, StyleSheet, Text } from 'react-native';
 import * as React from 'react';
 import Layout from '../../components/layout/Layout';
 import parseNodes from '../../utils/parseNodes';
-import { FollowedChannel, FollowedStack, Stack } from '../../utils/types';
+import { FollowedChannel, FollowedStack } from '../../utils/types';
 import ChannelBox from '../../components/channelBox/ChannelBox';
-import useFollowedChannels from '../../hooks/useFollowedChannels';
-import useFollowedStacks from '../../hooks/useFollowedStacks';
+import useFollowedCollections from '../../hooks/useFollowedCollections';
 import StackBox from '../../components/stackBox/StackBox';
 
 /* eslint-disable no-underscore-dangle */
@@ -28,31 +27,21 @@ function isChannel(item: DataType): item is FollowedChannel {
 }
 
 const Library = () => {
-  const [followedChannels, setFollowedChannels] = React.useState<FollowedChannel[]>([]);
-  const [userStacks, setUserStacks] = React.useState<FollowedStack[]>([]);
-
   const [data, setData] = React.useState<DataType[]>([]);
 
-  const { channels: followedRaw, loading: channelLoad } = useFollowedChannels("", "CONNECTION_DATE");
-  const { stacks: userStacksRaw, loading: stackLoad } = useFollowedStacks();
+  const { followedCollections: followedRaw, loading } = useFollowedCollections(
+    '',
+    'CONNECTION_DATE',
+  );
 
   React.useEffect(() => {
-    const followed = followedRaw ? parseNodes<FollowedChannel>(followedRaw) : [];
-    const userStacks = userStacksRaw ? parseNodes<FollowedStack>(userStacksRaw) : [];
-    setFollowedChannels(followed);
-    setUserStacks(userStacks);
-  }, [followedRaw, userStacksRaw, setFollowedChannels, setUserStacks]);
+    const followed = followedRaw
+      ? parseNodes<FollowedChannel>(followedRaw)
+      : [];
+    setData(followed);
+  }, [followedRaw, setData]);
 
-  React.useEffect(() => {
-    if (!(channelLoad || stackLoad)) {
-      setData([...followedChannels, ...userStacks]);
-    }
-  }, [followedChannels, userStacks, channelLoad, stackLoad]);
-
-  if (
-    (channelLoad || stackLoad) &&
-    (!followedChannels.length || !userStacks.length)
-  ) {
+  if (loading && !data.length) {
     return (
       <Layout>
         <Text style={styles.channelLoadText}>Loading</Text>
@@ -63,14 +52,14 @@ const Library = () => {
   return (
     <Layout>
       <FlatList
-      testID='library-list'
+        testID="library-list"
         data={data}
         keyExtractor={(item: DataType) => item.id + item.__typename}
         renderItem={({ item }) =>
           isChannel(item) ? (
             <ChannelBox channel={item} followedByUser />
           ) : (
-            <StackBox stack={item} />
+            <StackBox stack={item} followedByUser />
           )
         }
       />

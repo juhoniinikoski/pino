@@ -16,7 +16,7 @@ interface Args {
   searchKeyword?: string;
   createdBy?: number | string;
   public?: boolean;
-  followedByAutohrized?: boolean
+  followedByAutohrized?: boolean;
 }
 
 interface EdgeType {
@@ -38,7 +38,7 @@ const argsSchema = object({
   searchKeyword: string().trim(),
   createdBy: string().trim(),
   public: boolean(),
-  followedByAuthorized: boolean()
+  followedByAuthorized: boolean(),
 });
 
 const getLikeFilter = (value: string) => `%${value}%`;
@@ -46,9 +46,18 @@ const getLikeFilter = (value: string) => `%${value}%`;
 export const getStacks = async (args: Args, authService: AuthService): Promise<StackConnection> => {
   const normalizedArgs = await argsSchema.validate(args);
 
-  const { first, orderDirection, after, orderBy, searchKeyword, createdBy, public: publicStack, followedByAuthorized } = normalizedArgs;
+  const {
+    first,
+    orderDirection,
+    after,
+    orderBy,
+    searchKeyword,
+    createdBy,
+    public: publicStack,
+    followedByAuthorized,
+  } = normalizedArgs;
 
-  let query = Collection.query().where({type: 'stack'});
+  let query = Collection.query().where({ type: 'stack' });
 
   if (followedByAuthorized) {
     const user = await authService.getAuthorizedUserOrFail();
@@ -98,7 +107,7 @@ export const getStack = async (id: string | number): Promise<CollectionClass> =>
       '*',
       Collection.relatedQuery('questions').count().as('questions'),
       Collection.relatedQuery('followedBy').count().as('followedBy'),
-    )
+    );
 
 const stackSchema = object({
   name: string().required(),

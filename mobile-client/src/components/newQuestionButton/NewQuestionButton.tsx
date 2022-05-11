@@ -39,7 +39,11 @@ const NewQuestionButton = ({ channelId, stackId }: Props) => {
   };
 
   return (
-    <Pressable testID="button" style={styles.container} onPress={handlePress}>
+    <Pressable
+      testID='button'
+      style={styles.container}
+      onPress={handlePress}
+    >
       <FontAwesome
         style={{ marginLeft: 6 }}
         name="pencil-square-o"

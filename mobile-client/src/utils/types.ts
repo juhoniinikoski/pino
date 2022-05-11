@@ -8,14 +8,7 @@ export interface Channel {
   questions: number;
 }
 
-export interface FollowedChannel {
-  __typename?: string;
-  createdAt: Date;
-  updatedAt: Date;
-  followedBy: number;
-  id: string;
-  name: string;
-  questions: number;
+export interface FollowedChannel extends Channel {
   connectionDate: Date;
 }
 
@@ -46,17 +39,7 @@ export interface Stack {
   tags: Channel[];
 }
 
-export interface FollowedStack {
-  __typename?: string;
-  createdAt: Date;
-  updatedAt: Date;
-  createdById: string;
-  followedBy: number;
-  id: string;
-  name: string;
-  public: boolean;
-  questions: number;
-  tags: Channel[];
+export interface FollowedStack extends Stack {
   connectionDate: Date;
 }
 

@@ -8,8 +8,8 @@ export const AUTHORIZE = gql`
   }
 `;
 
-export const FOLLOW_CHANNEL = gql`
-  mutation followChannel($channelId: ID!) {
-    followChannel(channelId: $channelId)
+export const FOLLOW_COLLECTION = gql`
+  mutation followCollection($collectionId: ID!) {
+    followCollection(collectionId: $collectionId)
   }
 `;

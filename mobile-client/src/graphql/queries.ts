@@ -22,22 +22,35 @@ export const GET_CHANNELS = gql`
   }
 `;
 
-export const GET_FOLLOWED_CHANNELS = gql`
-  query Channels($first: Int, $after: String, $searchKeyword: String) {
-    channels(
+export const GET_FOLLOWED = gql`
+  query FollowedCollections(
+    $first: Int
+    $after: String
+    $searchKeyword: String
+  ) {
+    followedCollections(
       first: $first
       after: $after
       searchKeyword: $searchKeyword
-      followedByAuthorized: true
       orderBy: "connectionDate"
     ) {
       edges {
         node {
-          id
-          name
-          followedBy
-          questions
-          connectionDate
+          ... on Stack {
+            id
+            name
+            followedBy
+            questions
+            connectionDate
+            createdById
+          }
+          ... on Channel {
+            id
+            name
+            followedBy
+            questions
+            connectionDate
+          }
         }
         cursor
       }
@@ -53,15 +66,13 @@ export const GET_FOLLOWED_CHANNELS = gql`
 
 export const GET_QUESTIONS = gql`
   query Questions(
-    $channelId: ID
-    $stackId: ID
+    $collectionId: ID
     $createdBy: ID
     $first: Int
     $after: String
   ) {
     questions(
-      channelId: $channelId
-      stackId: $stackId
+      collectionId: $collectionId
       createdBy: $createdBy
       first: $first
       after: $after
@@ -93,44 +104,8 @@ export const GET_QUESTIONS = gql`
   }
 `;
 
-export const GET_FOLLOWED_STACKS = gql`
-  query Stacks(
-    $first: Int
-    $after: String
-    $searchKeyword: String
-  ) {
-    stacks(
-      first: $first
-      after: $after
-      searchKeyword: $searchKeyword
-      orderBy: "connectionDate"
-      followedByAuthorized: true
-    ) {
-      totalCount
-      edges {
-        node {
-          id
-          name
-          public
-          questions
-          followedBy
-          createdById
-          createdAt
-          updatedAt
-          connectionDate
-          tags {
-            id
-            name
-          }
-        }
-        cursor
-      }
-    }
-  }
-`;
-
 export const GET_AUTHORIZED_USER = gql`
-  query authorizedUser {
+  query AuthorizedUser {
     authorizedUser {
       id
       email

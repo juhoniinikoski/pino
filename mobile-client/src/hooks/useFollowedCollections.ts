@@ -1,10 +1,9 @@
 import { useQuery } from '@apollo/client';
-import { GET_QUESTIONS } from '../graphql/queries';
+import { GET_FOLLOWED } from '../graphql/queries';
 import parseSortBy from '../utils/parseSortBy';
-import { Connection, Question } from '../utils/types';
+import { Connection, FollowedChannel } from '../utils/types';
 
 interface QueryVariables {
-  channelId: string;
   sortVariables:
     | {
         orderDirection: string;
@@ -18,54 +17,60 @@ interface QueryVariables {
         orderDirection?: undefined;
         orderBy?: undefined;
       };
+  searchKeyword?: string;
   first?: number;
   after?: string;
 }
 
 interface QueryData {
-  questions: Connection<Question>;
+  followedCollections: Connection<FollowedChannel>;
 }
 
-const useQuestions = (channelId: string, sortBy?: string) => {
+const useFollowedCollections = (
+  after?: string,
+  sortBy?: string,
+  filterText?: string,
+) => {
   const sortVariables = parseSortBy(sortBy || 'ASC');
 
   const queryVariables: QueryVariables = {
-    channelId,
     sortVariables,
-    first: 20,
+    searchKeyword: filterText || '',
+    first: 10,
+    after: after || '',
   };
 
-  const { data, loading, fetchMore, ...result } = useQuery<
+  const { data, loading, fetchMore, error, ...result } = useQuery<
     QueryData,
     QueryVariables
-  >(GET_QUESTIONS, {
+  >(GET_FOLLOWED, {
     variables: queryVariables,
     fetchPolicy: 'cache-and-network',
   });
 
   const handleFetchMore = () => {
     const canFetchMore =
-      !loading && data && data.questions.pageInfo.hasNextPage;
+      !loading && data && data.followedCollections.pageInfo.hasNextPage;
 
     if (!canFetchMore) {
       return;
     }
 
     fetchMore({
-      query: GET_QUESTIONS,
+      query: GET_FOLLOWED,
       variables: {
-        after: data.questions.pageInfo.endCursor,
+        after: data.followedCollections.pageInfo.endCursor,
         ...queryVariables,
       },
     });
   };
 
   return {
-    questions: data ? data.questions.edges : undefined,
+    followedCollections: data ? data.followedCollections.edges : undefined,
     fetchMore: handleFetchMore,
     loading,
     ...result,
   };
 };
 
-export default useQuestions;
+export default useFollowedCollections;

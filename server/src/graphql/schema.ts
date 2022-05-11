@@ -12,6 +12,7 @@ import DateTime from './scalars/DateTime';
 import QuestionConnection from './types/QuestionConnection';
 import StackConection from './types/StackConection';
 import ChannelConnection from './types/ChannelConnection';
+import CollectionConnection from './types/CollectionConnection';
 
 import UserQuery from './queries/user';
 import UsersQuery from './queries/users';
@@ -24,6 +25,7 @@ import ChannelsQuery from './queries/channels';
 import AnswerQuery from './queries/answer';
 import AnswersQuery from './queries/answers';
 import AuthorizedUserQuery from './queries/authorizedUser';
+import FollowedCollectionsQuery from './queries/followedCollections';
 
 import CreateUser from './mutations/create/createUser';
 import CreateQuestion from './mutations/create/createQuestion';
@@ -97,6 +99,8 @@ const typeDefs = [
   AnswersQuery.typeDefs,
   CreateAnswer.typeDefs,
   AuthorizedUserQuery.typeDefs,
+  CollectionConnection.typeDefs,
+  FollowedCollectionsQuery.typeDefs,
 ];
 
 const resolvers = merge(
@@ -137,6 +141,8 @@ const resolvers = merge(
   AnswersQuery.resolvers,
   CreateAnswer.resolvers,
   AuthorizedUserQuery.resolvers,
+  CollectionConnection.resolvers,
+  FollowedCollectionsQuery.resolvers,
 );
 
 const schema = makeExecutableSchema({

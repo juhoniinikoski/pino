@@ -7,7 +7,13 @@ export const typeDefs = gql`
     """
     Returns list of channels.
     """
-    channels(first: Int, after: String, searchKeyword: String, followedByAuthorized: Boolean, orderBy: String): ChannelConnection!
+    channels(
+      first: Int
+      after: String
+      searchKeyword: String
+      followedByAuthorized: Boolean
+      orderBy: String
+    ): ChannelConnection!
   }
 `;
 

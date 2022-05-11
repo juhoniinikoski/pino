@@ -28,7 +28,7 @@ class UserClass extends BaseModel {
         },
         to: 'collections.id',
       },
-    }
+    },
   };
 }
 

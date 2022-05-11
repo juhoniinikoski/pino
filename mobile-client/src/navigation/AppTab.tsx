@@ -2,14 +2,15 @@ import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View } from 'react-native';
-import ChannelsPage from '../pages/library/Library';
-import LibraryPage from '../pages/channel/Channel';
-import { Channel } from '../utils/types';
+import LibraryPage from '../pages/library/Library';
+import ChannelPage from '../pages/channel/Channel';
+import StackPage from '../pages/stack/Stack';
+import { Channel, Stack } from '../utils/types';
 import CustomTitle from '../components/common/CustomTitle';
-import FollowBox from '../components/followBox/FollowBox';
+import PinBox from '../components/pinBox/PinBox';
 
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator<LibraryStackParamList>();
+const StackNav = createNativeStackNavigator<LibraryStackParamList>();
 
 const PlaceHolderIcon = () => {
   return (
@@ -27,6 +28,7 @@ const PlaceHolderIcon = () => {
 export type LibraryStackParamList = {
   Library: undefined;
   Channel: { channel: Channel; followedByUser: boolean };
+  Stack: { stack: Stack; followedByUser: boolean };
 };
 
 const LibraryStack = () => {
@@ -37,27 +39,36 @@ const LibraryStack = () => {
 
   const HeaderRight = React.useCallback(
     (channel, followedByUser) => (
-      <FollowBox channel={channel} followedByUser={followedByUser} />
+      <PinBox channel={channel} followedByUser={followedByUser} />
     ),
     [],
   );
 
   return (
-    <Stack.Navigator
+    <StackNav.Navigator
       initialRouteName="Library"
       screenOptions={{ headerTintColor: 'black', headerBackTitle: '' }}
     >
-      <Stack.Screen name="Library" component={ChannelsPage} />
-      <Stack.Screen
+      <StackNav.Screen name="Library" component={LibraryPage} />
+      <StackNav.Screen
         name="Channel"
-        component={LibraryPage}
+        component={ChannelPage}
         options={({ route }) => ({
           headerTitle: () => HeaderTitle(route.params.channel.name),
           headerRight: () =>
             HeaderRight(route.params.channel, route.params.followedByUser),
         })}
       />
-    </Stack.Navigator>
+      <StackNav.Screen
+        name="Stack"
+        component={StackPage}
+        options={({ route }) => ({
+          headerTitle: () => HeaderTitle(route.params.stack.name),
+          headerRight: () =>
+            HeaderRight(route.params.stack, route.params.followedByUser),
+        })}
+      />
+    </StackNav.Navigator>
   );
 };
 
@@ -70,7 +81,7 @@ const AppTab = () => {
         tabBarIcon: IconComponent,
       }}
     >
-      <Tab.Screen name="Kanavat" component={LibraryStack} />
+      <Tab.Screen name="Oma kirjasto" component={LibraryStack} />
     </Tab.Navigator>
   );
 };

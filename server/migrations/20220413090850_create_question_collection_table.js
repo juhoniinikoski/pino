@@ -1,8 +1,8 @@
 exports.up = function(knex) {
-  return knex.schema.createTable('question_stack', table => {
+  return knex.schema.createTable('question_collection', table => {
     table.increments('id').primary();
     table.text('question_id').notNullable();
-    table.text('stack_id').notNullable();
+    table.text('collection_id').notNullable();
     table.timestamp('created_at');
     table.timestamp('updated_at');
 
@@ -11,13 +11,13 @@ exports.up = function(knex) {
       .inTable('questions')
       .onDelete('cascade')
     
-    table.foreign('stack_id')
+    table.foreign('collection_id')
       .references('id')
-      .inTable('stacks')
+      .inTable('collections')
       .onDelete('cascade')
   })
 }
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists('question_stack')
+  return knex.schema.dropTableIfExists('question_collection')
 }

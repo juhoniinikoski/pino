@@ -8,7 +8,7 @@ import testServer from '../../utils/testServer';
 const channelQuery = {
   query: `
     query {
-      channel (id: "kauppikseen1234") {
+      channel (id: "kauppikseen1234channel") {
         id
         name
         questions
@@ -115,7 +115,7 @@ describe('testing channel creation', () => {
 const deleteChannelMutation = {
   mutation: `
     mutation {
-      deleteChannel(id: "yomatematiikka1234")
+      deleteChannel(id: "yomatematiikka1234channel")
     }
   `,
 };
@@ -123,7 +123,7 @@ const deleteChannelMutation = {
 const deleteChannelMutation2 = {
   mutation: `
     mutation {
-      deleteChannel(id: "kauppikseen1234")
+      deleteChannel(id: "kauppikseen1234channel")
     }
   `,
 };

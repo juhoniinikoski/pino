@@ -9,7 +9,7 @@ import testServer from '../../utils/testServer';
 const channelQuery = {
   query: `
     query {
-      questions (channelId: "kauppikseen1234") {
+      questions (collectionId: "kauppikseen1234channel") {
         edges {
           node {
             id
@@ -31,7 +31,7 @@ const channelQuery = {
 const stackQuery = {
   query: `
   query {
-    questions (stackId: "kauppis-yh1234") {
+    questions (collectionId: "kauppis-yh1234stack") {
       edges {
         node {
           id

@@ -1,8 +1,7 @@
 import BaseModel from './BaseModel';
 import knex from '../utils/knex';
-import ChannelClass from './Channel';
-import StackClass from './Stack';
 import { Model } from 'objection';
+import CollectionClass from './Collection';
 
 class UserClass extends BaseModel {
   static idColumn = 'id';
@@ -12,38 +11,24 @@ class UserClass extends BaseModel {
   id: string | number;
   email: string;
   password: string;
-  followedChannels: ChannelClass[];
-  followedStacks: StackClass[];
+  followedCollections: CollectionClass[];
   createdAt: Date;
   updatedAt: Date;
 
   static relationMappings = {
-    followedChannels: {
+    followedCollections: {
       relation: Model.ManyToManyRelation,
-      modelClass: __dirname + '/Channel',
+      modelClass: __dirname + '/Collection',
       join: {
         from: 'users.id',
         through: {
-          // user_channel is the join table.
-          from: 'user_channel.userId',
-          to: 'user_channel.channelId',
+          // user_collection is the join table.
+          from: 'user_collection.userId',
+          to: 'user_collection.collectionId',
         },
-        to: 'channels.id',
+        to: 'collections.id',
       },
-    },
-    followedStacks: {
-      relation: Model.ManyToManyRelation,
-      modelClass: __dirname + '/Stack',
-      join: {
-        from: 'users.id',
-        through: {
-          // user_channel is the join table.
-          from: 'user_stack.userId',
-          to: 'user_stack.stackId',
-        },
-        to: 'stacks.id',
-      },
-    },
+    }
   };
 }
 

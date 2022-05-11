@@ -1,13 +1,12 @@
 import { boolean, number, object, string } from 'yup';
-import StackClass, { Stack } from '../../models/Stack';
+import CollectionClass, { Collection } from '../../models/Collection';
 import UserClass from '../../models/User';
 import { PageInfoType } from '../../utils/entities';
 import { v4 as uuid } from 'uuid';
 import { AuthenticationError } from 'apollo-server';
-import { StackChannel } from '../../models/StackChannel';
 import { InvalidIdError } from '../errors';
 import AuthService from '../authentication/authService';
-import { UserStack } from '../../models/UserStack';
+import { UserCollection } from '../../models/UserCollection';
 
 interface Args {
   first?: number;
@@ -22,7 +21,7 @@ interface Args {
 
 interface EdgeType {
   cursor: string;
-  node: StackClass;
+  node: CollectionClass;
 }
 
 interface StackConnection {
@@ -49,15 +48,15 @@ export const getStacks = async (args: Args, authService: AuthService): Promise<S
 
   const { first, orderDirection, after, orderBy, searchKeyword, createdBy, public: publicStack, followedByAuthorized } = normalizedArgs;
 
-  let query = Stack.query();
+  let query = Collection.query().where({type: 'stack'});
 
   if (followedByAuthorized) {
     const user = await authService.getAuthorizedUserOrFail();
     query = query
-      .where('id', 'in', UserStack.query().where('userId', user.id).select('stackId'))
+      .where('id', 'in', UserCollection.query().where('userId', user.id).select('collectionId'))
       .select(
         '*',
-        Stack.relatedQuery('followedBy').where('userId', user.id).select('createdAt').as('connectionDate'),
+        Collection.relatedQuery('followedBy').where('userId', user.id).select('createdAt').as('connectionDate'),
       );
   }
 
@@ -81,8 +80,8 @@ export const getStacks = async (args: Args, authService: AuthService): Promise<S
 
   query = query.select(
     '*',
-    Stack.relatedQuery('questions').count().as('questions'),
-    Stack.relatedQuery('followedBy').count().as('followedBy'),
+    Collection.relatedQuery('questions').count().as('questions'),
+    Collection.relatedQuery('followedBy').count().as('followedBy'),
   );
 
   return await query.cursorPaginateStack(count, {
@@ -92,29 +91,29 @@ export const getStacks = async (args: Args, authService: AuthService): Promise<S
   });
 };
 
-export const getStack = async (id: string | number): Promise<StackClass> =>
-  await Stack.query()
+export const getStack = async (id: string | number): Promise<CollectionClass> =>
+  await Collection.query()
     .findById(id)
     .select(
       '*',
-      Stack.relatedQuery('questions').count().as('questions'),
-      Stack.relatedQuery('followedBy').count().as('followedBy'),
+      Collection.relatedQuery('questions').count().as('questions'),
+      Collection.relatedQuery('followedBy').count().as('followedBy'),
     )
-    .withGraphFetched('tags');
 
 const stackSchema = object({
   name: string().required(),
   public: boolean().required(),
 });
 
-export const createStack = async (stack: Partial<StackClass>, authorizedUser: UserClass): Promise<string> => {
+export const createStack = async (stack: Partial<CollectionClass>, authorizedUser: UserClass): Promise<string> => {
   const data = await stackSchema.validate(stack);
 
   const id = uuid();
 
-  await Stack.query().insertAndFetch({
+  await Collection.query().insertAndFetch({
     ...data,
     id: id,
+    type: 'stack',
     createdById: authorizedUser.id,
   });
 
@@ -138,16 +137,16 @@ export const updateStack = async (
     throw new AuthenticationError('You can only update stack if you are the creator.');
   }
 
-  await Stack.query().patchAndFetchById(id, { name: data.name });
+  await Collection.query().patchAndFetchById(id, { name: data.name });
 
   return id;
 };
 
 export const deleteStack = async (id: string | number, authorizedUser: UserClass): Promise<boolean> => {
-  const stack = await Stack.query().findById(id);
+  const stack = await Collection.query().findById(id);
 
   if (authorizedUser.id === stack.createdById) {
-    const res = await Stack.query().findById(id).delete();
+    const res = await Collection.query().findById(id).delete();
     if (res === 0) {
       throw new InvalidIdError('deleteStack');
     }
@@ -155,26 +154,4 @@ export const deleteStack = async (id: string | number, authorizedUser: UserClass
   }
 
   throw new AuthenticationError('You can only delete the stack if you have made it.');
-};
-
-export const tagToStack = async (
-  stackId: string | number,
-  channelId: string | number,
-  authorizedUser: UserClass,
-): Promise<string | number> => {
-  const existingStack = await getStack(stackId);
-
-  if (authorizedUser.id !== existingStack.createdById) {
-    throw new AuthenticationError('You can add tags to stack if you are the creator.');
-  }
-
-  const existingTag = await StackChannel.query().where({ stackId: stackId, channelId: channelId });
-
-  if (existingTag.length !== 0) {
-    await StackChannel.query().where({ stackId: stackId, channelId: channelId }).delete();
-  } else {
-    await StackChannel.query().insert({ stackId: stackId, channelId: channelId });
-  }
-
-  return channelId;
 };

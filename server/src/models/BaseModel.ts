@@ -42,6 +42,9 @@ class BaseModel extends Model {
     if (!this.createdAt) {
       this.createdAt = new Date();
     }
+    if (!this.updatedAt) {
+      this.updatedAt = new Date();
+    }
   }
 
   $beforeUpdate(this: any) {

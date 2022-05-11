@@ -1,8 +1,8 @@
 exports.up = function(knex) {
-  return knex.schema.createTable('user_channel', table => {
+  return knex.schema.createTable('user_collection', table => {
     table.increments('id').primary();
     table.text('user_id').notNullable();
-    table.text('channel_id').notNullable();
+    table.text('collection_id').notNullable();
     table.timestamp('created_at');
     table.timestamp('updated_at');
 
@@ -11,13 +11,13 @@ exports.up = function(knex) {
       .inTable('users')
       .onDelete('cascade')
     
-    table.foreign('channel_id')
+    table.foreign('collection_id')
       .references('id')
-      .inTable('channels')
+      .inTable('collections')
       .onDelete('cascade')
   })
 }
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists('user_channel')
+  return knex.schema.dropTableIfExists('user_collection')
 }

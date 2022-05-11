@@ -11,8 +11,7 @@ export const typeDefs = gql`
       after: String
       orderBy: String
       createdBy: ID
-      stackId: ID
-      channelId: ID
+      collectionId: ID
     ): QuestionConnection!
   }
 `;
@@ -23,8 +22,7 @@ interface Args {
   after?: string;
   orderBy?: string;
   createdBy?: number | string;
-  stackId?: number | string;
-  channelId?: number | string;
+  collectionId?: string | number
 }
 
 export const resolvers = {

@@ -36,10 +36,7 @@ import UpdateQuestion from './mutations/update/updateQuestion';
 import UpdateStack from './mutations/update/updateStack';
 import UpdateAnswer from './mutations/update/updateAnswer';
 
-import FollowChannel from './mutations/follow/followChannel';
-import FollowStack from './mutations/follow/followStack';
-
-import TagToStack from './mutations/add/tagToStack';
+import FollowCollection from './mutations/follow/followCollection';
 
 import DeleteUser from './mutations/delete/deleteUser';
 import DeleteQuestion from './mutations/delete/deleteQuestion';
@@ -87,9 +84,7 @@ const typeDefs = [
   StackQuery.typeDefs,
   CreateStack.typeDefs,
   UpdateStack.typeDefs,
-  TagToStack.typeDefs,
-  FollowStack.typeDefs,
-  FollowChannel.typeDefs,
+  FollowCollection.typeDefs,
   DeleteStack.typeDefs,
   ChannelConnection.typeDefs,
   ChannelsQuery.typeDefs,
@@ -129,9 +124,7 @@ const resolvers = merge(
   StackQuery.resolvers,
   CreateStack.resolvers,
   UpdateStack.resolvers,
-  TagToStack.resolvers,
-  FollowChannel.resolvers,
-  FollowStack.resolvers,
+  FollowCollection.resolvers,
   DeleteStack.resolvers,
   ChannelConnection.resolvers,
   ChannelsQuery.resolvers,

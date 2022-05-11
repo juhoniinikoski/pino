@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server';
-import StackClass from '../../models/Stack';
+import CollectionClass from '../../models/Collection';
 
 export const typeDefs = gql`
   type Stack {
@@ -8,7 +8,6 @@ export const typeDefs = gql`
     questions: Int!
     followedBy: Int!
     public: Boolean!
-    tags: [Channel]
     createdById: ID!
     createdAt: DateTime!
     updatedAt: DateTime!
@@ -18,7 +17,7 @@ export const typeDefs = gql`
 
 export const resolvers = {
   Stack: {
-    public: (obj: StackClass) => {
+    public: (obj: CollectionClass) => {
       return obj.public === 'true' ? true : false;
     },
   },

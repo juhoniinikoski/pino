@@ -4,17 +4,15 @@ import UserClass, { User } from '../../models/User';
 import { EmailTakenError, InvalidIdError } from '../errors';
 import { v4 as uuid } from 'uuid';
 import { object, string } from 'yup';
-import { UserChannel } from '../../models/UserChannel';
-import { UserStack } from '../../models/UserStack';
+import { UserCollection } from '../../models/UserCollection';
 import AuthService from '../authentication/authService';
 
 const createPasswordHash = (password: string) => bcrypt.hash(password, 10);
 
 export const getUser = async (id: string | number): Promise<UserClass> => {
-  let data = await User.query().findById(id).withGraphFetched('[followedChannels, followedStacks]');
-
+  let data = await User.query().findById(id).withGraphFetched('followedCollections');
   if (!data) {
-    data = await User.query().findOne({ email: id }).withGraphFetched('[followedChannels, followedStacks]');
+    data = await User.query().findOne({ email: id }).withGraphFetched('followedCollections');
   }
 
   if (!data) {
@@ -96,29 +94,17 @@ export const deleteUser = async (id: string | number, authorizedUser: UserClass)
   throw new AuthenticationError('You can only delete your user when authenticated.');
 };
 
-export const followChannel = async (
-  channelId: string | number,
+export const followCollection = async (
+  collectionId: string | number,
   authorizedUser: UserClass,
 ): Promise<string | number> => {
-  const alreadyFollowing = await UserChannel.query().where({ userId: authorizedUser.id, channelId: channelId });
+  const alreadyFollowing = await UserCollection.query().where({ userId: authorizedUser.id, collectionId: collectionId });
 
   if (alreadyFollowing.length !== 0) {
-    await UserChannel.query().where({ userId: authorizedUser.id, channelId: channelId }).delete();
+    await UserCollection.query().where({ userId: authorizedUser.id, collectionId: collectionId }).delete();
   } else {
-    await UserChannel.query().insert({ userId: authorizedUser.id, channelId: channelId });
+    await UserCollection.query().insert({ userId: authorizedUser.id, collectionId: collectionId });
   }
 
-  return channelId;
-};
-
-export const followStack = async (stackId: string | number, authorizedUser: UserClass): Promise<string | number> => {
-  const alreadyFollowing = await UserStack.query().where({ userId: authorizedUser.id, stackId: stackId });
-
-  if (alreadyFollowing.length !== 0) {
-    await UserStack.query().where({ userId: authorizedUser.id, stackId: stackId }).delete();
-  } else {
-    await UserStack.query().insert({ userId: authorizedUser.id, stackId: stackId });
-  }
-
-  return stackId;
+  return collectionId;
 };

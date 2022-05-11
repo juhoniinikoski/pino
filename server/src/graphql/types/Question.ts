@@ -1,6 +1,8 @@
 import { gql } from 'apollo-server';
+import CollectionClass from '../../models/Collection';
 
 export const typeDefs = gql`
+  union Collection = Stack | Channel
   type Question {
     id: ID!
     question: String!
@@ -9,12 +11,19 @@ export const typeDefs = gql`
     answers: [Answer]!
     createdAt: DateTime!
     updatedAt: DateTime!
-    channels: [Channel]
-    stacks: [Stack]
+    collections: [Collection]
   }
 `;
 
-export const resolvers = {};
+export const resolvers = {
+  Collection: {
+    __resolveType: (collection: CollectionClass) => {
+      if (collection.type === 'channel') {
+        return 'Channel'
+      } else return 'Stack'
+    },
+  },
+};
 
 export default {
   typeDefs,

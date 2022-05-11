@@ -1,12 +1,13 @@
 import { boolean, number, object, string } from 'yup';
-import ChannelClass, { Channel } from '../../models/Channel';
 import { PageInfoType } from '../../utils/entities';
 import { v4 as uuid } from 'uuid';
 import { ApolloError } from 'apollo-server';
 import { InvalidIdError } from '../errors';
-import { QuestionChannel } from '../../models/QuestionChannel';
 import AuthService from '../authentication/authService';
-import { UserChannel } from '../../models/UserChannel';
+import { UserCollection } from '../../models/UserCollection';
+import CollectionClass from '../../models/Collection';
+import { Collection } from '../../models/Collection';
+import { QuestionCollection } from '../../models/QuestionCollection';
 
 interface Args {
   first?: number;
@@ -19,7 +20,7 @@ interface Args {
 
 interface EdgeType {
   cursor: string;
-  node: ChannelClass;
+  node: CollectionClass;
 }
 
 interface ChannelConnection {
@@ -37,13 +38,13 @@ const argsSchema = object({
   followedByAuthorized: boolean(),
 });
 
-export const getChannel = async (id: string | number): Promise<ChannelClass> =>
-  await Channel.query()
+export const getChannel = async (id: string | number): Promise<CollectionClass> =>
+  await Collection.query()
     .findById(id)
     .select(
       '*',
-      Channel.relatedQuery('questions').count().as('questions'),
-      Channel.relatedQuery('followedBy').count().as('followedBy'),
+      Collection.relatedQuery('questions').count().as('questions'),
+      Collection.relatedQuery('followedBy').count().as('followedBy'),
     );
 
 const getLikeFilter = (value: string) => `%${value}%`;
@@ -53,15 +54,15 @@ export const getChannels = async (args: Args, authService: AuthService): Promise
 
   const { first, orderDirection, orderBy, after, searchKeyword, followedByAuthorized } = normalizedArgs;
 
-  let query = Channel.query();
+  let query = Collection.query().where({ type: 'channel' });
 
   if (followedByAuthorized) {
     const user = await authService.getAuthorizedUserOrFail();
     query = query
-      .where('id', 'in', UserChannel.query().where('userId', user.id).select('channelId'))
+      .where('id', 'in', UserCollection.query().where('userId', user.id).select('channelId'))
       .select(
         '*',
-        Channel.relatedQuery('followedBy').where('userId', user.id).select('createdAt').as('connectionDate'),
+        Collection.relatedQuery('followedBy').where('userId', user.id).select('createdAt').as('connectionDate'),
       );
   }
 
@@ -77,8 +78,8 @@ export const getChannels = async (args: Args, authService: AuthService): Promise
 
   query = query.select(
     '*',
-    Channel.relatedQuery('questions').count().as('questions'),
-    Channel.relatedQuery('followedBy').count().as('followedBy'),
+    Collection.relatedQuery('questions').count().as('questions'),
+    Collection.relatedQuery('followedBy').count().as('followedBy'),
   );
 
   return await query.cursorPaginate(count, {
@@ -92,10 +93,10 @@ const channelSchema = object({
   name: string().required(),
 });
 
-export const createChannel = async (channel: Partial<ChannelClass>): Promise<string> => {
+export const createChannel = async (channel: Partial<CollectionClass>): Promise<string> => {
   const data = await channelSchema.validate(channel);
 
-  const existingChannel = await Channel.query().where({ name: data.name });
+  const existingChannel = await Collection.query().where({ name: data.name });
 
   if (existingChannel.length !== 0) {
     throw new ApolloError('channel with given name already exists');
@@ -103,8 +104,9 @@ export const createChannel = async (channel: Partial<ChannelClass>): Promise<str
 
   const id = uuid();
 
-  await Channel.query().insertAndFetch({
+  await Collection.query().insertAndFetch({
     ...data,
+    type: 'channel',
     id: id,
   });
 
@@ -112,10 +114,10 @@ export const createChannel = async (channel: Partial<ChannelClass>): Promise<str
 };
 
 export const deleteChannel = async (id: string | number): Promise<boolean> => {
-  const questions = await QuestionChannel.query().where({ channelId: id });
+  const questions = await QuestionCollection.query().where({ collectionId: id });
 
   if (questions.length === 0) {
-    const res = await Channel.query().findById(id).delete();
+    const res = await Collection.query().findById(id).delete();
     if (res === 0) {
       throw new InvalidIdError('deleteChannel');
     }

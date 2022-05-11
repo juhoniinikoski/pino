@@ -1,8 +1,8 @@
 import BaseModel from './BaseModel';
 import knex from '../utils/knex';
 import { Model } from 'objection';
-import ChannelClass from './Channel';
-import StackClass from './Stack';
+import collectionClass from './collection';
+import CollectionClass from './Collection';
 import AnswerClass from './Answer';
 
 class QuestionClass extends BaseModel {
@@ -17,34 +17,20 @@ class QuestionClass extends BaseModel {
   createdAt: Date;
   updatedAt: Date;
   answers: Partial<AnswerClass>[];
-  channels: ChannelClass[];
-  stacks: StackClass[];
+  collections: CollectionClass[];
 
   static relationMappings = {
-    stacks: {
+    collections: {
       relation: Model.ManyToManyRelation,
-      modelClass: __dirname + '/Stack',
+      modelClass: __dirname + '/Collection',
       join: {
         from: 'questions.id',
         through: {
-          // question_stack is the join table.
-          from: 'question_stack.questionId',
-          to: 'question_stack.stackId',
+          // question_collection is the join table.
+          from: 'question_collection.questionId',
+          to: 'question_collection.collectionId',
         },
-        to: 'stacks.id',
-      },
-    },
-    channels: {
-      relation: Model.ManyToManyRelation,
-      modelClass: __dirname + '/Channel',
-      join: {
-        from: 'questions.id',
-        through: {
-          // question_channel is the join table.
-          from: 'question_channel.questionId',
-          to: 'question_channel.channelId',
-        },
-        to: 'channels.id',
+        to: 'collections.id',
       },
     },
     answers: {

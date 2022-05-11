@@ -36,8 +36,7 @@ const argsSchema = object({
   orderBy: string().default('CREATED_AT'),
   searchKeyword: string().trim(),
   createdBy: string().trim(),
-  channelId: string().trim(),
-  stackId: string().trim(),
+  collectionId: string().trim()
 });
 
 const getLikeFilter = (value: string) => `%${value}%`;
@@ -45,16 +44,12 @@ const getLikeFilter = (value: string) => `%${value}%`;
 export const getQuestions = async (args: Args): Promise<QuestionConnection> => {
   const normalizedArgs = await argsSchema.validate(args);
 
-  const { first, orderDirection, after, searchKeyword, createdBy, stackId, channelId } = normalizedArgs;
+  const { first, orderDirection, after, searchKeyword, createdBy, collectionId } = normalizedArgs;
 
   let query = Question.query();
 
-  if (stackId) {
-    query = query.whereExists(Question.relatedQuery('stacks').where('stacks.id', stackId));
-  }
-
-  if (channelId) {
-    query = query.whereExists(Question.relatedQuery('channels').where('channels.id', channelId));
+  if (collectionId) {
+    query = query.whereExists(Question.relatedQuery('collections').where('collections.id', collectionId));
   }
 
   if (createdBy) {

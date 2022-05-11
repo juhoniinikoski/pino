@@ -1,4 +1,4 @@
-import StackClass from '../../models/Stack';
+import CollectionClass from '../../models/Collection';
 import testServer from '../../utils/testServer';
 
 /* eslint-disable @typescript-eslint/no-unsafe-call*/
@@ -8,7 +8,7 @@ import testServer from '../../utils/testServer';
 
 interface EdgeType {
   cursor: string;
-  node: StackClass;
+  node: CollectionClass;
 }
 
 const userStackQuery = {
@@ -23,9 +23,6 @@ const userStackQuery = {
             public
             createdById
             followedBy
-            tags {
-              name
-            }
           }
         }
       }
@@ -36,16 +33,13 @@ const userStackQuery = {
 const stackQuery = {
   query: `
     query {
-      stack (id: "kauppis-yh1234") {
+      stack (id: "kauppis-yh1234stack") {
         id
         name
         questions
         public
         createdById
         followedBy
-        tags {
-          name
-        }
       }
     }
   `,
@@ -54,16 +48,13 @@ const stackQuery = {
 const stackQuery2 = {
   query: `
     query {
-      stack (id: "DIA20221234") {
+      stack (id: "DIA20221234stack") {
         id
         name
         questions
         public
         followedBy
         createdById
-        tags {
-          name
-        }
       }
     }
   `,
@@ -82,9 +73,6 @@ const publicQuery = {
             followedBy
             public
             createdById
-            tags {
-              name
-            }
           }
         }
       }
@@ -105,9 +93,6 @@ const keywordQuery = {
             followedBy
             public
             createdById
-            tags {
-              name
-            }
           }
         }
       }
@@ -122,9 +107,10 @@ describe('testing stack read', () => {
       expect(edge.node.createdById).toBe('bbe42984-051b-4a01-b45d-b8d29c32200c'),
     );
   });
+
   test('should return one stack', async () => {
     const result = await testServer.executeOperation({ query: stackQuery.query });
-    expect(result.data.stack.id).toBe('kauppis-yh1234');
+    expect(result.data.stack.id).toBe('kauppis-yh1234stack');
     expect(result.data.stack.questions).toBe(3);
     return expect(result.data.stack.name).toBe('kauppis-yh');
   });
@@ -157,7 +143,7 @@ const updateNameMutation = {
   mutation: `
     mutation {
       updateStack(
-        id: "DIA20221234",
+        id: "DIA20221234stack",
         name: "DIA-haku"
       )
     }
@@ -168,19 +154,8 @@ const updateNameMutation2 = {
   mutation: `
     mutation {
       updateStack(
-        id: "yofysiikka1234",
+        id: "yofysiikka1234stack",
         name: "yofyssa"
-      )
-    }
-  `,
-};
-
-const tagToStack = {
-  mutation: `
-    mutation {
-      tagToStack(
-        stackId: "kauppis-yh1234",
-        channelId: "kauppikseen1234"
       )
     }
   `,
@@ -190,7 +165,7 @@ const deleteStack = {
   mutation: `
     mutation {
       deleteStack(
-        id: "yomatematiikka1234"
+        id: "yomatematiikka1234stack"
       )
     }
   `,
@@ -200,7 +175,7 @@ const deleteStackUnable = {
   mutation: `
     mutation {
       deleteStack(
-        id: "yofysiikka1234"
+        id: "yofysiikka1234stack"
       )
     }
   `,
@@ -223,18 +198,6 @@ describe('testing stack mutations', () => {
   test("shouldn't change the name of the stack as it isn't made by the authorized user", async () => {
     const mutation = await testServer.executeOperation({ query: updateNameMutation2.mutation });
     return expect(mutation.errors[0].message).toBe('You can only update stack if you are the creator.');
-  });
-
-  test('should be able to add tags to stack', async () => {
-    await testServer.executeOperation({ query: tagToStack.mutation });
-    const result = await testServer.executeOperation({ query: stackQuery.query });
-    return expect(result.data.stack.tags.length).toBe(1);
-  });
-
-  test('should remove the tag from stack', async () => {
-    await testServer.executeOperation({ query: tagToStack.mutation });
-    const result = await testServer.executeOperation({ query: stackQuery.query });
-    return expect(result.data.stack.tags.length).toBe(0);
   });
 
   test('should delete the stack', async () => {

@@ -40,7 +40,7 @@ const useFollowedCollections = (
     after: after || '',
   };
 
-  const { data, loading, fetchMore, error, ...result } = useQuery<
+  const { data, loading, fetchMore, ...result } = useQuery<
     QueryData,
     QueryVariables
   >(GET_FOLLOWED, {

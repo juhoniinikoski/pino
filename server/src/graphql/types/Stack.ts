@@ -11,6 +11,7 @@ export const typeDefs = gql`
     createdById: ID!
     createdAt: DateTime!
     updatedAt: DateTime!
+    tags: [Channel]
     connectionDate: DateTime
   }
 `;

@@ -35,7 +35,7 @@ const useQuestions = (collectionId: string, sortBy?: string) => {
     first: 20,
   };
 
-  const { data, loading, fetchMore, error, ...result } = useQuery<
+  const { data, loading, fetchMore, ...result } = useQuery<
     QueryData,
     QueryVariables
   >(GET_QUESTIONS, {

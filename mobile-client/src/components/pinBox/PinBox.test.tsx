@@ -30,7 +30,7 @@ const mockProps2 = {
 };
 
 describe('rendering tests', () => {
-  test('should render a follower count', async () => {
+  it('should render a follower count', async () => {
     const { getByText } = render(
       <MockedProvider>
         <PinBox
@@ -41,7 +41,7 @@ describe('rendering tests', () => {
     );
     expect(getByText('2')).toBeTruthy;
   });
-  test('should be colored by if its followed by user', async () => {
+  it('should be colored by if its followed by user', async () => {
     const { getByTestId } = render(
       <MockedProvider>
         <PinBox
@@ -54,7 +54,7 @@ describe('rendering tests', () => {
     expect(element.props.style[0].color).toEqual('white');
   });
 
-  test('should not be colored by if it is not followed by user', async () => {
+  it('should not be colored by if it is not followed by user', async () => {
     const { getByTestId } = render(
       <MockedProvider>
         <PinBox

@@ -64,7 +64,9 @@ const Stack = ({ route }: Props) => {
         showsHorizontalScrollIndicator={false}
       />
       {user && user.id === stack.createdById && (
-        <View testID="add-question"><NewQuestionButton stackId={stack.id} /></View>
+        <View testID="add-question">
+          <NewQuestionButton stack={stack} />
+        </View>
       )}
     </Layout>
   );

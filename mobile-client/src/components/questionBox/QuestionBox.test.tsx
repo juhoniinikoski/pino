@@ -34,7 +34,7 @@ const testProps = {
 };
 
 describe('testing render', () => {
-  test('should render a question and list of answers', async () => {
+  it('should render a question and list of answers', async () => {
     const { getByText } = render(<QuestionBox question={testProps} />);
     expect(getByText(testProps.question)).toBeTruthy;
     expect(getByText(testProps.answers[0].answer)).toBeTruthy;
@@ -44,5 +44,5 @@ describe('testing render', () => {
 });
 
 describe('interactions', () => {
-  test.todo('should open more-menu when clicking three buttons');
+  it.todo('should open more-menu when clicking three buttons');
 });

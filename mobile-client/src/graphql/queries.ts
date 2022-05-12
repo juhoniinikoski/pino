@@ -43,6 +43,10 @@ export const GET_FOLLOWED = gql`
             questions
             connectionDate
             createdById
+            tags {
+              id
+              name
+            }
           }
           ... on Channel {
             id

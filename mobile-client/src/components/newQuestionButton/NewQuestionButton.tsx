@@ -2,6 +2,9 @@ import { Pressable, StyleSheet } from 'react-native';
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { LibraryStackParamList } from '../../navigation/AppTab';
+import { Channel, Stack } from '../../utils/types';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,28 +25,24 @@ const styles = StyleSheet.create({
   },
 });
 
+type NavigationProps = NativeStackNavigationProp<LibraryStackParamList>;
+
 interface Props {
-  channelId?: string;
-  stackId?: string;
+  stack?: Stack;
+  channel?: Channel;
 }
 
-const NewQuestionButton = ({ channelId, stackId }: Props) => {
-  const navigation = useNavigation();
+const NewQuestionButton = ({ stack, channel }: Props) => {
+  const navigation = useNavigation<NavigationProps>();
 
   const handlePress = () => {
-    if (channelId) {
-      console.log(`lisätään oletusarvoisesti kanavalle: ${channelId}`);
-    } else if (stackId) {
-      console.log(`lisätään oletusarvoisesti stackiin: ${stackId}`);
-    }
+    navigation.navigate('AddQuestion', {
+      tags: channel ? new Array(channel) : stack?.tags,
+    });
   };
 
   return (
-    <Pressable
-      testID='button'
-      style={styles.container}
-      onPress={handlePress}
-    >
+    <Pressable testID="button" style={styles.container} onPress={handlePress}>
       <FontAwesome
         style={{ marginLeft: 6 }}
         name="pencil-square-o"

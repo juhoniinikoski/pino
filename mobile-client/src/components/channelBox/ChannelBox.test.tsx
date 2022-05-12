@@ -28,7 +28,7 @@ const testProps = {
 };
 
 describe('box rendering', () => {
-  test('should render a name of channel', async () => {
+  it('should render a name of channel', async () => {
     const { getByText } = render(
       <NavigationContainer>
         <MockedProvider>
@@ -39,7 +39,7 @@ describe('box rendering', () => {
     expect(getByText('kauppikseen')).toBeTruthy;
   });
 
-  // test('should render number of followers of channel', async () => {
+  // it('should render number of followers of channel', async () => {
   //   const { getByText } = render(
   //     <NavigationContainer>
   //       <MockedProvider>
@@ -52,7 +52,7 @@ describe('box rendering', () => {
 });
 
 describe('block press gestures', () => {
-  test('navigate function is called when pressing the box', async () => {
+  it('navigate function is called when pressing the box', async () => {
     const component = (
       <NavigationContainer>
         <MockedProvider>

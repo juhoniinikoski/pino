@@ -6,8 +6,10 @@ import LibraryPage from '../pages/library/Library';
 import ChannelPage from '../pages/channel/Channel';
 import StackPage from '../pages/stack/Stack';
 import { Channel, Stack } from '../utils/types';
-import CustomTitle from '../components/common/CustomTitle';
+import CustomTitleChannel from '../components/common/CustomTitleChannel';
 import PinBox from '../components/pinBox/PinBox';
+import CustomTitleStack from '../components/common/CustomTitleStack';
+import AddQuestion from '../pages/add/AddQuestion';
 
 const Tab = createBottomTabNavigator();
 const StackNav = createNativeStackNavigator<LibraryStackParamList>();
@@ -29,11 +31,17 @@ export type LibraryStackParamList = {
   Library: undefined;
   Channel: { channel: Channel; followedByUser: boolean };
   Stack: { stack: Stack; followedByUser: boolean };
+  AddQuestion: { tags?: Channel[] };
 };
 
 const LibraryStack = () => {
-  const HeaderTitle = React.useCallback(
-    title => <CustomTitle title={title} />,
+  const HeaderTitleChannel = React.useCallback(
+    title => <CustomTitleChannel title={title} />,
+    [],
+  );
+
+  const HeaderTitleStack = React.useCallback(
+    title => <CustomTitleStack title={title} />,
     [],
   );
 
@@ -49,25 +57,34 @@ const LibraryStack = () => {
       initialRouteName="Library"
       screenOptions={{ headerTintColor: 'black', headerBackTitle: '' }}
     >
-      <StackNav.Screen name="Library" component={LibraryPage} />
-      <StackNav.Screen
-        name="Channel"
-        component={ChannelPage}
-        options={({ route }) => ({
-          headerTitle: () => HeaderTitle(route.params.channel.name),
-          headerRight: () =>
-            HeaderRight(route.params.channel, route.params.followedByUser),
-        })}
-      />
-      <StackNav.Screen
-        name="Stack"
-        component={StackPage}
-        options={({ route }) => ({
-          headerTitle: () => HeaderTitle(route.params.stack.name),
-          headerRight: () =>
-            HeaderRight(route.params.stack, route.params.followedByUser),
-        })}
-      />
+      <StackNav.Group>
+        <StackNav.Screen name="Library" component={LibraryPage} />
+        <StackNav.Screen
+          name="Channel"
+          component={ChannelPage}
+          options={({ route }) => ({
+            headerTitle: () => HeaderTitleChannel(route.params.channel.name),
+            headerRight: () =>
+              HeaderRight(route.params.channel, route.params.followedByUser),
+          })}
+        />
+        <StackNav.Screen
+          name="Stack"
+          component={StackPage}
+          options={({ route }) => ({
+            headerTitle: () => HeaderTitleStack(route.params.stack.name),
+            headerRight: () =>
+              HeaderRight(route.params.stack, route.params.followedByUser),
+          })}
+        />
+      </StackNav.Group>
+      <StackNav.Group screenOptions={{ presentation: 'modal' }}>
+        <StackNav.Screen
+          name="AddQuestion"
+          component={AddQuestion}
+          options={{ headerTitle: 'Lisää tehtävä' }}
+        />
+      </StackNav.Group>
     </StackNav.Navigator>
   );
 };

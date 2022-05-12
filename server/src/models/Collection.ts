@@ -32,19 +32,19 @@ class CollectionClass extends BaseModel {
         to: 'questions.id',
       },
     },
-    // tags: {
-    //   relation: Model.ManyToManyRelation,
-    //   modelClass: __dirname + '/Channel',
-    //   join: {
-    //     from: 'collections.id',
-    //     through: {
-    //       // collection_channel is the join table.
-    //       from: 'collection_channel.collectionId',
-    //       to: 'collection_channel.channelId',
-    //     },
-    //     to: 'channels.id',
-    //   },
-    // },
+    tags: {
+      relation: Model.ManyToManyRelation,
+      modelClass: CollectionClass,
+      join: {
+        from: 'collections.id',
+        through: {
+          // collection_collection is the join table.
+          from: 'collection_collection.collectionId',
+          to: 'collection_collection.tagId',
+        },
+        to: 'collections.id',
+      },
+    },
     followedBy: {
       relation: Model.HasManyRelation,
       modelClass: __dirname + '/UserCollection',

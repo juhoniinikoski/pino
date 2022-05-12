@@ -1,7 +1,7 @@
 import { MockedProvider } from '@apollo/client/testing';
 import { NavigationContainer } from '@react-navigation/native';
 import { render, RenderAPI, waitFor } from '@testing-library/react-native';
-import React from 'react';
+import * as React from 'react';
 import { GET_QUESTIONS } from '../../graphql/queries';
 import Channel from './Channel';
 
@@ -184,21 +184,21 @@ describe('render tests', () => {
     );
   });
 
-  test('should display a name of the channel (channelpage)', async () => {
+  it('should display a name of the channel (channelpage)', async () => {
     await waitFor(() => {
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     });
   });
 
-  test('should show loading indicator when questions are loaded (channelpage)', async () => {
+  it('should show loading indicator when questions are loaded (channelpage)', async () => {
     await waitFor(() => {
       expect(component.getByText('Loading')).toBeTruthy;
       expect(component).toMatchSnapshot();
     });
   });
 
-  test('should render a list containing questions succesfully (channelpage)', async () => {
+  it('should render a list containing questions succesfully (channelpage)', async () => {
     await waitFor(async () => {
       expect(component.getAllByTestId('question-list').length).toBe(1);
       expect(component).toMatchSnapshot();

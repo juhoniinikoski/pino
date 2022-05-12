@@ -11,7 +11,7 @@ const mockAnswer: Partial<Answer> = {
 };
 
 describe('render tests', () => {
-  test('should render an actual question', () => {
+  it('should render an actual question', () => {
     const { getByText, queryByText } = render(
       <AnswerBox answer={mockAnswer} />,
     );

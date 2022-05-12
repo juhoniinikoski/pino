@@ -101,27 +101,27 @@ const keywordQuery = {
 };
 
 describe('testing stack read', () => {
-  test('should return list of stacks created by specific user with number of questions included', async () => {
+  it('should return list of stacks created by specific user with number of questions included', async () => {
     const result = await testServer.executeOperation({ query: userStackQuery.query });
     return result.data.stacks.edges.forEach((edge: EdgeType) =>
       expect(edge.node.createdById).toBe('bbe42984-051b-4a01-b45d-b8d29c32200c'),
     );
   });
 
-  test('should return one stack', async () => {
+  it('should return one stack', async () => {
     const result = await testServer.executeOperation({ query: stackQuery.query });
     expect(result.data.stack.id).toBe('kauppis-yh1234stack');
     expect(result.data.stack.questions).toBe(3);
     return expect(result.data.stack.name).toBe('kauppis-yh');
   });
 
-  test('should return list of public stacks', async () => {
+  it('should return list of public stacks', async () => {
     const result = await testServer.executeOperation({ query: publicQuery.query });
     expect(result.data.stacks.totalCount).toBe(2);
     return result.data.stacks.edges.forEach((edge: EdgeType) => expect(edge.node.public).toBe(true));
   });
 
-  test('should return list of public stacks filtered with search keyword', async () => {
+  it('should return list of public stacks filtered with search keyword', async () => {
     const result = await testServer.executeOperation({ query: keywordQuery.query });
     expect(result.data.stacks.totalCount).toBe(1);
     return expect(result.data.stacks.edges[0].node.name).toBe('kauppis-yh');
@@ -182,32 +182,32 @@ const deleteStackUnable = {
 };
 
 describe('testing stack mutations', () => {
-  test('should create a new, empty stack', async () => {
+  it('should create a new, empty stack', async () => {
     const initialStacks = await testServer.executeOperation({ query: publicQuery.query });
     await testServer.executeOperation({ query: createStackMutation.mutation });
     const resultStacks = await testServer.executeOperation({ query: publicQuery.query });
     return expect(initialStacks.data.stacks.totalCount).toBe(resultStacks.data.stacks.totalCount - 1);
   });
 
-  test('should change the name of the stack', async () => {
+  it('should change the name of the stack', async () => {
     await testServer.executeOperation({ query: updateNameMutation.mutation });
     const resultStack = await testServer.executeOperation({ query: stackQuery2.query });
     return expect(resultStack.data.stack.name).toBe('DIA-haku');
   });
 
-  test("shouldn't change the name of the stack as it isn't made by the authorized user", async () => {
+  it("shouldn't change the name of the stack as it isn't made by the authorized user", async () => {
     const mutation = await testServer.executeOperation({ query: updateNameMutation2.mutation });
     return expect(mutation.errors[0].message).toBe('You can only update stack if you are the creator.');
   });
 
-  test('should delete the stack', async () => {
+  it('should delete the stack', async () => {
     const initial = await testServer.executeOperation({ query: publicQuery.query });
     await testServer.executeOperation({ query: deleteStack.mutation });
     const result = await testServer.executeOperation({ query: publicQuery.query });
     return expect(result.data.stacks.edges.length).toBe(initial.data.stacks.edges.length - 1);
   });
 
-  test("shouldn't delete the stack if it's not made by authorized user", async () => {
+  it("shouldn't delete the stack if it's not made by authorized user", async () => {
     const initial = await testServer.executeOperation({ query: publicQuery.query });
     const mutation = await testServer.executeOperation({ query: deleteStackUnable.mutation });
     const result = await testServer.executeOperation({ query: publicQuery.query });

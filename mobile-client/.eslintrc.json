@@ -19,6 +19,7 @@
   "rules": {
     "no-shadow": "off",
     "no-empty": "off",
+    "no-console": "off",
     "import/no-unresolved": 0,
     "react/jsx-filename-extension": [1, {
       "extensions": [

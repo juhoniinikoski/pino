@@ -32,6 +32,12 @@ const mocks = [
             followedBy: 1,
             questions: 0,
             connectionDate: '2022-05-11T10:36:25.877Z',
+            tags: [
+              {
+                id: 'DIA20221234channel',
+                name: 'DIA2022',
+              },
+            ],
           },
           cursor: 'WzE2NTIyNjUzODU4NzcsIkRJQTIwMjIxMjM0c3RhY2siXQ==',
         },
@@ -61,13 +67,13 @@ describe('rendering tests', () => {
     );
   });
 
-  test('should show loading indicator when data is initially loaded', async () => {
+  it('should show loading indicator when data is initially loaded', async () => {
     await waitFor(() => {
       expect(component.getByText('Loading')).toBeTruthy;
     });
   });
 
-  test('should render the flatlist when not loading', async () => {
+  it('should render the flatlist when not loading', async () => {
     await waitFor(async () => {
       expect(component.getAllByTestId('library-list').length).toBe(1);
       expect(component).toMatchSnapshot();

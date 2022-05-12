@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const CustomTitle = ({ title }: { title: string }) => {
+const CustomTitleChannel = ({ title }: { title: string }) => {
   return (
     <View style={styles.nameContainer}>
       <MaterialIcons name="tag" size={24} color="black" />
@@ -22,4 +22,4 @@ const CustomTitle = ({ title }: { title: string }) => {
   );
 };
 
-export default CustomTitle;
+export default CustomTitleChannel;

@@ -17,6 +17,10 @@ const followedQuery = {
               name
               questions
               followedBy
+              tags {
+                id
+                name
+              }
             }
             ... on Channel {
               id
@@ -32,7 +36,7 @@ const followedQuery = {
 };
 
 describe('fetch tests', () => {
-  test('should get followed stacks and channels of authorized user', async () => {
+  it('should get followed stacks and channels of authorized user', async () => {
     const result = await testServer.executeOperation({ query: followedQuery.query });
     return expect(result.data.followedCollections).toBeDefined();
   });

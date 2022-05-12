@@ -62,7 +62,7 @@ export const getFollowed = async (args: Args, authService: AuthService): Promise
     Collection.relatedQuery('followedBy').count().as('followedBy'),
   );
 
-  return await query.cursorPaginate(count, {
+  return await query.cursorPaginateStack(count, {
     first,
     after,
     orderBy: [{ column: orderBy, order: orderDirection.toLowerCase() }, 'id'],

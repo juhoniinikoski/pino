@@ -76,7 +76,7 @@ const cursorPaginateStack = async (
     .first();
 
   const [rows, cursorCountObject, totalCountObject] = await Promise.all([
-    paginationQuery,
+    paginationQuery.withGraphFetched('tags'),
     cursorCountQuery,
     totalCountQuery,
   ]);

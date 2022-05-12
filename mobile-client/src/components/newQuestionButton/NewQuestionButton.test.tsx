@@ -18,10 +18,10 @@ jest.mock('@react-navigation/native', () => {
 });
 
 describe('render tests', () => {
-  test('should render the button', async () => {
+  it('should render the button', async () => {
     const { getByTestId } = render(
       <NavigationContainer>
-        <NewQuestionButton channelId="kauppikseen1234" />
+        <NewQuestionButton collectionId="kauppikseen1234channel" />
       </NavigationContainer>,
     );
     expect(getByTestId('button')).toBeTruthy;
@@ -29,5 +29,5 @@ describe('render tests', () => {
 });
 
 describe('interactions', () => {
-  test.todo('should open the new question modal when pressed');
+  it.todo('should open the new question modal when pressed');
 });

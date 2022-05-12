@@ -6,17 +6,21 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Stack } from '../../utils/types';
 import BodyText from '../common/BodyText';
 import { LibraryStackParamList } from '../../navigation/AppTab';
+import TagBox from '../tagBox/TagBox';
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     padding: 16,
     marginTop: 8,
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#C4C3C6',
+  },
+  container: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    width: '100%',
     justifyContent: 'space-between',
   },
   nameContainer: {
@@ -45,18 +49,25 @@ const StackBox = ({ stack, followedByUser }: Props) => {
   };
 
   return (
-    <Pressable style={styles.container} onPress={handlePress}>
-      <View style={styles.textContainer}>
-        <View style={styles.nameContainer}>
-          <Ionicons name="layers" size={24} color="black" />
-          <BodyText style={{ marginLeft: 2 }}>
-            {}
-            {stack.name}
-          </BodyText>
+    <Pressable style={styles.mainContainer} onPress={handlePress}>
+      <View style={styles.container}>
+        <View style={styles.textContainer}>
+          <View style={styles.nameContainer}>
+            <Ionicons name="layers" size={24} color="black" />
+            <BodyText style={{ marginLeft: 2 }}>
+              {}
+              {stack.name}
+            </BodyText>
+          </View>
+          <BodyText textType="secondary">{stack.questions} tehtävää</BodyText>
         </View>
-        <BodyText textType="secondary">{stack.questions} tehtävää</BodyText>
+        <Entypo name="pin" size={20} color="#DADADA" />
       </View>
-      <Entypo name="pin" size={20} color="#DADADA" />
+      <View style={{ marginTop: 4 }}>
+        {stack.tags.map(t => (
+          <TagBox key={t.id} tag={t} />
+        ))}
+      </View>
     </Pressable>
   );
 };

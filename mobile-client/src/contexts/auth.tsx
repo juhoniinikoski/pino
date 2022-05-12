@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  useContext,
-  useEffect,
-  useMemo,
-} from 'react';
+import * as React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthData, authService } from '../services/authService';
 import apolloClient from '../utils/apolloClient';
@@ -16,11 +10,11 @@ type AuthContextData = {
   signOut(): void;
 };
 
-const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+const AuthContext = React.createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
-  const [authData, setAuthData] = useState<AuthData>();
-  const [loading, setLoading] = useState(true);
+  const [authData, setAuthData] = React.useState<AuthData>();
+  const [loading, setLoading] = React.useState(true);
 
   const loadStorageData = async (): Promise<void> => {
     try {
@@ -35,7 +29,7 @@ const AuthProvider: React.FC = ({ children }) => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     loadStorageData();
   }, []);
 
@@ -55,7 +49,7 @@ const AuthProvider: React.FC = ({ children }) => {
     await AsyncStorage.removeItem('@AuthData');
   };
 
-  const value = useMemo(
+  const value = React.useMemo(
     () => ({ authData, loading, signIn, signOut }),
     [authData, loading],
   );
@@ -64,7 +58,7 @@ const AuthProvider: React.FC = ({ children }) => {
 };
 
 function useAuth(): AuthContextData {
-  const context = useContext(AuthContext);
+  const context = React.useContext(AuthContext);
 
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');

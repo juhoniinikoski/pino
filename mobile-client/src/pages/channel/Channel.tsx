@@ -58,7 +58,7 @@ const Channel = ({ route }: Props) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       />
-      <NewQuestionButton channelId={route.params.channel.id} />
+      <NewQuestionButton channel={route.params.channel} />
     </Layout>
   );
 };

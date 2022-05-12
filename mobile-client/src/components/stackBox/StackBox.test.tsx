@@ -26,11 +26,11 @@ describe('rendering tests', () => {
     );
   });
 
-  test('should display the name of the stack', async () => {
+  it('should display the name of the stack', async () => {
     await waitFor(() => expect(component.getByText('kauppis-yh')).toBeTruthy);
   });
 
-  test('should display the number of questions inside stack', async () => {
+  it('should display the number of questions inside stack', async () => {
     await waitFor(() => expect(component.getByText('3 tehtävää')).toBeTruthy);
   });
 });

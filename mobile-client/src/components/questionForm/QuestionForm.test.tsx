@@ -16,19 +16,19 @@ jest.mock('formik', () => ({
 }));
 
 const mockValues = {
-  question: "testiquestion",
+  question: 'testiquestion',
   answers: ['ans1', 'ans2'],
   tags: [
     {
       id: '12345',
-      name: 'Tagi 1'
+      name: 'Tagi 1',
     },
     {
       id: '123456',
-      name: 'Tagi 2'
-    }
-  ]
-}
+      name: 'Tagi 2',
+    },
+  ],
+};
 
 describe('rendering tests', () => {
   let component: RenderAPI;
@@ -36,7 +36,9 @@ describe('rendering tests', () => {
   const onSubmit = jest.fn();
 
   beforeEach(() => {
-    component = render(<QuestionForm values={mockValues} onSubmit={onSubmit} />);
+    component = render(
+      <QuestionForm values={mockValues} onSubmit={onSubmit} />,
+    );
   });
 
   it('should render placeholders', async () => {
@@ -52,9 +54,9 @@ describe('rendering tests', () => {
 
   it('renders tag carousel', async () => {
     await waitFor(() => {
-      expect(component.getByTestId('tag-carousel')).toBeTruthy
-      expect(component.getByText(`# ${mockValues.tags[0].name}`)).toBeTruthy
-    })
+      expect(component.getByTestId('tag-carousel')).toBeTruthy;
+      expect(component.getByText(`@ ${mockValues.tags[0].name}`)).toBeTruthy;
+    });
   });
 
   it.todo('adds new answerbox');

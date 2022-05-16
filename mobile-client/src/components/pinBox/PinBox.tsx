@@ -2,20 +2,22 @@ import { Pressable, StyleSheet } from 'react-native';
 import * as React from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { useMutation } from '@apollo/client';
-import BodyText from '../common/BodyText';
 import { FOLLOW_COLLECTION } from '../../graphql/mutations';
 import { Channel } from '../../utils/types';
 import { GET_FOLLOWED } from '../../graphql/queries';
+import CaptionText from '../common/CaptionText';
 
 const styles = StyleSheet.create({
   followContainer: {
-    height: 36,
-    borderRadius: 4,
+    borderRadius: 100,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingVertical: 3,
     paddingHorizontal: 8,
     flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: '#A0E4B2',
   },
 });
 
@@ -49,17 +51,14 @@ const PinBox = ({ channel, followedByUser }: Props) => {
       <Pressable
         style={{
           ...styles.followContainer,
-          backgroundColor: '#EFEFEF',
+          backgroundColor: '#DAFBE1',
         }}
         onPress={handlePress}
       >
-        <BodyText
-          style={{ marginRight: 6, color: 'white' }}
-          textType="medium-light"
-        >
+        <CaptionText style={{ marginRight: 4 }} textType="semibold1">
           {followerCount}
-        </BodyText>
-        <Entypo testID="pin" name="pin" size={18} color="white" />
+        </CaptionText>
+        <Entypo testID="pin" name="pin" size={16} color="#1A7F37" />
       </Pressable>
     );
   }
@@ -72,10 +71,10 @@ const PinBox = ({ channel, followedByUser }: Props) => {
       }}
       onPress={handlePress}
     >
-      <BodyText style={{ marginRight: 6 }} textType="medium-light">
+      <CaptionText style={{ marginRight: 4 }} textType="semibold1">
         {followerCount}
-      </BodyText>
-      <Entypo testID="pin" name="pin" size={18} color="black" />
+      </CaptionText>
+      <Entypo testID="pin" name="pin" size={16} color="black" />
     </Pressable>
   );
 };

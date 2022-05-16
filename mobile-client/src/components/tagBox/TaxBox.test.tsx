@@ -22,7 +22,7 @@ describe('render', () => {
 
   it('renders a name of tagged channel', async () => {
     await waitFor(() => {
-      expect(component.getByText(`# ${mockProps.tag.name}`));
+      expect(component.getByText(`@ ${mockProps.tag.name}`));
     });
   });
 });

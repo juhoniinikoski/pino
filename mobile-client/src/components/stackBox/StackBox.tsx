@@ -1,20 +1,21 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 import * as React from 'react';
-import { Ionicons, Entypo } from '@expo/vector-icons';
+import { Entypo, Octicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Stack } from '../../utils/types';
 import BodyText from '../common/BodyText';
 import { LibraryStackParamList } from '../../navigation/AppTab';
 import TagBox from '../tagBox/TagBox';
+import CaptionText from '../common/CaptionText';
 
 const styles = StyleSheet.create({
   mainContainer: {
     padding: 16,
     marginTop: 8,
-    borderRadius: 8,
+    borderRadius: 6,
     borderWidth: 1,
-    borderColor: '#C4C3C6',
+    borderColor: '#C8E1FF',
   },
   container: {
     display: 'flex',
@@ -53,17 +54,19 @@ const StackBox = ({ stack, followedByUser }: Props) => {
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <View style={styles.nameContainer}>
-            <Ionicons name="layers" size={24} color="black" />
-            <BodyText style={{ marginLeft: 2 }}>
+            <Octicons name="verified" size={16} color="black" />
+            <BodyText textType="medium" style={{ marginLeft: 6 }}>
               {}
               {stack.name}
             </BodyText>
           </View>
-          <BodyText textType="secondary">{stack.questions} tehtävää</BodyText>
+          <CaptionText style={{ marginTop: 4, marginBottom: 8 }}>
+            {stack.questions} tehtävää
+          </CaptionText>
         </View>
         <Entypo name="pin" size={20} color="#DADADA" />
       </View>
-      <View style={{ marginTop: 4 }}>
+      <View>
         {stack.tags.map(t => (
           <TagBox key={t.id} tag={t} />
         ))}

@@ -3,53 +3,34 @@ import { FunctionComponent } from 'react';
 import { Text, StyleSheet, TextStyle } from 'react-native';
 
 const styles = StyleSheet.create({
-  bold: {
-    fontSize: 18,
-    fontWeight: '600',
-    letterSpacing: -0.41,
+  regular: {
+    fontSize: 17,
+    fontWeight: '400',
+    letterSpacing: -0.43,
     lineHeight: 22,
-    textAlign: 'center',
   },
   medium: {
     fontSize: 17,
     fontWeight: '500',
-    letterSpacing: -0.41,
+    letterSpacing: -0.43,
     lineHeight: 22,
-    textAlign: 'center',
   },
-  regular: {
+  semibold: {
     fontSize: 17,
-    fontWeight: '400',
-    letterSpacing: -0.41,
-    lineHeight: 22,
-    textAlign: 'center',
-  },
-  secondary: {
-    fontSize: 15,
-    color: '#8E8E8E',
-    fontWeight: '400',
-    letterSpacing: -0.41,
-    lineHeight: 22,
-    textAlign: 'center',
-  },
-  mediumLight: {
-    fontSize: 17,
-    fontWeight: '300',
-    letterSpacing: -0.41,
-    lineHeight: 22,
-    textAlign: 'center',
-  },
-  small: {
-    fontSize: 14,
     fontWeight: '600',
-    letterSpacing: -0.41,
+    letterSpacing: -0.43,
     lineHeight: 22,
-    textAlign: 'center',
+  },
+  bold: {
+    fontSize: 18,
+    fontWeight: '700',
+    letterSpacing: -0.43,
+    lineHeight: 22,
   },
 });
 
 type BodyTextProps = {
-  textType?: 'bold' | 'medium-light' | 'regular' | 'secondary' | 'small';
+  textType?: 'bold' | 'semibold' | 'medium' | 'regular';
   style?: TextStyle | TextStyle[];
 };
 
@@ -63,20 +44,14 @@ const BodyText: FunctionComponent<BodyTextProps> = ({
     case 'bold':
       textStyle = styles.bold;
       break;
-    case 'medium-light':
-      textStyle = styles.mediumLight;
+    case 'semibold':
+      textStyle = styles.semibold;
       break;
-    case 'regular':
-      textStyle = styles.regular;
-      break;
-    case 'secondary':
-      textStyle = styles.secondary;
-      break;
-    case 'small':
-      textStyle = styles.small;
+    case 'medium':
+      textStyle = styles.medium;
       break;
     default:
-      textStyle = styles.medium;
+      textStyle = styles.regular;
       break;
   }
 

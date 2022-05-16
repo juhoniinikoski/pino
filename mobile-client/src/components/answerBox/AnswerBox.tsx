@@ -6,11 +6,12 @@ import { Answer } from '../../utils/types';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
     marginTop: 8,
-    borderRadius: 8,
+    borderRadius: 6,
     borderWidth: 1,
-    borderColor: '#C4C3C6',
+    borderColor: '#C8E1FF',
     width: '100%',
   },
 });
@@ -32,7 +33,7 @@ const AnswerBox = ({ answer }: Props) => {
 
   return (
     <Pressable onPress={handlePress} style={styles.container}>
-      <BodyText textType="regular">{answer.answer}</BodyText>
+      <BodyText style={{ textAlign: 'center' }}>{answer.answer}</BodyText>
     </Pressable>
   );
 };

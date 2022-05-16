@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 import * as React from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
+import { Octicons } from '@expo/vector-icons';
 import BodyText from '../common/BodyText';
 import { Question } from '../../utils/types';
 import AnswerBox from '../answerBox/AnswerBox';
@@ -24,15 +24,20 @@ const QuestionBox = ({ question }: Props) => {
 
   return (
     <View style={styles.container}>
-      <BodyText style={{ marginBottom: 16 }}>{question.question}</BodyText>
+      <BodyText
+        textType="medium"
+        style={{ textAlign: 'center', marginBottom: 16 }}
+      >
+        {question.question}
+      </BodyText>
       {question.answers.map(a => (
         <AnswerBox key={a.id} answer={a} />
       ))}
       <Pressable onPress={handleMorePress}>
-        <MaterialIcons
+        <Octicons
           style={{ marginTop: 16 }}
-          name="more-horiz"
-          size={24}
+          name="kebab-horizontal"
+          size={16}
           color="black"
         />
       </Pressable>

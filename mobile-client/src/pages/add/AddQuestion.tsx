@@ -1,4 +1,4 @@
-import { Button, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import * as React from 'react';
 import { Formik } from 'formik';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';

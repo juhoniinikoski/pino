@@ -1,19 +1,20 @@
 import { Pressable, StyleSheet, View } from 'react-native';
-import { MaterialIcons, Entypo } from '@expo/vector-icons';
+import { Entypo, Octicons } from '@expo/vector-icons';
 import * as React from 'react';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import BodyText from '../common/BodyText';
 import { Channel } from '../../utils/types';
 import { LibraryStackParamList } from '../../navigation/AppTab';
+import CaptionText from '../common/CaptionText';
 
 const styles = StyleSheet.create({
   container: {
     padding: 16,
     marginTop: 8,
-    borderRadius: 8,
+    borderRadius: 6,
     borderWidth: 1,
-    borderColor: '#C4C3C6',
+    borderColor: '#C8E1FF',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -27,17 +28,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: -4,
-  },
-  followContainer: {
-    height: 36,
-    backgroundColor: '#EFEFEF',
-    borderRadius: 4,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 8,
-    flexDirection: 'row',
   },
 });
 
@@ -63,10 +53,20 @@ const ChannelBox = ({ channel, followedByUser }: Props) => {
     >
       <View style={styles.textContainer}>
         <View style={styles.nameContainer}>
-          <MaterialIcons name="tag" size={24} color="black" />
-          <BodyText style={{ marginLeft: 2 }}>{channel.name}</BodyText>
+          <Octicons
+            iconStyle={{}}
+            style={{ marginTop: 2 }}
+            name="mention"
+            size={16}
+            color="black"
+          />
+          <BodyText textType="medium" style={{ marginLeft: 6 }}>
+            {channel.name}
+          </BodyText>
         </View>
-        <BodyText textType="secondary">{channel.questions} tehtävää</BodyText>
+        <CaptionText style={{ marginTop: 4 }}>
+          {channel.questions} tehtävää
+        </CaptionText>
       </View>
       <Entypo name="pin" size={20} color="#DADADA" />
     </Pressable>

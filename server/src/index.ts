@@ -8,7 +8,7 @@ dotenv.config();
 const server = new ApolloServer({
   schema,
   cors: {
-    origin: ['http://192.168.100.23:19000', 'https://studio.apollographql.com'],
+    origin: ['http://192.168.100.23:19000', 'http://192.168.1.223:19000', 'http://192.168.1.228:19000', 'https://studio.apollographql.com'],
     credentials: true,
   },
   context: ({ req }) => {

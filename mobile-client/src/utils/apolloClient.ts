@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const httpLink = createHttpLink({
   uri: `http://localhost:3001/graphql`,
+  // uri: `https://flidi-api.herokuapp.com/graphql`,
   credentials: 'include',
 });
 

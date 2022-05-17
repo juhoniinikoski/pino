@@ -39,12 +39,11 @@ export const getFollowed = async (args: Args, authService: AuthService): Promise
   const { first, orderDirection, orderBy, after, searchKeyword } = normalizedArgs;
 
   const user = await authService.getAuthorizedUserOrFail();
-  let query = Collection.query()
-    .where('id', 'in', UserCollection.query().where('userId', user.id).select('collectionId'))
-    .select(
-      '*',
-      Collection.relatedQuery('followedBy').where('userId', user.id).select('createdAt').as('connectionDate'),
-    );
+  let query = Collection.query().where(
+    'id',
+    'in',
+    UserCollection.query().where('userId', user.id).select('collectionId'),
+  );
 
   if (searchKeyword) {
     const likeFilter = getLikeFilter(searchKeyword);
@@ -55,6 +54,11 @@ export const getFollowed = async (args: Args, authService: AuthService): Promise
   }
 
   const count = query.clone();
+
+  query = query.select(
+    '*',
+    Collection.relatedQuery('followedBy').where('userId', user.id).select('createdAt').as('connectionDate'),
+  );
 
   query = query.select(
     '*',

@@ -8,6 +8,7 @@ import { UserCollection } from '../../models/UserCollection';
 import CollectionClass from '../../models/Collection';
 import { Collection } from '../../models/Collection';
 import { QuestionCollection } from '../../models/QuestionCollection';
+import UserClass from '../../models/User';
 
 interface Args {
   first?: number;
@@ -56,14 +57,11 @@ export const getChannels = async (args: Args, authService: AuthService): Promise
 
   let query = Collection.query().where({ type: 'channel' });
 
+  let user: UserClass;
+
   if (followedByAuthorized) {
-    const user = await authService.getAuthorizedUserOrFail();
-    query = query
-      .where('id', 'in', UserCollection.query().where('userId', user.id).select('collectionId'))
-      .select(
-        '*',
-        Collection.relatedQuery('followedBy').where('userId', user.id).select('createdAt').as('connectionDate'),
-      );
+    user = await authService.getAuthorizedUserOrFail();
+    query = query.where('id', 'in', UserCollection.query().where('userId', user.id).select('collectionId'));
   }
 
   if (searchKeyword) {
@@ -75,6 +73,13 @@ export const getChannels = async (args: Args, authService: AuthService): Promise
   }
 
   const count = query.clone();
+
+  if (followedByAuthorized) {
+    query = query.select(
+      '*',
+      Collection.relatedQuery('followedBy').where('userId', user.id).select('createdAt').as('connectionDate'),
+    );
+  }
 
   query = query.select(
     '*',

@@ -1,5 +1,5 @@
 {
-  "name": "fluidi-backend",
+  "name": "flidi-backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
@@ -7,7 +7,7 @@
     "tsc": "tsc",
     "test": "knex seed:run --env test && jest --runInBand --detectOpenHandles --forceExit",
     "dev": "ts-node-dev ./src/index.ts",
-    "start": "node build/index.js",
+    "start": "node build/src/index.js",
     "build": "npm run migrate:latest",
     "lint": "eslint --fix --ext .ts ."
   },

@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { render, RenderAPI, waitFor } from '@testing-library/react-native';
+import {
+  fireEvent,
+  render,
+  RenderAPI,
+  waitFor,
+} from '@testing-library/react-native';
 import QuestionForm from './QuestionForm';
 
 /* eslint-disable no-unused-expressions */
@@ -34,10 +39,15 @@ describe('rendering tests', () => {
   let component: RenderAPI;
 
   const onSubmit = jest.fn();
+  const setFieldValue = jest.fn();
 
   beforeEach(() => {
     component = render(
-      <QuestionForm values={mockValues} onSubmit={onSubmit} />,
+      <QuestionForm
+        values={mockValues}
+        onSubmit={onSubmit}
+        setFieldValue={setFieldValue}
+      />,
     );
   });
 
@@ -59,7 +69,19 @@ describe('rendering tests', () => {
     });
   });
 
-  it.todo('adds new answerbox');
+  it('adds new answerbox', async () => {
+    const button = component.getByTestId('add-button');
+    fireEvent(button, 'press');
 
-  it.todo('should render a button for adding answer');
+    await waitFor(() => {
+      expect(component.getByPlaceholderText('Kirjoita kysymys tähän...'))
+        .toBeTruthy;
+      expect(component.getByPlaceholderText('Anna 1. ratkaisuvaihtoehto tähän'))
+        .toBeTruthy;
+      expect(component.getByPlaceholderText('Anna 2. ratkaisuvaihtoehto tähän'))
+        .toBeTruthy;
+      expect(component.getByPlaceholderText('Anna 3. ratkaisuvaihtoehto tähän'))
+        .toBeTruthy;
+    });
+  });
 });

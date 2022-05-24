@@ -1,13 +1,17 @@
 import { ScrollView } from 'react-native';
 import * as React from 'react';
 import { Formik } from 'formik';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 import QuestionForm from '../../components/questionForm/QuestionForm';
-import { LibraryStackParamList } from '../../navigation/AppTab';
+import { AddModalStackParamList } from '../../navigation/AddModal';
 
 // const styles = StyleSheet.create({});
 
-type Props = NativeStackScreenProps<LibraryStackParamList, 'AddQuestion'>;
+type Props = NativeStackScreenProps<AddModalStackParamList, 'AddQuestion'>;
 
 export interface FormValues {
   question: string;
@@ -20,16 +24,23 @@ export interface FormValues {
     | undefined;
 }
 
+type NavigationProps = NativeStackNavigationProp<AddModalStackParamList>;
+
 const AddQuestion = ({ route }: Props) => {
-  const onSubmit = (values: any) => {
-    console.log(values);
-  };
   const initialTags = route.params.tags?.map(t => ({ id: t.id, name: t.name }));
 
   const initialValues: FormValues = {
     question: '',
     answers: [],
     tags: initialTags,
+  };
+
+  const navigation = useNavigation<NavigationProps>();
+
+  const onSubmit = (values: any, resetForm: () => void) => {
+    console.log(values);
+    navigation.navigate('ConfirmAdd', { initialValues: values });
+    resetForm();
   };
 
   return (
@@ -40,11 +51,17 @@ const AddQuestion = ({ route }: Props) => {
     >
       <Formik
         initialValues={initialValues}
-        onSubmit={onSubmit}
+        onSubmit={(values, { resetForm }) => {
+          onSubmit(values, resetForm);
+        }}
         // validationSchema={validationSchema}
       >
-        {({ handleSubmit, values }) => (
-          <QuestionForm values={values} onSubmit={handleSubmit} />
+        {({ handleSubmit, setFieldValue, values }) => (
+          <QuestionForm
+            values={values}
+            onSubmit={handleSubmit}
+            setFieldValue={setFieldValue}
+          />
         )}
       </Formik>
     </ScrollView>

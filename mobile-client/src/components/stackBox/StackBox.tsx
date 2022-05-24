@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Stack } from '../../utils/types';
 import BodyText from '../common/BodyText';
-import { LibraryStackParamList } from '../../navigation/AppTab';
+import { LibraryStackParamList } from '../../navigation/LibraryStack';
 import TagBox from '../tagBox/TagBox';
 import CaptionText from '../common/CaptionText';
 

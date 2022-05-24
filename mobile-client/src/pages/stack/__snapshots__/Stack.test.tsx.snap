@@ -19,16 +19,36 @@ exports[`add question button responsibility if stack is not made by authorized u
     ]
   }
 >
-  <Text
-    style={
-      Object {
-        "textAlign": "center",
-        "textAlignVertical": "center",
-      }
-    }
+  <RCTScrollView
+    ItemSeparatorComponent={[Function]}
+    data={Array []}
+    disableVirtualization={false}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={false}
+    initialNumToRender={10}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={10}
+    onContentSizeChange={[Function]}
+    onEndReachedThreshold={2}
+    onLayout={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    showsHorizontalScrollIndicator={false}
+    showsVerticalScrollIndicator={false}
+    stickyHeaderIndices={Array []}
+    testID="question-list"
+    updateCellsBatchingPeriod={50}
+    viewabilityConfigCallbackPairs={Array []}
+    windowSize={21}
   >
-    Loading
-  </Text>
+    <View />
+  </RCTScrollView>
 </RNCSafeAreaView>
 `;
 
@@ -51,16 +71,99 @@ exports[`render tests should display a name of the stack 1`] = `
     ]
   }
 >
-  <Text
-    style={
-      Object {
-        "textAlign": "center",
-        "textAlignVertical": "center",
-      }
-    }
+  <RCTScrollView
+    ItemSeparatorComponent={[Function]}
+    data={Array []}
+    disableVirtualization={false}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={false}
+    initialNumToRender={10}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={10}
+    onContentSizeChange={[Function]}
+    onEndReachedThreshold={2}
+    onLayout={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    showsHorizontalScrollIndicator={false}
+    showsVerticalScrollIndicator={false}
+    stickyHeaderIndices={Array []}
+    testID="question-list"
+    updateCellsBatchingPeriod={50}
+    viewabilityConfigCallbackPairs={Array []}
+    windowSize={21}
   >
-    Loading
-  </Text>
+    <View />
+  </RCTScrollView>
+  <View
+    testID="add-question"
+  >
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#EFEFEF",
+          "borderRadius": 100,
+          "bottom": 16,
+          "display": "flex",
+          "height": 64,
+          "justifyContent": "center",
+          "position": "absolute",
+          "right": 0,
+          "shadowColor": "black",
+          "shadowOffset": Object {
+            "height": 4,
+            "width": 0,
+          },
+          "shadowOpacity": 0.08,
+          "shadowRadius": 8,
+          "width": 64,
+        }
+      }
+      testID="button"
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "black",
+              "fontSize": 28,
+            },
+            Object {
+              "marginLeft": 6,
+            },
+            Object {
+              "fontFamily": "FontAwesome",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+  </View>
 </RNCSafeAreaView>
 `;
 
@@ -313,15 +416,98 @@ exports[`render tests should show loading indicator when questions are loaded 1`
     ]
   }
 >
-  <Text
-    style={
-      Object {
-        "textAlign": "center",
-        "textAlignVertical": "center",
-      }
-    }
+  <RCTScrollView
+    ItemSeparatorComponent={[Function]}
+    data={Array []}
+    disableVirtualization={false}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={false}
+    initialNumToRender={10}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={10}
+    onContentSizeChange={[Function]}
+    onEndReachedThreshold={2}
+    onLayout={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    showsHorizontalScrollIndicator={false}
+    showsVerticalScrollIndicator={false}
+    stickyHeaderIndices={Array []}
+    testID="question-list"
+    updateCellsBatchingPeriod={50}
+    viewabilityConfigCallbackPairs={Array []}
+    windowSize={21}
   >
-    Loading
-  </Text>
+    <View />
+  </RCTScrollView>
+  <View
+    testID="add-question"
+  >
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#EFEFEF",
+          "borderRadius": 100,
+          "bottom": 16,
+          "display": "flex",
+          "height": 64,
+          "justifyContent": "center",
+          "position": "absolute",
+          "right": 0,
+          "shadowColor": "black",
+          "shadowOffset": Object {
+            "height": 4,
+            "width": 0,
+          },
+          "shadowOpacity": 0.08,
+          "shadowRadius": 8,
+          "width": 64,
+        }
+      }
+      testID="button"
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "black",
+              "fontSize": 28,
+            },
+            Object {
+              "marginLeft": 6,
+            },
+            Object {
+              "fontFamily": "FontAwesome",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+  </View>
 </RNCSafeAreaView>
 `;

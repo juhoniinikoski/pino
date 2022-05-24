@@ -16,13 +16,7 @@ export const typeDefs = gql`
   }
 `;
 
-export const resolvers = {
-  Stack: {
-    public: (obj: CollectionClass) => {
-      return obj.public === 'true' ? true : false;
-    },
-  },
-};
+export const resolvers = {};
 
 export default {
   typeDefs,

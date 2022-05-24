@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     justifyContent: 'center',
     alignItems: 'flex-start',
+    position: 'relative',
   },
   tagContainer: {
     marginStart: 0,
@@ -71,13 +72,25 @@ const styles = StyleSheet.create({
 type Props = {
   onSubmit: () => void;
   values: FormValues;
+  setFieldValue: (
+    field: string,
+    value: string[],
+    shouldValidate?: boolean | undefined,
+  ) => void;
 };
 
-const QuestionForm = ({ onSubmit, values }: Props) => {
+const QuestionForm = ({ onSubmit, values, setFieldValue }: Props) => {
   const [answers, setAnswers] = React.useState<Array<string>>([
     'answers[0]',
     'answers[1]',
   ]);
+
+  const addAns = () => {
+    const index = answers.length;
+    const answersToSet = [...answers, `answers[${index}]`];
+    setAnswers(answersToSet);
+    setFieldValue('answers', values.answers.concat(''));
+  };
 
   return (
     <View>
@@ -112,21 +125,25 @@ const QuestionForm = ({ onSubmit, values }: Props) => {
             />
           </View>
         ))}
-        <Pressable
-          style={{
-            ...styles.answerContainer,
-            backgroundColor: 'transparent',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-          }}
-        >
-          <Octicons name="plus" size={16} color="#6E7781" />
-          <BodyText style={{ marginLeft: 6, color: '#6E7781' }}>
-            Lisää ratkaisu
-          </BodyText>
-        </Pressable>
+        {answers.length < 6 && (
+          <Pressable
+            testID="add-button"
+            onPress={addAns}
+            style={{
+              ...styles.answerContainer,
+              backgroundColor: 'transparent',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+            }}
+          >
+            <Octicons name="plus" size={16} color="#6E7781" />
+            <BodyText style={{ marginLeft: 6, color: '#6E7781' }}>
+              Lisää ratkaisu
+            </BodyText>
+          </Pressable>
+        )}
         <Button title="submit" onPress={onSubmit} />
       </Layout>
     </View>

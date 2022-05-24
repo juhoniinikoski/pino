@@ -2,8 +2,6 @@ import { Pressable, StyleSheet } from 'react-native';
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { LibraryStackParamList } from '../../navigation/AppTab';
 import { Channel, Stack } from '../../utils/types';
 
 const styles = StyleSheet.create({
@@ -25,19 +23,20 @@ const styles = StyleSheet.create({
   },
 });
 
-type NavigationProps = NativeStackNavigationProp<LibraryStackParamList>;
-
 interface Props {
   stack?: Stack;
   channel?: Channel;
 }
 
 const NewQuestionButton = ({ stack, channel }: Props) => {
-  const navigation = useNavigation<NavigationProps>();
+  const navigation = useNavigation<any>(); // eslint-disable-line
 
   const handlePress = () => {
-    navigation.navigate('AddQuestion', {
-      tags: channel ? new Array(channel) : stack?.tags,
+    navigation.navigate('AddModal', {
+      screen: 'AddQuestion',
+      params: {
+        tags: channel ? new Array(channel) : stack?.tags,
+      },
     });
   };
 

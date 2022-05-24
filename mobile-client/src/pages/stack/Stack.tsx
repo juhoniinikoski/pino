@@ -2,7 +2,7 @@ import { Text, StyleSheet, FlatList, View } from 'react-native';
 import * as React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Layout from '../../components/layout/Layout';
-import { LibraryStackParamList } from '../../navigation/AppTab';
+import { LibraryStackParamList } from '../../navigation/LibraryStack';
 import useQuestions from '../../hooks/useQuestions';
 import { Question } from '../../utils/types';
 import parseNodes from '../../utils/parseNodes';

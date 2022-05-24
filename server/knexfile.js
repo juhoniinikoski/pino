@@ -11,18 +11,17 @@ module.exports = {
       },
       useNullAsDefault: true,
   },
-  // development: {
-  //   client: 'better-sqlite3',
-  //     connection: {
-  //       filename: FILENAME,
-  //     },
-  //     useNullAsDefault: true,
-  // },
-
   development: {
-    client: 'pg',
-    connection: process.env.DB_URL,
-    useNullAsDefault: true,
-  }
+    client: 'better-sqlite3',
+      connection: {
+        filename: FILENAME,
+      },
+      useNullAsDefault: true,
+  },
+  // production: {
+  //   client: 'pg',
+  //   connection: process.env.DB_URL,
+  //   useNullAsDefault: true,
+  // }
 
 }

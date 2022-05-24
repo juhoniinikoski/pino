@@ -5,7 +5,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import BodyText from '../common/BodyText';
 import { Channel } from '../../utils/types';
-import { LibraryStackParamList } from '../../navigation/AppTab';
+import { LibraryStackParamList } from '../../navigation/LibraryStack';
 import CaptionText from '../common/CaptionText';
 
 const styles = StyleSheet.create({

@@ -7,6 +7,7 @@ import Stack from './Stack';
 
 /* eslint-disable no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-promise-executor-return */
 
 const mockedNavigate = jest.fn();
 
@@ -217,21 +218,24 @@ describe('render tests', () => {
   });
 
   it('should display a name of the stack', async () => {
-    await waitFor(() => {
+    await waitFor(async () => {
+      await new Promise(resolve => setTimeout(resolve, 0));
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     });
   });
 
   it('should show loading indicator when questions are loaded', async () => {
-    await waitFor(() => {
+    await waitFor(async () => {
       expect(component.getByText('Loading')).toBeTruthy;
+      await new Promise(resolve => setTimeout(resolve, 0));
       expect(component).toMatchSnapshot();
     });
   });
 
   it('should render a list containing questions succesfully', async () => {
     await waitFor(async () => {
+      await new Promise(resolve => setTimeout(resolve, 0));
       expect(component.getAllByTestId('question-list').length).toBe(1);
       expect(component).toMatchSnapshot();
     });
@@ -239,6 +243,7 @@ describe('render tests', () => {
 
   it('should render add question button succesfully', async () => {
     await waitFor(async () => {
+      await new Promise(resolve => setTimeout(resolve, 0));
       expect(component.getByTestId('add-question')).toBeDefined;
       expect(component).toMatchSnapshot();
     });
@@ -262,6 +267,7 @@ describe('add question button responsibility', () => {
 
   it('if stack is not made by authorized user, it should not display new question button', async () => {
     await waitFor(async () => {
+      await new Promise(resolve => setTimeout(resolve, 0));
       expect(component.queryByTestId('add-question')).toBeNull();
       expect(component).toMatchSnapshot();
     });

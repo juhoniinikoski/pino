@@ -1,7 +1,7 @@
-import { Octicons } from '@expo/vector-icons';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import BodyText from './BodyText';
+import Verified from '../../assets/icons/verified.svg';
 
 const styles = StyleSheet.create({
   nameContainer: {
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 const CustomTitleChannel = ({ title }: { title: string }) => {
   return (
     <View style={styles.nameContainer}>
-      <Octicons name="verified" size={16} />
+      <Verified />
       <BodyText textType="semibold" style={{ marginLeft: 6 }}>
         {title}
       </BodyText>

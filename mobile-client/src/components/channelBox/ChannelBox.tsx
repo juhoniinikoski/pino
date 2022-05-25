@@ -1,5 +1,4 @@
 import { Pressable, StyleSheet, View } from 'react-native';
-import { Entypo, Octicons } from '@expo/vector-icons';
 import * as React from 'react';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
@@ -7,6 +6,7 @@ import BodyText from '../common/BodyText';
 import { Channel } from '../../utils/types';
 import { LibraryStackParamList } from '../../navigation/LibraryStack';
 import CaptionText from '../common/CaptionText';
+import Mention from '../../assets/icons/mention.svg';
 
 const styles = StyleSheet.create({
   container: {
@@ -53,13 +53,7 @@ const ChannelBox = ({ channel, followedByUser }: Props) => {
     >
       <View style={styles.textContainer}>
         <View style={styles.nameContainer}>
-          <Octicons
-            iconStyle={{}}
-            style={{ marginTop: 2 }}
-            name="mention"
-            size={16}
-            color="black"
-          />
+          <Mention />
           <BodyText textType="medium" style={{ marginLeft: 6 }}>
             {channel.name}
           </BodyText>
@@ -68,7 +62,6 @@ const ChannelBox = ({ channel, followedByUser }: Props) => {
           {channel.questions} tehtävää
         </CaptionText>
       </View>
-      <Entypo name="pin" size={20} color="#DADADA" />
     </Pressable>
   );
 };

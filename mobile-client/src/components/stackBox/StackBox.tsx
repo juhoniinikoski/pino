@@ -1,6 +1,5 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 import * as React from 'react';
-import { Entypo, Octicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Stack } from '../../utils/types';
@@ -8,6 +7,7 @@ import BodyText from '../common/BodyText';
 import { LibraryStackParamList } from '../../navigation/LibraryStack';
 import TagBox from '../tagBox/TagBox';
 import CaptionText from '../common/CaptionText';
+import Verified from '../../assets/icons/verified.svg';
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -54,7 +54,7 @@ const StackBox = ({ stack, followedByUser }: Props) => {
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <View style={styles.nameContainer}>
-            <Octicons name="verified" size={16} color="black" />
+            <Verified />
             <BodyText textType="medium" style={{ marginLeft: 6 }}>
               {}
               {stack.name}
@@ -64,7 +64,6 @@ const StackBox = ({ stack, followedByUser }: Props) => {
             {stack.questions} tehtävää
           </CaptionText>
         </View>
-        <Entypo name="pin" size={20} color="#DADADA" />
       </View>
       <View>
         {stack.tags.map(t => (

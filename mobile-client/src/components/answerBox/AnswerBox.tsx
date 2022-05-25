@@ -2,6 +2,8 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import * as React from 'react';
 import BodyText from '../common/BodyText';
 import { Answer } from '../../utils/types';
+import CheckCircle from '../../assets/icons/check-circle.svg';
+import XCircle from '../../assets/icons/x-circle.svg';
 
 /* eslint-disable no-nested-ternary */
 
@@ -29,12 +31,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   correct: {
-    borderWidth: 0,
-    backgroundColor: 'green',
+    borderColor: 'rgba(74, 194, 107, 0.4)',
+    backgroundColor: '#DAFBE1',
   },
   incorrect: {
-    borderWidth: 0,
-    backgroundColor: 'red',
+    borderColor: 'rgba(255, 129, 130, 0.4)',
+    backgroundColor: '#FFEBE9',
   },
 });
 
@@ -57,20 +59,19 @@ const AnswerBox = ({ answer }: Props) => {
   }, [answered]);
 
   return (
-    <Pressable onPress={handlePress} style={styles.container}>
-      <View
-        testID="radio-button"
-        style={
-          answer.correct && answered
-            ? [styles.radioButton, styles.correct]
-            : answered
-            ? [styles.radioButton, styles.incorrect]
-            : styles.radioButton
-        }
-      />
-      <View style={{ flex: 1 }}>
-        <BodyText>{answer.answer}</BodyText>
-      </View>
+    <Pressable
+      onPress={handlePress}
+      style={
+        answered && answer.correct
+          ? [styles.container, styles.correct]
+          : answered
+          ? [styles.container, styles.incorrect]
+          : styles.container
+      }
+    >
+      { answered && answer.correct && <CheckCircle style={{position: 'absolute', top: -8, right: 8}} /> }
+      { answered && !answer.correct && <XCircle style={{position: 'absolute', top: -8, right: 8}} /> }
+      <BodyText>{answer.answer}</BodyText>
     </Pressable>
   );
 };

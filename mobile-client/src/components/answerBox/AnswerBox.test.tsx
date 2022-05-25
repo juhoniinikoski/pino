@@ -19,17 +19,4 @@ describe('render tests', () => {
     expect(getByText('testivastaus')).toBeTruthy;
     expect(queryByText('joku muu')).toBeFalsy;
   });
-
-  it('renders radio button', () => {
-    const { getByTestId } = render(<AnswerBox answer={mockAnswer} />);
-    expect(getByTestId('radio-button')).toBeTruthy;
-  });
-
-  it('toggles radio button when pressed', () => {
-    const { getByTestId } = render(<AnswerBox answer={mockAnswer} />);
-    const toClick = getByTestId('radio-button');
-
-    fireEvent(toClick, 'press');
-    // TODO renders a wanted icon or color or something
-  });
 });

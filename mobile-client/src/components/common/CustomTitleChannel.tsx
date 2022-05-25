@@ -1,7 +1,7 @@
-import { Octicons } from '@expo/vector-icons';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import BodyText from './BodyText';
+import Mention from '../../assets/icons/mention.svg';
 
 const styles = StyleSheet.create({
   nameContainer: {
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 const CustomTitleChannel = ({ title }: { title: string }) => {
   return (
     <View style={styles.nameContainer}>
-      <Octicons name="mention" size={16} style={{ marginTop: 2 }} />
+      <Mention />
       <BodyText textType="semibold" style={{ marginLeft: 6 }}>
         {title}
       </BodyText>

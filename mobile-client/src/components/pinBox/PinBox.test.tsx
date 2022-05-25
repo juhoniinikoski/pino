@@ -41,6 +41,7 @@ describe('rendering tests', () => {
     );
     expect(getByText('2')).toBeTruthy;
   });
+
   it('should be colored by if its followed by user', async () => {
     const { getByTestId } = render(
       <MockedProvider>
@@ -50,8 +51,8 @@ describe('rendering tests', () => {
         />
       </MockedProvider>,
     );
-    const element = getByTestId('pin');
-    expect(element.props.style[0].color).toEqual('#1A7F37');
+    const element = getByTestId('pin-box');
+    expect(element.props.style.backgroundColor).toEqual('#DAFBE1');
   });
 
   it('should not be colored by if it is not followed by user', async () => {
@@ -63,7 +64,7 @@ describe('rendering tests', () => {
         />
       </MockedProvider>,
     );
-    const element = getByTestId('pin');
-    expect(element.props.style[0].color).toEqual('black');
+    const element = getByTestId('pin-box');
+    expect(element.props.style.backgroundColor).toEqual('pink');
   });
 });

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react-native';
+import { render } from '@testing-library/react-native';
 import { Answer } from '../../utils/types';
 import AnswerBox from './AnswerBox';
 

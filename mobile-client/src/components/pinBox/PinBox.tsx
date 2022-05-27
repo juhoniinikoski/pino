@@ -54,7 +54,7 @@ const PinBox = ({ channel, followedByUser }: Props) => {
           backgroundColor: '#DAFBE1',
         }}
         onPress={handlePress}
-        testID='pin-box'
+        testID="pin-box"
       >
         <Pin />
         <CaptionText style={{ marginLeft: 4 }} textType="semibold1">
@@ -71,7 +71,7 @@ const PinBox = ({ channel, followedByUser }: Props) => {
         backgroundColor: 'pink',
       }}
       onPress={handlePress}
-      testID='pin-box'
+      testID="pin-box"
     >
       <Pin />
       <CaptionText style={{ marginLeft: 4 }} textType="semibold1">

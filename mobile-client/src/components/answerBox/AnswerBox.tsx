@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import * as React from 'react';
 import BodyText from '../common/BodyText';
 import { Answer } from '../../utils/types';
@@ -69,8 +69,12 @@ const AnswerBox = ({ answer }: Props) => {
           : styles.container
       }
     >
-      { answered && answer.correct && <CheckCircle style={{position: 'absolute', top: -8, right: 8}} /> }
-      { answered && !answer.correct && <XCircle style={{position: 'absolute', top: -8, right: 8}} /> }
+      {answered && answer.correct && (
+        <CheckCircle style={{ position: 'absolute', top: -8, right: 8 }} />
+      )}
+      {answered && !answer.correct && (
+        <XCircle style={{ position: 'absolute', top: -8, right: 8 }} />
+      )}
       <BodyText>{answer.answer}</BodyText>
     </Pressable>
   );

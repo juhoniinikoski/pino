@@ -1,8 +1,22 @@
 import * as React from 'react';
 import { render } from '@testing-library/react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { MockedProvider } from '@apollo/client/testing';
 import QuestionBox from './QuestionBox';
 
 /* eslint-disable no-unused-expressions */
+
+const mockedNavigate = jest.fn();
+
+jest.mock('@react-navigation/native', () => {
+  const actualNav = jest.requireActual('@react-navigation/native');
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: mockedNavigate,
+    }),
+  };
+});
 
 const testProps = {
   answers: [
@@ -34,15 +48,23 @@ const testProps = {
 };
 
 describe('testing render', () => {
-  it('should render a question and list of answers', async () => {
-    const { getByText } = render(<QuestionBox question={testProps} />);
+  it('should render a question', async () => {
+    const { getByText } = render(
+      <NavigationContainer>
+        <MockedProvider>
+          <QuestionBox
+            question={testProps}
+            collectionId="kauppikseenchannel1234"
+            index={0}
+          />
+        </MockedProvider>
+      </NavigationContainer>,
+    );
     expect(getByText(testProps.question)).toBeTruthy;
-    expect(getByText(testProps.answers[0].answer)).toBeTruthy;
-    expect(getByText(testProps.answers[1].answer)).toBeTruthy;
-    expect(getByText(testProps.answers[2].answer)).toBeTruthy;
   });
 });
 
 describe('interactions', () => {
+  it.todo('open full screen view when clicked');
   it.todo('should open more-menu when clicking three buttons');
 });

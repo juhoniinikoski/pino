@@ -1,4 +1,4 @@
-import { Text, StyleSheet, FlatList, View } from 'react-native';
+import { Text, StyleSheet, FlatList } from 'react-native';
 import * as React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Layout from '../../components/layout/Layout';
@@ -23,21 +23,9 @@ const styles = StyleSheet.create({
 type Props = NativeStackScreenProps<LibraryStackParamList, 'Channel'>;
 
 const Channel = ({ route }: Props) => {
-  const { questions: raw, loading } = useQuestions(route.params.channel.id);
+  const { channel } = route.params;
+  const { questions: raw, loading } = useQuestions(channel.id);
   const questions = raw ? parseNodes<Question>(raw) : [];
-
-  const SeparatorItem = React.useCallback(
-    () => (
-      <View
-        style={{
-          marginTop: 24,
-          borderBottomColor: 'grey',
-          borderBottomWidth: StyleSheet.hairlineWidth,
-        }}
-      />
-    ),
-    [],
-  );
 
   if (loading) {
     return (
@@ -53,8 +41,13 @@ const Channel = ({ route }: Props) => {
         testID="question-list"
         data={questions}
         keyExtractor={item => item.id}
-        ItemSeparatorComponent={SeparatorItem}
-        renderItem={({ item }) => <QuestionBox question={item} />}
+        renderItem={({ item, index }) => (
+          <QuestionBox
+            question={item}
+            collectionId={channel.id}
+            index={index}
+          />
+        )}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       />

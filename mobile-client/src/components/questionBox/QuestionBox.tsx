@@ -1,47 +1,47 @@
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import * as React from 'react';
-import { Octicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import BodyText from '../common/BodyText';
 import { Question } from '../../utils/types';
-import AnswerBox from '../answerBox/AnswerBox';
+import { AppStackParamList } from '../../navigation/AppStack';
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 24,
+    padding: 16,
+    marginTop: 8,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#C8E1FF',
     display: 'flex',
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });
 
 type Props = {
   question: Question;
+  collectionId: string;
+  index: number;
 };
 
-const QuestionBox = ({ question }: Props) => {
-  const handleMorePress = () => {
-    console.log('painettu kolmea pistettä');
+type NavigationProps = NativeStackNavigationProp<AppStackParamList>;
+
+const QuestionBox = ({ question, collectionId, index }: Props) => {
+  const navigation = useNavigation<NavigationProps>();
+
+  const handlePress = () => {
+    navigation.navigate('Question', {
+      collectionId,
+      initialScrollIndex: index,
+    });
   };
 
   return (
-    <View style={styles.container}>
-      <BodyText
-        textType="medium"
-        style={{ textAlign: 'center', marginBottom: 16 }}
-      >
-        {question.question}
-      </BodyText>
-      {question.answers.map(a => (
-        <AnswerBox key={a.id} answer={a} />
-      ))}
-      <Pressable onPress={handleMorePress}>
-        <Octicons
-          style={{ marginTop: 16 }}
-          name="kebab-horizontal"
-          size={16}
-          color="black"
-        />
-      </Pressable>
-    </View>
+    <Pressable onPress={handlePress} style={styles.container}>
+      <BodyText textType="medium">{question.question}</BodyText>
+    </Pressable>
   );
 };
 

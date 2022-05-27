@@ -52,7 +52,6 @@ exports[`render tests should render a list containing questions succesfully (cha
   }
 >
   <RCTScrollView
-    ItemSeparatorComponent={[Function]}
     data={Array []}
     disableVirtualization={false}
     getItem={[Function]}

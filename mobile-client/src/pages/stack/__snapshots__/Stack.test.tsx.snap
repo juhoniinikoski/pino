@@ -20,7 +20,6 @@ exports[`add question button responsibility if stack is not made by authorized u
   }
 >
   <RCTScrollView
-    ItemSeparatorComponent={[Function]}
     data={Array []}
     disableVirtualization={false}
     getItem={[Function]}
@@ -72,7 +71,6 @@ exports[`render tests should display a name of the stack 1`] = `
   }
 >
   <RCTScrollView
-    ItemSeparatorComponent={[Function]}
     data={Array []}
     disableVirtualization={false}
     getItem={[Function]}
@@ -187,7 +185,6 @@ exports[`render tests should render a list containing questions succesfully 1`] 
   }
 >
   <RCTScrollView
-    ItemSeparatorComponent={[Function]}
     data={Array []}
     disableVirtualization={false}
     getItem={[Function]}
@@ -302,7 +299,6 @@ exports[`render tests should render add question button succesfully 1`] = `
   }
 >
   <RCTScrollView
-    ItemSeparatorComponent={[Function]}
     data={Array []}
     disableVirtualization={false}
     getItem={[Function]}
@@ -417,7 +413,6 @@ exports[`render tests should show loading indicator when questions are loaded 1`
   }
 >
   <RCTScrollView
-    ItemSeparatorComponent={[Function]}
     data={Array []}
     disableVirtualization={false}
     getItem={[Function]}

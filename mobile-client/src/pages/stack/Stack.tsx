@@ -31,19 +31,6 @@ const Stack = ({ route }: Props) => {
 
   const { user } = useAuthorizedUser();
 
-  const SeparatorItem = React.useCallback(
-    () => (
-      <View
-        style={{
-          marginTop: 24,
-          borderBottomColor: 'grey',
-          borderBottomWidth: StyleSheet.hairlineWidth,
-        }}
-      />
-    ),
-    [],
-  );
-
   if (loading) {
     return (
       <Layout>
@@ -58,8 +45,9 @@ const Stack = ({ route }: Props) => {
         testID="question-list"
         data={questions}
         keyExtractor={item => item.id}
-        ItemSeparatorComponent={SeparatorItem}
-        renderItem={({ item }) => <QuestionBox question={item} />}
+        renderItem={({ item, index }) => (
+          <QuestionBox question={item} collectionId={stack.id} index={index} />
+        )}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       />

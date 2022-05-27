@@ -3,49 +3,52 @@ import { FunctionComponent } from 'react';
 import { Text, StyleSheet, TextStyle } from 'react-native';
 
 const styles = StyleSheet.create({
-  large: {
-    fontSize: 32,
-    fontWeight: 'bold',
-  },
   regular: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 22,
+    fontWeight: '400',
+    letterSpacing: -0.26,
+    lineHeight: 34,
   },
-  small: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  medium: {
+    fontSize: 22,
+    fontWeight: '500',
+    letterSpacing: -0.26,
+    lineHeight: 34,
   },
-  smallest: {
-    fontSize: 13,
-    fontWeight: 'bold',
+  semibold: {
+    fontSize: 22,
+    fontWeight: '600',
+    letterSpacing: -0.26,
+    lineHeight: 34,
+  },
+  bold: {
+    fontSize: 22,
+    fontWeight: '700',
+    letterSpacing: -0.26,
+    lineHeight: 34,
   },
 });
 
 type HeaderTextProps = {
-  textType?: 'large' | 'regular' | 'small' | 'smallest';
+  textType?: 'bold' | 'semibold' | 'medium' | 'regular';
   style?: TextStyle | TextStyle[];
-  testID?: string;
 };
 
 const HeaderText: FunctionComponent<HeaderTextProps> = ({
   children,
   textType,
   style,
-  testID,
 }) => {
   let textStyle: TextStyle;
   switch (textType) {
-    case 'large':
-      textStyle = styles.large;
+    case 'bold':
+      textStyle = styles.bold;
       break;
-    case 'regular':
-      textStyle = styles.regular;
+    case 'semibold':
+      textStyle = styles.semibold;
       break;
-    case 'small':
-      textStyle = styles.small;
-      break;
-    case 'smallest':
-      textStyle = styles.smallest;
+    case 'medium':
+      textStyle = styles.medium;
       break;
     default:
       textStyle = styles.regular;
@@ -56,15 +59,11 @@ const HeaderText: FunctionComponent<HeaderTextProps> = ({
     ? Object.assign({}, ...style)
     : style;
 
-  return (
-    <Text testID={testID} style={[textStyle, { ...passedStyles }]}>
-      {children}
-    </Text>
-  );
+  return <Text style={[textStyle, { ...passedStyles }]}>{children}</Text>;
 };
 
 HeaderText.defaultProps = {
-  textType: 'regular',
+  textType: undefined,
   style: {},
 };
 

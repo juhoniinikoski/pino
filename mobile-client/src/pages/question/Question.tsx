@@ -17,8 +17,8 @@ import AnswerBox from '../../components/answerBox/AnswerBox';
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16
-  }
+    paddingHorizontal: 16,
+  },
 });
 
 type Props = NativeStackScreenProps<AppStackParamList, 'Question'>;
@@ -33,14 +33,14 @@ const QuestionScreen = ({ question }: ScreenProps) => {
   const paddingTop = useHeaderHeight() + 64;
 
   return (
-    <View style={{...styles.container, height}}>
+    <View style={{ ...styles.container, height }}>
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        >
+      >
         <HeaderText
           textType="semibold"
-          style={{ textAlign: 'center', paddingTop }}
+          style={{ paddingTop, marginHorizontal: 8, marginBottom: 16 }}
         >
           {question.question}
         </HeaderText>
@@ -53,11 +53,7 @@ const QuestionScreen = ({ question }: ScreenProps) => {
 };
 
 const Question = ({ route }: Props) => {
-  const {
-    questions: raw,
-    loading,
-    fetchMore,
-  } = useQuestions(route.params.collectionId);
+  const { questions: raw } = useQuestions(route.params.collectionId);
   const questions = raw ? parseNodes<QuestionType>(raw) : [];
 
   const { height } = Dimensions.get('screen');

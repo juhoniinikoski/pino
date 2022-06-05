@@ -1,38 +1,46 @@
-import { Button, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import * as React from 'react';
-import { ScrollView } from 'react-native-gesture-handler';
 import { Octicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { FieldArray } from 'formik';
 import FormikTextInput from '../common/FormikTextInput';
 import Layout from '../layout/Layout';
 import { FormValues } from '../../pages/add/AddQuestion';
-import TagBox from '../tagBox/TagBox';
-import CaptionText from '../common/CaptionText';
 import BodyText from '../common/BodyText';
+import { AddModalStackParamList } from '../../navigation/AddModal';
+import EmptyCircle from '../../assets/icons/empty-circle.svg';
 
 const styles = StyleSheet.create({
-  medium: {
-    fontSize: 17,
+  questionText: {
+    fontSize: 20,
     fontWeight: '500',
     letterSpacing: -0.43,
-    lineHeight: 22,
-    marginBottom: 20,
+    lineHeight: 25,
+    marginBottom: 28,
   },
   answerContainer: {
-    fontSize: 17,
-    fontWeight: '400',
-    letterSpacing: -0.43,
-    lineHeight: 22,
     paddingTop: 12,
     paddingBottom: 12,
     paddingHorizontal: 12,
     borderRadius: 6,
-    backgroundColor: '#F6F8FA',
     borderWidth: 1,
     borderColor: '#D0D7DE',
     marginVertical: 4,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    position: 'relative',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  inputText: {
+    fontSize: 17,
+    fontWeight: '400',
+    letterSpacing: -0.43,
+    lineHeight: 22,
+    display: 'flex',
+    flex: 1,
+    paddingTop: 0,
+    paddingBottom: 2,
   },
   tagContainer: {
     marginStart: 0,
@@ -42,109 +50,108 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginLeft: 16,
   },
-  addTag: {
-    alignSelf: 'flex-start',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    backgroundColor: 'white',
-    paddingVertical: 3,
-    paddingHorizontal: 5,
-    borderRadius: 100,
-  },
-  addTagBack: {
-    alignSelf: 'flex-start',
-    marginLeft: 16,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    backgroundColor: '#DDF4FF',
-    paddingVertical: 1,
-    paddingHorizontal: 1,
-    borderRadius: 100,
-  },
 });
+
+interface AnswerType {
+  answer: string;
+  correct: boolean;
+}
 
 type Props = {
   onSubmit: () => void;
   values: FormValues;
-  setFieldValue: (
-    field: string,
-    value: string[],
-    shouldValidate?: boolean | undefined,
-  ) => void;
 };
 
-const QuestionForm = ({ onSubmit, values, setFieldValue }: Props) => {
-  const [answers, setAnswers] = React.useState<Array<string>>([
-    'answers[0]',
-    'answers[1]',
-  ]);
+type NavigationProps = NativeStackNavigationProp<AddModalStackParamList>;
 
-  const addAns = () => {
-    const index = answers.length;
-    const answersToSet = [...answers, `answers[${index}]`];
-    setAnswers(answersToSet);
-    setFieldValue('answers', values.answers.concat(''));
-  };
+type NavPressableProps = {
+  onSubmit: () => void;
+  disabled: boolean;
+};
+
+const NavPressable = ({ onSubmit, disabled }: NavPressableProps) => {
+  return (
+    <Pressable onPress={onSubmit} disabled={disabled}>
+      {disabled ? (
+        <BodyText style={{ color: '#959DA5' }}>Seuraava</BodyText>
+      ) : (
+        <BodyText textType="semibold">Seuraava</BodyText>
+      )}
+    </Pressable>
+  );
+};
+
+const QuestionForm = ({ onSubmit, values }: Props) => {
+  const [disabled, setDisabled] = React.useState<boolean>(true);
+
+  const navigation = useNavigation<NavigationProps>();
+
+  const MemoizedNestedComponent = React.useCallback(
+    () => <NavPressable onSubmit={onSubmit} disabled={disabled} />,
+    [disabled, onSubmit],
+  );
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: MemoizedNestedComponent,
+    });
+  }, [navigation, MemoizedNestedComponent]);
+
+  const isntEmpty = (value: AnswerType) => value.answer !== '';
+
+  React.useEffect(() => {
+    setDisabled(
+      !(values.answers.slice(0, 2).every(isntEmpty) && values.question !== ''),
+    );
+  }, [values]);
 
   return (
     <View>
-      <ScrollView testID="tag-carousel" style={styles.tagContainer} horizontal>
-        <Pressable style={styles.addTagBack}>
-          <Pressable style={styles.addTag}>
-            <Octicons name="plus" size={13} color="black" />
-            <CaptionText textType="semibold1" style={{ marginLeft: 1 }}>
-              {' '}
-              lisää tagi
-            </CaptionText>
-          </Pressable>
-        </Pressable>
-        {values.tags?.map(t => (
-          <TagBox style={{ marginLeft: 8 }} key={t.id} tag={t} />
-        ))}
-      </ScrollView>
       <Layout>
         <FormikTextInput
-          color="#6E7781"
-          style={styles.medium}
           name="question"
           placeholder="Kirjoita kysymys tähän..."
+          style={styles.questionText}
         />
-        {answers.map((a, index) => (
-          <View key={a}>
-            <FormikTextInput
-              color="#6E7781"
-              name={a}
-              style={styles.answerContainer}
-              placeholder={`Anna ${index + 1}. ratkaisuvaihtoehto tähän`}
-            />
-          </View>
-        ))}
-        {answers.length < 6 && (
-          <Pressable
-            testID="add-button"
-            onPress={addAns}
-            style={{
-              ...styles.answerContainer,
-              backgroundColor: 'transparent',
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-            }}
-          >
-            <Octicons name="plus" size={16} color="#6E7781" />
-            <BodyText style={{ marginLeft: 6, color: '#6E7781' }}>
-              Lisää ratkaisu
-            </BodyText>
-          </Pressable>
-        )}
-        <Button title="submit" onPress={onSubmit} />
+        <FieldArray name="answers">
+          {({ push }) => (
+            <View>
+              {values.answers.length > 0 &&
+                values.answers.map((_a, index) => (
+                  // eslint-disable-next-line
+                  <View key={index}> 
+                    <View style={styles.answerContainer}>
+                      <EmptyCircle style={{ marginRight: 12 }} />
+                      <FormikTextInput
+                        name={`answers.${index}.answer`}
+                        style={styles.inputText}
+                        placeholder={`Ratkaisu ${index + 1}`}
+                      />
+                    </View>
+                  </View>
+                ))}
+              {values.answers.length < 6 && (
+                <Pressable
+                  testID="add-button"
+                  onPress={() => push({ answer: '', correct: false })}
+                  style={{
+                    ...styles.answerContainer,
+                    borderStyle: 'dashed',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                  }}
+                >
+                  <Octicons name="plus" size={16} color="#6E7781" />
+                  <BodyText style={{ marginLeft: 6, color: '#6E7781' }}>
+                    Lisää ratkaisu
+                  </BodyText>
+                </Pressable>
+              )}
+            </View>
+          )}
+        </FieldArray>
       </Layout>
     </View>
   );

@@ -2,6 +2,8 @@ import * as React from 'react';
 import { render, RenderAPI } from '@testing-library/react-native';
 import ConfirmAdd from './ConfirmAdd';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 const createTestProps = (props: Record<string, unknown>) => ({
   navigation: {
     navigate: jest.fn(),

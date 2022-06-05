@@ -1,8 +1,8 @@
 import { Pressable, StyleSheet } from 'react-native';
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { FontAwesome } from '@expo/vector-icons';
 import { Channel, Stack } from '../../utils/types';
+import PaintBrush from '../../assets/icons/paintbrush.svg';
 
 const styles = StyleSheet.create({
   container: {
@@ -42,12 +42,7 @@ const NewQuestionButton = ({ stack, channel }: Props) => {
 
   return (
     <Pressable testID="button" style={styles.container} onPress={handlePress}>
-      <FontAwesome
-        style={{ marginLeft: 6 }}
-        name="pencil-square-o"
-        size={28}
-        color="black"
-      />
+      <PaintBrush />
     </Pressable>
   );
 };

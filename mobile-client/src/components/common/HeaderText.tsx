@@ -4,28 +4,28 @@ import { Text, StyleSheet, TextStyle } from 'react-native';
 
 const styles = StyleSheet.create({
   regular: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: '400',
-    letterSpacing: -0.26,
-    lineHeight: 34,
+    letterSpacing: -0.45,
+    lineHeight: 25,
   },
   medium: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: '500',
-    letterSpacing: -0.26,
-    lineHeight: 34,
+    letterSpacing: -0.45,
+    lineHeight: 25,
   },
   semibold: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: '600',
-    letterSpacing: -0.26,
-    lineHeight: 34,
+    letterSpacing: -0.45,
+    lineHeight: 25,
   },
   bold: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: '700',
-    letterSpacing: -0.26,
-    lineHeight: 34,
+    letterSpacing: -0.45,
+    lineHeight: 25,
   },
 });
 

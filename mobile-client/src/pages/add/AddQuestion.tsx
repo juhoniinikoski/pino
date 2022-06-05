@@ -15,7 +15,10 @@ type Props = NativeStackScreenProps<AddModalStackParamList, 'AddQuestion'>;
 
 export interface FormValues {
   question: string;
-  answers: string[];
+  answers: {
+    answer: string;
+    correct: boolean;
+  }[];
   tags:
     | {
         id: string;
@@ -31,16 +34,24 @@ const AddQuestion = ({ route }: Props) => {
 
   const initialValues: FormValues = {
     question: '',
-    answers: [],
+    answers: [
+      {
+        answer: '',
+        correct: false,
+      },
+      {
+        answer: '',
+        correct: false,
+      },
+    ],
     tags: initialTags,
   };
 
   const navigation = useNavigation<NavigationProps>();
 
-  const onSubmit = (values: any, resetForm: () => void) => {
+  const onSubmit = (values: FormValues) => {
     console.log(values);
     navigation.navigate('ConfirmAdd', { initialValues: values });
-    resetForm();
   };
 
   return (
@@ -51,17 +62,13 @@ const AddQuestion = ({ route }: Props) => {
     >
       <Formik
         initialValues={initialValues}
-        onSubmit={(values, { resetForm }) => {
-          onSubmit(values, resetForm);
+        onSubmit={values => {
+          onSubmit(values);
         }}
         // validationSchema={validationSchema}
       >
-        {({ handleSubmit, setFieldValue, values }) => (
-          <QuestionForm
-            values={values}
-            onSubmit={handleSubmit}
-            setFieldValue={setFieldValue}
-          />
+        {({ handleSubmit, values }) => (
+          <QuestionForm values={values} onSubmit={handleSubmit} />
         )}
       </Formik>
     </ScrollView>

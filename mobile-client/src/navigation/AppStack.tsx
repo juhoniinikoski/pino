@@ -2,7 +2,6 @@ import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AppTab from './AppTab';
 import QuestionScreen from '../pages/question/Question';
-import { Question } from '../utils/types';
 
 export type AppStackParamList = {
   AppTab: undefined;

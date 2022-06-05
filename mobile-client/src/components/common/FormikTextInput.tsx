@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useField } from 'formik';
-import { ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 import TextInput from './TextInput';
 import BodyText from './BodyText';
 
 interface Props {
   name: string;
-  style?: ViewStyle;
+  style?: ViewStyle | TextStyle;
   placeholder: string;
   color?: string;
 }

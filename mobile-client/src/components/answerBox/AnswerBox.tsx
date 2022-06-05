@@ -1,9 +1,10 @@
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import * as React from 'react';
 import BodyText from '../common/BodyText';
 import { Answer } from '../../utils/types';
 import CheckCircle from '../../assets/icons/check-circle.svg';
 import XCircle from '../../assets/icons/x-circle.svg';
+import EmptyCircle from '../../assets/icons/empty-circle.svg';
 
 /* eslint-disable no-nested-ternary */
 
@@ -21,14 +22,11 @@ const styles = StyleSheet.create({
     borderColor: '#C8E1FF',
     width: '100%',
   },
-  radioButton: {
-    height: 16,
-    width: 16,
-    marginRight: 16,
-    borderRadius: 50,
-    borderColor: '#BEBEBE',
-    borderStyle: 'solid',
-    borderWidth: 1,
+  circle: {
+    marginRight: 12,
+  },
+  textContainer: {
+    flex: 1,
   },
   correct: {
     borderColor: 'rgba(74, 194, 107, 0.4)',
@@ -69,13 +67,12 @@ const AnswerBox = ({ answer }: Props) => {
           : styles.container
       }
     >
-      {answered && answer.correct && (
-        <CheckCircle style={{ position: 'absolute', top: -8, right: 8 }} />
-      )}
-      {answered && !answer.correct && (
-        <XCircle style={{ position: 'absolute', top: -8, right: 8 }} />
-      )}
-      <BodyText>{answer.answer}</BodyText>
+      {answered && answer.correct && <CheckCircle style={styles.circle} />}
+      {answered && !answer.correct && <XCircle style={styles.circle} />}
+      {!answered && <EmptyCircle style={styles.circle} />}
+      <View style={styles.textContainer}>
+        <BodyText>{answer.answer}</BodyText>
+      </View>
     </Pressable>
   );
 };

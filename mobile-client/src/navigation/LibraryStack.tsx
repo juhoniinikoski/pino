@@ -64,7 +64,7 @@ const LibraryStack = () => {
         />
       </StackNav.Group>
       <StackNav.Group
-        screenOptions={{ presentation: 'modal', headerShown: false }}
+        screenOptions={{ presentation: 'fullScreenModal', headerShown: false }}
       >
         <StackNav.Screen name="AddModal" component={AddModal} />
       </StackNav.Group>

@@ -17,11 +17,20 @@ jest.mock('@react-navigation/native', () => {
   };
 });
 
+const testProps = {
+  id: 'kauppikseen1234',
+  name: 'kauppikseen',
+  followedBy: 2,
+  questions: 4,
+  updatedAt: new Date('2022-05-07T10:50:58.983Z'),
+  createdAt: new Date('2022-05-07T10:50:58.983Z'),
+};
+
 describe('render tests', () => {
   it('should render the button', async () => {
     const { getByTestId } = render(
       <NavigationContainer>
-        <NewQuestionButton collectionId="kauppikseen1234channel" />
+        <NewQuestionButton channel={testProps} />
       </NavigationContainer>,
     );
     expect(getByTestId('button')).toBeTruthy;

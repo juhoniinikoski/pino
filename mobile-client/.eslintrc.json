@@ -34,7 +34,8 @@
         "singleQuote": true,
         "trailingComma": "all",
         "arrowParens": "avoid",
-        "endOfLine": "auto"
+        "endOfLine": "auto",
+        "bracketSpacing": true
       }
     ],
     "no-use-before-define": "off",

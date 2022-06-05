@@ -1,13 +1,13 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import BackButton from '../components/common/BackButton';
-import AddQuestion from '../pages/add/AddQuestion';
+import AddQuestion, { FormValues } from '../pages/add/AddQuestion';
 import ConfirmAdd from '../pages/add/ConfirmAdd';
 import { Channel } from '../utils/types';
 
 export type AddModalStackParamList = {
   AddQuestion: { tags?: Channel[] };
-  ConfirmAdd: { initialValues: any };
+  ConfirmAdd: { initialValues: FormValues };
 };
 
 const StackNav = createNativeStackNavigator<AddModalStackParamList>();

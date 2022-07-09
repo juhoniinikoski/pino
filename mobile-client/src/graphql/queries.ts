@@ -86,6 +86,12 @@ export const GET_QUESTIONS = gql`
           id
           question
           createdById
+          collections {
+            ... on Channel {
+              id
+              name
+            }
+          }
           type
           answers {
             answer

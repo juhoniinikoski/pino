@@ -71,7 +71,7 @@ const cursorPaginateQuestion = async (
     .first();
 
   const [rows, cursorCountObject, totalCountObject] = await Promise.all([
-    paginationQuery.withGraphFetched('answers'),
+    paginationQuery.withGraphFetched('[answers, collections]'),
     cursorCountQuery,
     totalCountQuery,
   ]);

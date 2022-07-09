@@ -38,6 +38,8 @@ const QuestionBox = ({ question, collectionId, index }: Props) => {
     });
   };
 
+  console.log(question)
+
   return (
     <Pressable onPress={handlePress} style={styles.container}>
       <BodyText textType="medium">{question.question}</BodyText>

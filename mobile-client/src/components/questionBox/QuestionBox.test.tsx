@@ -62,9 +62,11 @@ describe('testing render', () => {
     );
     expect(getByText(testProps.question)).toBeTruthy;
   });
+
+  it.todo('displays tags');
+  it.todo('displays likes')
 });
 
 describe('interactions', () => {
   it.todo('open full screen view when clicked');
-  it.todo('should open more-menu when clicking three buttons');
 });

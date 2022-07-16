@@ -50,6 +50,7 @@ export interface Question {
   createdAt: Date;
   updatedAt: Date;
   createdById: string;
+  collections: Partial<Channel>[];
   question: string;
   stacks?: Stack[];
   type: string;

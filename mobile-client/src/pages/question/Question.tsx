@@ -14,10 +14,18 @@ import useQuestions from '../../hooks/useQuestions';
 import parseNodes from '../../utils/parseNodes';
 import HeaderText from '../../components/common/HeaderText';
 import AnswerBox from '../../components/answerBox/AnswerBox';
+import colors from '../../styles/colors';
+import CaptionText from '../../components/common/CaptionText';
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
+    paddingBottom: 64,
+  },
+  tagContainer: {
+    marginTop: 16,
+    display: 'flex',
+    flexDirection: 'row',
   },
 });
 
@@ -30,7 +38,7 @@ interface ScreenProps {
 const QuestionScreen = ({ question }: ScreenProps) => {
   const { height } = Dimensions.get('screen');
 
-  const paddingTop = useHeaderHeight() + 64;
+  const paddingTop = useHeaderHeight() + 32;
 
   return (
     <View style={{ ...styles.container, height }}>
@@ -38,12 +46,20 @@ const QuestionScreen = ({ question }: ScreenProps) => {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >
-        <HeaderText
-          textType="semibold"
-          style={{ paddingTop, marginHorizontal: 8, marginBottom: 16 }}
-        >
-          {question.question}
-        </HeaderText>
+        <View style={{ paddingTop, marginHorizontal: 8, marginBottom: 16 }}>
+          <CaptionText
+            textType="bold1"
+            style={{ color: colors.BORDER_LIGHT, marginBottom: 16 }}
+          >
+            SELECT ONE
+          </CaptionText>
+          <HeaderText
+            textType="semibold"
+            style={{ color: colors.TEXT_COLOR_PRIMARY }}
+          >
+            {question.question}
+          </HeaderText>
+        </View>
         {question.answers.map(a => (
           <AnswerBox key={a.id} answer={a} />
         ))}

@@ -5,6 +5,9 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import BodyText from '../common/BodyText';
 import { Question } from '../../utils/types';
 import { AppStackParamList } from '../../navigation/AppStack';
+import colors from '../../styles/colors';
+
+/* eslint-disable no-underscore-dangle */
 
 const styles = StyleSheet.create({
   container: {
@@ -12,11 +15,9 @@ const styles = StyleSheet.create({
     marginTop: 8,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: '#C8E1FF',
+    borderColor: colors.BORDER_LIGHT,
     display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    alignItems: 'flex-start',
   },
 });
 
@@ -38,11 +39,28 @@ const QuestionBox = ({ question, collectionId, index }: Props) => {
     });
   };
 
-  console.log(question)
-
   return (
     <Pressable onPress={handlePress} style={styles.container}>
-      <BodyText textType="medium">{question.question}</BodyText>
+      {/* <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          marginRight: -8,
+          marginBottom: 8,
+        }}
+      >
+        {tags.map(t => (
+          <TagBox
+            style={{ marginRight: 8, marginBottom: 8 }}
+            key={t.id}
+            tag={t}
+          />
+        ))}
+      </View> */}
+      <BodyText style={{ color: colors.TEXT_COLOR_PRIMARY }}>
+        {question.question}
+      </BodyText>
     </Pressable>
   );
 };

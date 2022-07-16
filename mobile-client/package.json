@@ -9,7 +9,8 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "lint": "eslint --fix --ext .ts --ext .tsx .",
-    "test": "jest --detectOpenHandles -- QuestionForm.test.tsx",
+    "test": "jest --detectOpenHandles",
+    "test:watch": "jest --detectOpenHandles --watch",
     "coverage": "CI=true npm test -- --coverage"
   },
   "dependencies": {

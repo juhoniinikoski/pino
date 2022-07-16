@@ -5,6 +5,7 @@ import { Answer } from '../../utils/types';
 import CheckCircle from '../../assets/icons/check-circle.svg';
 import XCircle from '../../assets/icons/x-circle.svg';
 import EmptyCircle from '../../assets/icons/empty-circle.svg';
+import colors from '../../styles/colors';
 
 /* eslint-disable no-nested-ternary */
 
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: '#C8E1FF',
+    borderColor: colors.BORDER_LIGHT,
     width: '100%',
   },
   circle: {
@@ -71,7 +72,15 @@ const AnswerBox = ({ answer }: Props) => {
       {answered && !answer.correct && <XCircle style={styles.circle} />}
       {!answered && <EmptyCircle style={styles.circle} />}
       <View style={styles.textContainer}>
-        <BodyText>{answer.answer}</BodyText>
+        <BodyText
+          style={{
+            color: answered
+              ? colors.TEXT_COLOR_PRIMARY
+              : colors.TEXT_COLOR_SECONDARY,
+          }}
+        >
+          {answer.answer}
+        </BodyText>
       </View>
     </Pressable>
   );

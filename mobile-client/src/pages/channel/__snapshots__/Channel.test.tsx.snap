@@ -116,28 +116,9 @@ exports[`render tests should render a list containing questions succesfully (cha
     }
     testID="button"
   >
-    <Text
-      allowFontScaling={false}
-      style={
-        Array [
-          Object {
-            "color": "black",
-            "fontSize": 28,
-          },
-          Object {
-            "marginLeft": 6,
-          },
-          Object {
-            "fontFamily": "FontAwesome",
-            "fontStyle": "normal",
-            "fontWeight": "normal",
-          },
-          Object {},
-        ]
-      }
-    >
-      
-    </Text>
+    <svg
+      data-file-name="SvgPaintbrush"
+    />
   </View>
 </RNCSafeAreaView>
 `;

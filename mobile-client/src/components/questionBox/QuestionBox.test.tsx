@@ -45,6 +45,13 @@ const testProps = {
   question: 'Mikä seuraavista väittämistä ei pidä paikkaansa?',
   type: 'multi',
   updatedAt: new Date('2022-04-28T08:12:46.157Z'),
+  collections: [
+    {
+      __typename: 'Channel',
+      id: 'DIA20221234channel',
+      name: 'DIA2022',
+    },
+  ],
 };
 
 describe('testing render', () => {
@@ -64,7 +71,8 @@ describe('testing render', () => {
   });
 
   it.todo('displays tags');
-  it.todo('displays likes')
+  it.todo('navigates to the tag page');
+  it.todo('displays likes');
 });
 
 describe('interactions', () => {

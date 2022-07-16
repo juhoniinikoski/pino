@@ -8,6 +8,7 @@ import { LibraryStackParamList } from '../../navigation/LibraryStack';
 import TagBox from '../tagBox/TagBox';
 import CaptionText from '../common/CaptionText';
 import Verified from '../../assets/icons/verified.svg';
+import colors from '../../styles/colors';
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: '#C8E1FF',
+    borderColor: colors.BORDER_LIGHT,
   },
   container: {
     display: 'flex',

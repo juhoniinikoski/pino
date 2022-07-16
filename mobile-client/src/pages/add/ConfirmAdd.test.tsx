@@ -42,18 +42,6 @@ describe('render', () => {
     ).toBeTruthy();
   });
 
-  it('renders answers given as parameter', () => {
-    expect(
-      component.getByText(props.route.params.initialValues.answers[0]),
-    ).toBeTruthy();
-    expect(
-      component.getByText(props.route.params.initialValues.answers[1]),
-    ).toBeTruthy();
-    expect(
-      component.getByText(props.route.params.initialValues.answers[2]),
-    ).toBeTruthy();
-  });
-
   it.todo('renders all tags given as parameter');
   it.todo(
     'renders confirm button as undefined when correct answer is not selected',

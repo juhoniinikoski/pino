@@ -7,6 +7,7 @@ import { Channel } from '../../utils/types';
 import { LibraryStackParamList } from '../../navigation/LibraryStack';
 import CaptionText from '../common/CaptionText';
 import Mention from '../../assets/icons/mention.svg';
+import colors from '../../styles/colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: '#C8E1FF',
+    borderColor: colors.BORDER_LIGHT,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',

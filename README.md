@@ -31,7 +31,7 @@ Create question stacks, follow the tag channels and track your learning with sta
 
 ### ✍️ Current status
 
-Currently, the main focus on building the product is in the API. We are building a GraphQL API that will serve our mobile client as well as web client in the future. Check the API docs [here](https://github.com/juhoniinikoski/pino/tree/main/server).
+Currently, the main focus on building the product is in the mobile client. We are building a cross-platform React Native application where you can dive deeper into [here](https://github.com/juhoniinikoski/pino/tree/main/mobile-client).
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
